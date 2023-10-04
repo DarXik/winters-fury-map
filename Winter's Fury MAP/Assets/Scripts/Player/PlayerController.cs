@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +20,10 @@ public class PlayerController : MonoBehaviour
     private float standingHeight;
     private float currentHeight;
     private bool isCrouching;
+
+    [Header("Slope Handling")] 
+    public float slopeForce;
+    public float slopeForceRayLength;
     
 
     private void Awake()
@@ -66,6 +69,12 @@ public class PlayerController : MonoBehaviour
         Vector3 rightMovement = transform.right * horizontalInput;
 
         charController.SimpleMove(Vector3.ClampMagnitude(forwardMovement + rightMovement, 1f) * movementSpeed);
+        
+        // if player's moving on slope
+        if ((verticalInput != 0 || horizontalInput != 0) && OnSlope())
+        {
+            charController.Move(Vector3.down * currentHeight / 2f * (slopeForce * Time.deltaTime));
+        }
     }
 
     private void MovingStateHandler()
@@ -89,5 +98,17 @@ public class PlayerController : MonoBehaviour
 
             movementSpeed = crouchSpeed;
         }
+    }
+
+    private bool OnSlope()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, currentHeight / 2f * slopeForceRayLength))
+        {
+            if (hit.normal != Vector3.up) return true;
+        }
+
+        return false;
     }
 }
