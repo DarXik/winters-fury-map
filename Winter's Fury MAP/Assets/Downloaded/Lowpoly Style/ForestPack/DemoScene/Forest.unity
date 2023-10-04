@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.1676155, g: 0.12261816, b: 0.10673628, a: 1}
+  m_FogColor: {r: 0.86825895, g: 0.9405116, b: 0.93150157, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.006
   m_LinearFogStart: 0
@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 119908547}
-  m_IndirectSpecularColor: {r: 0.002543943, g: 0.0024250208, b: 0.021767274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3968289, g: 0.46393538, b: 0.548282, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2441,7 +2441,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.99511117, b: 0.8632076, a: 1}
-  m_Intensity: 0
+  m_Intensity: 0.9803527
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2498,7 +2498,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119908546}
-  m_LocalRotation: {x: -0.06262805, y: 0.91520506, z: 0.15660784, w: 0.3659939}
+  m_LocalRotation: {x: 0.1483563, y: -0.74548453, z: 0.1768807, w: 0.6252651}
   m_LocalPosition: {x: 13.00946, y: -8.283262, z: -15.279623}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -75960,7 +75960,7 @@ MonoBehaviour:
   moonOrbitPivot: {fileID: 922068292}
   startTime: 0
   timeIncrement: 0.5
-  autoTimeIncrement: 1
+  autoTimeIncrement: 0
   shouldUpdateEnvironmentReflection: 0
   environmentReflectionResolution: 128
   environmentReflectionTimeSlicingMode: 1
