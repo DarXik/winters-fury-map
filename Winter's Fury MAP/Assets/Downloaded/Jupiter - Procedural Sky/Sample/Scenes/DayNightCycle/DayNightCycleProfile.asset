@@ -855,7 +855,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0
+        value: 0.001
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1011,21 +1011,21 @@ MonoBehaviour:
       m_RotationOrder: 4
     gradient:
       serializedVersion: 2
-      key0: {r: 0.41598335, g: 0.363, b: 0.55, a: 1}
+      key0: {r: 0.0017564351, g: 0.00057849905, b: 0.122641504, a: 1}
       key1: {r: 1, g: 0.70666665, b: 0.6, a: 1}
-      key2: {r: 1, g: 0.70666665, b: 0.6, a: 0}
-      key3: {r: 0.4159287, g: 0.36391956, b: 0.5471698, a: 0}
-      key4: {r: 0.4159287, g: 0.36391956, b: 0.5471698, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
+      key2: {r: 0.9710552, g: 0.7208923, b: 0.6364871, a: 0}
+      key3: {r: 0.7126202, g: 0.84790707, b: 0.9622642, a: 0}
+      key4: {r: 1, g: 0.70666665, b: 0.6, a: 0}
+      key5: {r: 0.0017564351, g: 0.00057849905, b: 0.122641504, a: 0}
+      key6: {r: 0.0017564351, g: 0.00057849905, b: 0.122641504, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 10409
-      ctime1: 22359
-      ctime2: 49730
-      ctime3: 59560
-      ctime4: 59560
-      ctime5: 0
-      ctime6: 0
+      ctime0: 8867
+      ctime1: 16974
+      ctime2: 27371
+      ctime3: 34078
+      ctime4: 49730
+      ctime5: 59571
+      ctime6: 59571
       ctime7: 0
       atime0: 0
       atime1: 65535
@@ -1037,5 +1037,5 @@ MonoBehaviour:
       atime7: 0
       m_Mode: 0
       m_ColorSpace: 0
-      m_NumColorKeys: 4
+      m_NumColorKeys: 6
       m_NumAlphaKeys: 2
