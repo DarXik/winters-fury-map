@@ -17,20 +17,24 @@ namespace Player
         [Header("Health")] 
         public float maxHealth;
         private float currentHealth;
+        
+        [Header("Temperature")]
 
-        [Header("Hunger")] 
-        public float maxHunger;
-        public float hungerDepletionRate;
-        private float currentHunger;
+        [Header("Hunger (Calories)")] 
+        public float maxCalories;
+        public float standingBurnRate, walkingBurnRate, runningBurnRate;
+        private float currentCalories;
+        private PlayerActivity currentActivity;
 
-        [Header("Thirst")] 
+        [Header("Thirst (mL)")] 
         public float maxThirst;
-        public float thirstDepletionRate;
+        public float awakeDepletionRate, asleepDepletionRate;
         private float currentThirst;
+        private PlayerAwakeness currentAwakeness;
     
         // Fill Amounts
         private float HealthPercent => currentHealth / maxHealth;
-        private float HungerPercent => currentHunger / maxHunger;
+        private float HungerPercent => currentCalories / maxCalories;
         private float ThirstPercent => currentThirst / maxThirst;
 
         public static VitalManager Instance;
@@ -44,10 +48,11 @@ namespace Player
         private void Start()
         {
             currentHealth = maxHealth;
-            currentHunger = maxHunger;
+            currentCalories = maxCalories;
             currentThirst = maxThirst;
 
             timeIncrement = skybox.TimeIncrement;
+            currentAwakeness = PlayerController.Instance.currentAwakeness;
         }
 
         private void Update()
@@ -56,20 +61,41 @@ namespace Player
             ReduceThirst();
 
             HandleUI();
+
+            currentActivity = PlayerController.Instance.currentActivity;
         }
 
         private void ReduceHunger()
         {
-            if (currentHunger <= 0) return;
+            if (currentCalories <= 0) return;
 
-            currentHunger -= hungerDepletionRate * (Time.deltaTime * timeIncrement);
+            switch (currentActivity)
+            {
+                case PlayerActivity.Standing:
+                    currentCalories -= standingBurnRate * (Time.deltaTime * timeIncrement);
+                    break;
+                case PlayerActivity.Walking:
+                    currentCalories -= walkingBurnRate * (Time.deltaTime * timeIncrement);
+                    break;
+                case PlayerActivity.Running:
+                    currentCalories -= runningBurnRate * (Time.deltaTime * timeIncrement);
+                    break;
+            }
         }
 
         private void ReduceThirst()
         {
             if (currentThirst <= 0) return;
 
-            currentThirst -= thirstDepletionRate * (Time.deltaTime * timeIncrement);
+            switch (currentAwakeness)
+            {
+                case PlayerAwakeness.Awake:
+                    currentThirst -= awakeDepletionRate * (Time.deltaTime * timeIncrement);
+                    break;
+                case PlayerAwakeness.Asleep:
+                    currentThirst -= asleepDepletionRate * (Time.deltaTime * timeIncrement);
+                    break;
+            }
         }
 
         private void HandleUI()

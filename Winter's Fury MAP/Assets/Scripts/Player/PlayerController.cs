@@ -1,4 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
+
+public enum PlayerActivity
+{
+    Standing,
+    Walking,
+    Running
+}
+
+public enum PlayerAwakeness
+{
+    Awake,
+    Asleep
+}
 
 public class PlayerController : MonoBehaviour
 {
@@ -6,6 +20,9 @@ public class PlayerController : MonoBehaviour
     private CharacterController charController;
     [SerializeField] private Transform cameraTransform;
     private Vector3 initialCameraPos;
+    
+    [HideInInspector] public PlayerActivity currentActivity;
+    [HideInInspector] public PlayerAwakeness currentAwakeness;
 
     [Header("Movement")] 
     public float walkSpeed;
@@ -27,11 +44,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Utilities")] 
     public Headbob headBob = new();
+
+    public static PlayerController Instance;
     
 
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
+        Instance = this;
     }
 
     private void Start()
@@ -40,6 +60,8 @@ public class PlayerController : MonoBehaviour
         initialCameraPos = cameraTransform.localPosition;
         
         headBob.Setup();
+
+        currentAwakeness = PlayerAwakeness.Awake;
     }
 
     private void Update()
@@ -50,6 +72,9 @@ public class PlayerController : MonoBehaviour
 
         CheckForHeadBob();
         headBob.ResetHeadBob();
+
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+            currentActivity = PlayerActivity.Standing;
     }
 
     private void CheckForHeadBob()
@@ -100,12 +125,16 @@ public class PlayerController : MonoBehaviour
             movementSpeed = runningSpeed;
             
             isRunning = true;
+
+            currentActivity = PlayerActivity.Running;
         }
         else
         {
             movementSpeed = isCrouching ? crouchSpeed : walkSpeed;
 
             isRunning = false;
+
+            currentActivity = PlayerActivity.Walking;
         }
         
         if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))
