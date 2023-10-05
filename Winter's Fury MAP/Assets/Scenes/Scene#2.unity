@@ -15,11 +15,11 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.9625768, g: 0.7250592, b: 0.6471747, a: 1}
-  m_FogMode: 3
+  m_FogColor: {r: 0.99784225, g: 0.70772713, b: 0.60272, a: 1}
+  m_FogMode: 1
   m_FogDensity: 0.015
-  m_LinearFogStart: 10
-  m_LinearFogEnd: 200
+  m_LinearFogStart: 30
+  m_LinearFogEnd: 500
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0013405129, g: 0.0013405129, b: 0.0013405129, a: 1}
+  m_IndirectSpecularColor: {r: 0.27473047, g: 0.17797405, b: 0.17780273, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -376,7 +376,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
-  m_Intensity: 0.000091335365
+  m_Intensity: 0.00002651877
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -433,7 +433,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362096504}
-  m_LocalRotation: {x: -0, y: 0.85911894, z: 0.51177603, w: 0}
+  m_LocalRotation: {x: -0, y: 0.99785894, z: 0.065403126, w: 0}
   m_LocalPosition: {x: -648.98785, y: -206.90686, z: -222.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -612,9 +612,9 @@ MonoBehaviour:
   sunOrbitPivot: {fileID: 0}
   useMoonPivot: 0
   moonOrbitPivot: {fileID: 0}
-  startTime: 10
+  startTime: 6.5
   timeIncrement: 0.005
-  autoTimeIncrement: 1
+  autoTimeIncrement: 0
   shouldUpdateEnvironmentReflection: 0
   environmentReflectionResolution: 0
   environmentReflectionTimeSlicingMode: 0
@@ -679,7 +679,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.99511117, b: 0.8632076, a: 1}
-  m_Intensity: 0.8283569
+  m_Intensity: 0.1404383
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -736,7 +736,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872816394}
-  m_LocalRotation: {x: 0.51177603, y: -0, z: -0, w: 0.85911894}
+  m_LocalRotation: {x: 0.065403126, y: -0, z: -0, w: 0.99785894}
   m_LocalPosition: {x: -648.98785, y: -206.90686, z: -222.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -800,13 +800,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 254833820}
-  walkSpeed: 10
-  runningSpeed: 30
-  crouchSpeed: 5
+  walkSpeed: 5
+  runningSpeed: 15
+  crouchSpeed: 3
   crouchHeight: 1
   crouchTransitionSpeed: 10
   slopeForce: 50
   slopeForceRayLength: 10
+  headBob:
+    playerCam: {fileID: 254833820}
+    amount: 0.1
+    frequency: 16
+    smooth: 18
 --- !u!143 &915188274
 CharacterController:
   m_ObjectHideFlags: 0
@@ -830,7 +835,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &915188276
@@ -849,7 +854,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915188272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 646.677, y: 209.33386, z: 225.181}
+  m_LocalPosition: {x: 646.677, y: 120.924, z: 225.181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     [Header("Slope Handling")] 
     public float slopeForce;
     public float slopeForceRayLength;
+
+    [Header("Utilities")] 
+    public Headbob headBob = new();
     
 
     private void Awake()
@@ -35,6 +38,8 @@ public class PlayerController : MonoBehaviour
     {
         standingHeight = currentHeight = charController.height;
         initialCameraPos = cameraTransform.localPosition;
+        
+        headBob.Setup();
     }
 
     private void Update()
@@ -42,6 +47,17 @@ public class PlayerController : MonoBehaviour
         MovingStateHandler();
         MovePlayer();
         CrouchHandler();
+
+        CheckForHeadBob();
+        headBob.ResetHeadBob();
+    }
+
+    private void CheckForHeadBob()
+    {
+        if (isRunning)
+        {
+            headBob.StartHeadBob();
+        }
     }
 
     private void CrouchHandler()
@@ -79,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovingStateHandler()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching)
         {
             movementSpeed = runningSpeed;
             
@@ -87,16 +103,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            movementSpeed = walkSpeed;
+            movementSpeed = isCrouching ? crouchSpeed : walkSpeed;
 
             isRunning = false;
         }
-
-        if (Input.GetKeyDown(KeyCode.C))
+        
+        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))
         {
             isCrouching = !isCrouching;
-
-            movementSpeed = crouchSpeed;
         }
     }
 
