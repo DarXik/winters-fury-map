@@ -1,0 +1,4 @@
+repository "Winters Fury MAP@Cosminary@cloud"
+  path "/"
+    br "/main"
+    co "/main"
