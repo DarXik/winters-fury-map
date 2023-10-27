@@ -81,8 +81,8 @@ public class PlayerController : MonoBehaviour
 
         CheckForHeadBob();
         headBob.ResetHeadBob();
-
-        if (isRegenerating) RegenerateStamina();
+        
+        if(isRegenerating) RegenerateStamina();
     }
 
     private void CheckForHeadBob()
