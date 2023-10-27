@@ -210,11 +210,19 @@ Material:
     - _HorizonCloudStart: -0.01
     - _HorizonCloudStartPosition: -0.01
     - _HorizonCloudStep: 25
+<<<<<<< HEAD
     - _HorizonExponent: 3.7715256
     - _HorizonStep: 1000
     - _HorizonThickness: 1
     - _MoonGlow: 0.191
     - _MoonLightIntensity: 0.013106995
+=======
+    - _HorizonExponent: 5
+    - _HorizonStep: 1000
+    - _HorizonThickness: 1
+    - _MoonGlow: 0.191
+    - _MoonLightIntensity: 0
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
     - _MoonSize: 0.165
     - _MoonSoftEdge: 1
     - _OverheadCloudAltitude: 422.77
@@ -223,8 +231,13 @@ Material:
     - _OverheadCloudFlowDirectionZ: 1
     - _OverheadCloudFlowX: 1
     - _OverheadCloudFlowZ: 1
+<<<<<<< HEAD
     - _OverheadCloudRemapMax: 1.7777779
     - _OverheadCloudRemapMin: 0.22540501
+=======
+    - _OverheadCloudRemapMax: 4
+    - _OverheadCloudRemapMin: 0.5
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
     - _OverheadCloudSize: 10
     - _OverheadCloudStep: 2
     - _StarsDensity0: 0.4
@@ -245,12 +258,17 @@ Material:
     - _StarsTwinkle1: 6
     - _StarsTwinkle2: 2
     - _SunGlow: 0.167
+<<<<<<< HEAD
     - _SunLightIntensity: 0.24972643
+=======
+    - _SunLightIntensity: 0.6
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
     - _SunSize: 0.077
     - _SunSoftEdge: 0.611
     m_Colors:
     - _DetailOverlayColor: {r: 1, g: 1, b: 1, a: 1}
     - _DetailOverlayTintColor: {r: 1, g: 1, b: 1, a: 1}
+<<<<<<< HEAD
     - _FogColor: {r: 0.995816, g: 0.7151483, b: 0.61419225, a: 1}
     - _GroundColor: {r: 0.6666565, g: 0.35551232, b: 0.19162434, a: 1}
     - _HorizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
@@ -265,6 +283,22 @@ Material:
     - _StarsColor2: {r: 1, g: 1, b: 1, a: 1}
     - _SunColor: {r: 0.9716981, g: 0.9248331, b: 0.84740746, a: 1}
     - _SunDirection: {r: 0, g: -0.5000001, b: 0.8660253, a: 0}
+=======
+    - _FogColor: {r: 0.8942603, g: 0.9210168, b: 0.95866907, a: 1}
+    - _GroundColor: {r: 0.99998474, g: 0.53326845, b: 0.28743652, a: 1}
+    - _HorizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HorizonColor: {r: 0.8662795, g: 0.97169375, b: 0.9706974, a: 1}
+    - _MoonColor: {r: 1, g: 1, b: 1, a: 0}
+    - _MoonDirection: {r: 0, g: 0.99999994, b: 0.00000017881393, a: 0}
+    - _MoonLightColor: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
+    - _OverheadCloudColor: {r: 1, g: 1, b: 1, a: 0.9837438}
+    - _SkyColor: {r: 0.4549905, g: 0.6944021, b: 1.2999728, a: 1}
+    - _StarsColor0: {r: 0.96470594, g: 0.9450981, b: 0.76470596, a: 1}
+    - _StarsColor1: {r: 1, g: 1, b: 1, a: 1}
+    - _StarsColor2: {r: 1, g: 1, b: 1, a: 1}
+    - _SunColor: {r: 0.9716981, g: 0.92267036, b: 0.8403877, a: 1}
+    - _SunDirection: {r: 0, g: -1.0000001, b: -0.00000011920929, a: 0}
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
     - _SunLightColor: {r: 1, g: 0.99511117, b: 0.8632076, a: 1}
   m_BuildTextureStacks: []
 --- !u!21 &8993251732621375409

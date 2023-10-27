@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.8914273, g: 0.89529014, b: 0.824196, a: 1}
+  m_FogColor: {r: 0.8662795, g: 0.9716937, b: 0.97069734, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.015
   m_LinearFogStart: 30
@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44818783, g: 0.30822688, b: 0.37165418, a: 1}
+  m_IndirectSpecularColor: {r: 0.79670614, g: 0.5136286, b: 0.7104114, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -850,8 +850,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 216145162}
-  - component: {fileID: 216145163}
-  - component: {fileID: 216145164}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -874,34 +872,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &216145163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216145161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd54fea63c3b49141bca2694486da228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionProbe: {fileID: 1512923020}
-  giUpdateTime: 1
---- !u!114 &216145164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216145161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d8d7428fe874903ae13bf9a24001e10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cycle: {fileID: 788761099}
-  autoCycle: 1
 --- !u!1 &254833817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,11 +1054,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012082070442, guid: 3a0f904d7dd2a964d82ea2345e558f55, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 7
 =======
       value: 5
 >>>>>>> Stashed changes
+=======
+      value: 6
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000012082070442, guid: 3a0f904d7dd2a964d82ea2345e558f55, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1322,7 +1296,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
-  m_Intensity: 0.0087448545
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1379,7 +1353,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362096504}
-  m_LocalRotation: {x: -0, y: 0.9335804, z: 0.358368, w: 0}
+  m_LocalRotation: {x: -0.7071067, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 2657.0122, y: -206.90686, z: 227.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1707,11 +1681,15 @@ Transform:
   - {fileID: 380562892}
   - {fileID: 2052766615}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 27
 =======
   m_RootOrder: 25
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 26
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &466446110
 PrefabInstance:
@@ -2819,11 +2797,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 429444, guid: f729490d24dbe3148a40206f1a31c10b, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 9
 =======
       value: 7
 >>>>>>> Stashed changes
+=======
+      value: 8
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 429444, guid: f729490d24dbe3148a40206f1a31c10b, type: 3}
       propertyPath: m_LocalScale.x
@@ -3176,11 +3158,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 407908, guid: 1b55a93948eaea247b5f43e4d2d5c9a4, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 13
 =======
       value: 11
 >>>>>>> Stashed changes
+=======
+      value: 12
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 407908, guid: 1b55a93948eaea247b5f43e4d2d5c9a4, type: 3}
       propertyPath: m_LocalScale.x
@@ -3533,11 +3519,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010642579748, guid: ac562c5a6ae3b334cb80cb055522dbe7, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 8
 =======
       value: 6
 >>>>>>> Stashed changes
+=======
+      value: 7
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000010642579748, guid: ac562c5a6ae3b334cb80cb055522dbe7, type: 3}
       propertyPath: m_LocalScale.x
@@ -3745,11 +3735,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 418612, guid: 316218738f588ee429a7d49034f8e355, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 10
 =======
       value: 8
 >>>>>>> Stashed changes
+=======
+      value: 9
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 418612, guid: 316218738f588ee429a7d49034f8e355, type: 3}
       propertyPath: m_LocalScale.x
@@ -3844,8 +3838,8 @@ MonoBehaviour:
   sunOrbitPivot: {fileID: 0}
   useMoonPivot: 0
   moonOrbitPivot: {fileID: 0}
-  startTime: 8
-  timeIncrement: 0.6
+  startTime: 12
+  timeIncrement: 0.2
   autoTimeIncrement: 0
   shouldUpdateEnvironmentReflection: 0
   environmentReflectionResolution: 0
@@ -4045,7 +4039,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.99511117, b: 0.8632076, a: 1}
-  m_Intensity: 0.34941077
+  m_Intensity: 0.6
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4102,7 +4096,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872816394}
-  m_LocalRotation: {x: 0.358368, y: -0, z: -0, w: 0.9335804}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 2657.0122, y: -206.90686, z: 227.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4433,11 +4427,15 @@ Transform:
   m_Children:
   - {fileID: 254833820}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 21
 =======
   m_RootOrder: 19
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 20
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: -263.097, z: 0}
 --- !u!114 &915188278
 MonoBehaviour:
@@ -4486,11 +4484,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 428062, guid: dccb956ff6085db478acf395280cbe44, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 15
 =======
       value: 13
 >>>>>>> Stashed changes
+=======
+      value: 14
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 428062, guid: dccb956ff6085db478acf395280cbe44, type: 3}
       propertyPath: m_LocalScale.x
@@ -4681,11 +4683,15 @@ Transform:
   - {fileID: 2046185614}
   - {fileID: 1234877529}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 24
 =======
   m_RootOrder: 22
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 23
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &942407373
 PrefabInstance:
@@ -4768,11 +4774,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010939487762, guid: d8eedb2a26b6e6d4bb4de0e576601c25, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 4
 =======
       value: 2
 >>>>>>> Stashed changes
+=======
+      value: 3
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000010939487762, guid: d8eedb2a26b6e6d4bb4de0e576601c25, type: 3}
       propertyPath: m_LocalScale.x
@@ -5012,11 +5022,15 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 19
 =======
   m_RootOrder: 17
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 18
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1014201937
 PrefabInstance:
@@ -5151,11 +5165,15 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 23
 =======
   m_RootOrder: 21
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 22
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1029810278
 PrefabInstance:
@@ -5372,11 +5390,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 435046, guid: d0ac3363f70f627489c385f181564315, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 16
 =======
       value: 14
 >>>>>>> Stashed changes
+=======
+      value: 15
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 435046, guid: d0ac3363f70f627489c385f181564315, type: 3}
       propertyPath: m_LocalScale.x
@@ -5598,11 +5620,15 @@ RectTransform:
   m_Children:
   - {fileID: 762456388}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 22
 =======
   m_RootOrder: 20
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 21
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5824,11 +5850,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011961413320, guid: 976334b832997084984a450972d36956, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 17
 =======
       value: 15
 >>>>>>> Stashed changes
+=======
+      value: 16
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000011961413320, guid: 976334b832997084984a450972d36956, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5956,11 +5986,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 407908, guid: 1b55a93948eaea247b5f43e4d2d5c9a4, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 14
 =======
       value: 12
 >>>>>>> Stashed changes
+=======
+      value: 13
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 407908, guid: 1b55a93948eaea247b5f43e4d2d5c9a4, type: 3}
       propertyPath: m_LocalScale.x
@@ -6683,11 +6717,15 @@ Transform:
   - {fileID: 1706259324}
   - {fileID: 2132377480}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 26
 =======
   m_RootOrder: 24
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 25
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1388119565
 PrefabInstance:
@@ -6913,11 +6951,15 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 20
 =======
   m_RootOrder: 18
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 19
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1505996391
 PrefabInstance:
@@ -6933,11 +6975,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 474432, guid: 9e0a93bae4b6dee4d9115ea12c70ed3b, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 11
 =======
       value: 9
 >>>>>>> Stashed changes
+=======
+      value: 10
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 474432, guid: 9e0a93bae4b6dee4d9115ea12c70ed3b, type: 3}
       propertyPath: m_LocalScale.x
@@ -6996,71 +7042,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e0a93bae4b6dee4d9115ea12c70ed3b, type: 3}
---- !u!1 &1512923019
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1512923021}
-  - component: {fileID: 1512923020}
-  m_Layer: 0
-  m_Name: Reflection Probe
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!215 &1512923020
-ReflectionProbe:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512923019}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Type: 0
-  m_Mode: 1
-  m_RefreshMode: 2
-  m_TimeSlicingMode: 0
-  m_Resolution: 128
-  m_UpdateFrequency: 0
-  m_BoxSize: {x: 1000, y: 200, z: 1000}
-  m_BoxOffset: {x: 0, y: 0, z: 0}
-  m_NearClip: 0.3
-  m_FarClip: 1000
-  m_ShadowDistance: 100
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IntensityMultiplier: 1
-  m_BlendDistance: 1
-  m_HDR: 1
-  m_BoxProjection: 0
-  m_RenderDynamicObjects: 0
-  m_UseOcclusionCulling: 1
-  m_Importance: 1
-  m_CustomBakedTexture: {fileID: 0}
---- !u!4 &1512923021
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1512923019}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 500, y: 207, z: 500}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1528273767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7210,7 +7191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012082070442, guid: 3a0f904d7dd2a964d82ea2345e558f55, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000012082070442, guid: 3a0f904d7dd2a964d82ea2345e558f55, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7377,11 +7358,15 @@ Transform:
   - {fileID: 569056626}
   - {fileID: 1296683784}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 25
 =======
   m_RootOrder: 23
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 24
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1614063188
 PrefabInstance:
@@ -7878,11 +7863,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010939487762, guid: d8eedb2a26b6e6d4bb4de0e576601c25, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 6
 =======
       value: 4
 >>>>>>> Stashed changes
+=======
+      value: 5
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000010939487762, guid: d8eedb2a26b6e6d4bb4de0e576601c25, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8162,11 +8151,15 @@ Transform:
   - {fileID: 872816396}
   - {fileID: 362096507}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   m_RootOrder: 18
 =======
   m_RootOrder: 16
 >>>>>>> Stashed changes
+=======
+  m_RootOrder: 17
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1976336886
 PrefabInstance:
@@ -8249,11 +8242,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010026431520, guid: 3c811eacb4c5d484881ab9a4b62f15fe, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 12
 =======
       value: 10
 >>>>>>> Stashed changes
+=======
+      value: 11
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000010026431520, guid: 3c811eacb4c5d484881ab9a4b62f15fe, type: 3}
       propertyPath: m_LocalScale.x
@@ -8673,11 +8670,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010026431520, guid: 3c811eacb4c5d484881ab9a4b62f15fe, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       value: 5
 =======
       value: 3
 >>>>>>> Stashed changes
+=======
+      value: 4
+>>>>>>> parent of 7adae328 (lighting done, test, mrdka)
       objectReference: {fileID: 0}
     - target: {fileID: 4000010026431520, guid: 3c811eacb4c5d484881ab9a4b62f15fe, type: 3}
       propertyPath: m_LocalPosition.x
