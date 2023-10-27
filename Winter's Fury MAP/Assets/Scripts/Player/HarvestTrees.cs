@@ -8,8 +8,14 @@ namespace Player
     {
         public float maxHitDistance;
         private List<TreeInstance> TreeInstances;
+        private TerrainCollider terrainCollider;
 
         // Use this for initialization
+        private void Awake()
+        {
+            terrainCollider = Terrain.activeTerrain.GetComponent<TerrainCollider>();
+        }
+
         private void Start()
         {
             TreeInstances = new List<TreeInstance>(Terrain.activeTerrain.terrainData.treeInstances);
@@ -69,13 +75,13 @@ namespace Player
                     TreeInstances.RemoveAt(closestTreeIndex);
                     terrain.treeInstances = TreeInstances.ToArray();
 
-                    // Now refresh the terrain, getting rid of the darn collider
-                    float[,] heights = terrain.GetHeights(0, 0, 0, 0);
-                    terrain.SetHeights(0, 0, heights);
+                    // Refresh of the tree colliders
+                    terrainCollider.enabled = false;
+                    Debug.Log("");
+                    terrainCollider.enabled = true;
 
                     // Put a falling tree in its place
                     Instantiate(currentTreePrototype.prefab, closestTreePosition, Quaternion.identity);
-                    //Debug.Log(DateTime.Now - start);
                 }
             }
         }
