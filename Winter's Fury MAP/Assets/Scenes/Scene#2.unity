@@ -14,8 +14,8 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.8977142, g: 0.8761892, b: 0.78757066, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0.88245964, g: 0.7169404, b: 0.65045214, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.015
   m_LinearFogStart: 30
@@ -937,8 +937,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 216145162}
-  - component: {fileID: 216145163}
   - component: {fileID: 216145164}
+  - component: {fileID: 216145165}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -961,20 +961,6 @@ Transform:
   m_Father: {fileID: 233449081}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &216145163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216145161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd54fea63c3b49141bca2694486da228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionProbe: {fileID: 1512923020}
-  giUpdateTime: 10
 --- !u!114 &216145164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,6 +975,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cycle: {fileID: 788761099}
   autoCycle: 1
+--- !u!114 &216145165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216145161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd54fea63c3b49141bca2694486da228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reflectionProbe: {fileID: 1512923020}
+  giUpdateTime: 10
 --- !u!1 &233449080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,6 +1034,7 @@ GameObject:
   - component: {fileID: 254833819}
   - component: {fileID: 254833818}
   - component: {fileID: 254833821}
+  - component: {fileID: 254833824}
   - component: {fileID: 254833822}
   - component: {fileID: 254833823}
   m_Layer: 0
@@ -1083,7 +1084,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
+  far clip plane: 1300
   field of view: 70
   orthographic: 0
   orthographic size: 5
@@ -1190,6 +1191,18 @@ MonoBehaviour:
   volume: {fileID: 996497550}
   focusSpeed: 8
   maxFocusDistance: 50
+--- !u!114 &254833824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254833817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19eac755f9ebc014faaf1059e1567263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &258512951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1481,7 +1494,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
-  m_Intensity: 0.013106995
+  m_Intensity: 0.014985506
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1538,7 +1551,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362096504}
-  m_LocalRotation: {x: -0, y: 0.9659258, z: 0.2588191, w: 0}
+  m_LocalRotation: {x: -0.14349277, y: -0, z: -0, w: 0.9896514}
   m_LocalPosition: {x: 2657.0122, y: -206.90686, z: 227.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4007,7 +4020,7 @@ MonoBehaviour:
   sunOrbitPivot: {fileID: 0}
   useMoonPivot: 0
   moonOrbitPivot: {fileID: 0}
-  startTime: 8
+  startTime: 16.9
   timeIncrement: 0.005
   autoTimeIncrement: 0
   shouldUpdateEnvironmentReflection: 0
@@ -4208,7 +4221,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.99511117, b: 0.8632076, a: 1}
-  m_Intensity: 0.24972643
+  m_Intensity: 0.1452305
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4265,7 +4278,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872816394}
-  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
+  m_LocalRotation: {x: -0, y: 0.9896514, z: -0.14349277, w: 0}
   m_LocalPosition: {x: 2657.0122, y: -206.90686, z: 227.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4534,7 +4547,7 @@ MonoBehaviour:
   currentActivity: 0
   currentAwakeness: 0
   walkSpeed: 5
-  runningSpeed: 50
+  runningSpeed: 12
   crouchSpeed: 3
   maxStamina: 100
   decreaseRate: 3
@@ -4591,7 +4604,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915188272}
   m_LocalRotation: {x: -0, y: -0.74839425, z: -0, w: -0.6632542}
-  m_LocalPosition: {x: 774.8, y: 183.4, z: 845.2}
+  m_LocalPosition: {x: 773.74, y: 183.4, z: 845.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
