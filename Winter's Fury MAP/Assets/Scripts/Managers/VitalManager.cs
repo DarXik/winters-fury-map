@@ -14,6 +14,10 @@ namespace Managers
 
         [Header("Health")] 
         public float maxHealth;
+        public float warmthDrainRate;
+        public float fatigueDrainRate;
+        public float thirstDrainRate;
+        public float hungerDrainRate;
         private float currentHealth;
 
         [Header("Temperature")] 
@@ -45,7 +49,7 @@ namespace Managers
         private int thirstChevronsToReveal;
     
         // Fill Amounts
-        private float HealthPercent => currentHealth / maxHealth;
+        public float HealthPercent => currentHealth / maxHealth;
         public float FatiguePercent => currentFatigue / maxFatigueBar;
         public float HungerPercent => currentCalories / maxCalories;
         public float ThirstPercent => currentThirst / maxThirst;
@@ -80,8 +84,32 @@ namespace Managers
             ReduceThirst();
             ReduceTemperature();
             ReduceFatigue();
+            ReduceHealth();
 
             currentActivity = PlayerController.Instance.currentActivity;
+        }
+
+        private void ReduceHealth()
+        {
+            if (TemperaturePercent <= 0)
+            {
+                currentHealth -= warmthDrainRate * (Time.deltaTime * timeIncrement);
+            }
+            
+            if (FatiguePercent <= 0)
+            {
+                currentHealth -= fatigueDrainRate * (Time.deltaTime * timeIncrement);
+            }
+
+            if (ThirstPercent <= 0)
+            {
+                currentHealth -= thirstDrainRate * (Time.deltaTime * timeIncrement);
+            }
+
+            if (HungerPercent <= 0)
+            {
+                currentHealth -= hungerDrainRate * (Time.deltaTime * timeIncrement);
+            }
         }
 
         private void ReduceFatigue()
@@ -102,7 +130,7 @@ namespace Managers
 
             for (int i = 0; i < fatigueChevrons.transform.childCount; i++)
             {
-                //fatigueChevrons.transform.GetChild(i).gameObject.SetActive(i < fatigueChevronsToReveal);
+                fatigueChevrons.transform.GetChild(i).gameObject.SetActive(i < fatigueChevronsToReveal);
             }
         }
 
@@ -128,7 +156,7 @@ namespace Managers
 
             for (int i = 0; i < hungerChevrons.transform.childCount; i++)
             {
-                //hungerChevrons.transform.GetChild(i).gameObject.SetActive(i < hungerChevronsToReveal);
+                hungerChevrons.transform.GetChild(i).gameObject.SetActive(i < hungerChevronsToReveal);
             }
         }
 
@@ -150,7 +178,7 @@ namespace Managers
 
             for (int i = 0; i < thirstChevrons.transform.childCount; i++)
             {
-                //thirstChevrons.transform.GetChild(i).gameObject.SetActive(i < thirstChevronsToReveal);
+                thirstChevrons.transform.GetChild(i).gameObject.SetActive(i < thirstChevronsToReveal);
             }
         }
 
@@ -179,7 +207,7 @@ namespace Managers
 
             for (int i = 0; i < tempChevrons.transform.childCount; i++)
             {
-                //tempChevrons.transform.GetChild(i).gameObject.SetActive(i < tempChevronsToReveal);
+                tempChevrons.transform.GetChild(i).gameObject.SetActive(i < tempChevronsToReveal);
             }
         }
     }

@@ -12,4 +12,6 @@ public class ItemData : ScriptableObject
     [Range(0, 100)] public float itemCondition;
     public float conditionPerDay;
     public Sprite itemIcon;
+    public float waterIntake;
+    public float caloriesIntake;
 }

@@ -8,8 +8,9 @@ using UnityEngine.UI;
 public class VitalUI : MonoBehaviour
 {
     public Gradient lowValueGradient;
-    
+
     [Header("Meters")] 
+    public Slider healthMeter;
     public Image warmthMeter;
     public Image fatigueMeter;
     public Image thirstMeter;
@@ -21,6 +22,7 @@ public class VitalUI : MonoBehaviour
     public Image thirstIcon;
     public Image hungerIcon;
 
+    private float healthPercent;
     private float temperaturePercent;
     private float fatiguePercent;
     private float thirstPercent;
@@ -34,6 +36,8 @@ public class VitalUI : MonoBehaviour
 
     private void UpdateNeedsUI()
     {
+        healthMeter.value = healthPercent;
+        
         warmthMeter.fillAmount = temperaturePercent;
         warmthMeter.color = lowValueGradient.Evaluate(temperaturePercent);
         warmthIcon.color = lowValueGradient.Evaluate(temperaturePercent);
@@ -54,6 +58,7 @@ public class VitalUI : MonoBehaviour
 
     private void GetPercents()
     {
+        healthPercent = VitalManager.Instance.HealthPercent;
         temperaturePercent = VitalManager.Instance.TemperaturePercent;
         fatiguePercent = VitalManager.Instance.FatiguePercent;
         thirstPercent = VitalManager.Instance.ThirstPercent;

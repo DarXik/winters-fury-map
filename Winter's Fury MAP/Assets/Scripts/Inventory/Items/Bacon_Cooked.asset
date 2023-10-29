@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
-  m_Name: Bacon_Uncooked
+  m_Name: Bacon_Cooked
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 7289933726378285110, guid: 523448f8c43fe2248b964211131ef9cd, type: 3}
-  itemName: Raw Bacon
-  itemDescription: Delicious but risky; cook it to avoid potential food poisoning.
+  itemObj: {fileID: 8574366006020177933, guid: 48901b36a520f6f4bac191238b91288c, type: 3}
+  itemName: Cooked Bacon
+  itemDescription: Delicious and not so risky; contains plenty of calories
   itemWeight: 0.014
   itemCondition: 100
-  conditionPerDay: 50
+  conditionPerDay: 25
   itemIcon: {fileID: 0}
   waterIntake: 0
-  caloriesIntake: 20
+  caloriesIntake: 40
