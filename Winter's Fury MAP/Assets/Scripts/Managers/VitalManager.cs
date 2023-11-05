@@ -114,7 +114,14 @@ namespace Managers
 
         private void ReduceFatigue()
         {
-            if (currentFatigue <= 0) return;
+            if (currentFatigue <= 0)
+            {
+                if (fatigueChevrons.activeInHierarchy) fatigueChevrons.SetActive(false);
+
+                return;
+            }
+            
+            if (!fatigueChevrons.activeInHierarchy) fatigueChevrons.SetActive(true);
 
             switch (currentActivity)
             {
@@ -136,7 +143,14 @@ namespace Managers
 
         private void ReduceHunger()
         {
-            if (currentCalories <= 0) return;
+            if (currentCalories <= 0)
+            {
+                if (hungerChevrons.activeInHierarchy) hungerChevrons.SetActive(false);
+
+                return;
+            }
+            
+            if (!hungerChevrons.activeInHierarchy) hungerChevrons.SetActive(true);
 
             switch (currentActivity)
             {
@@ -162,7 +176,14 @@ namespace Managers
 
         private void ReduceThirst()
         {
-            if (currentThirst <= 0) return;
+            if (currentThirst <= 0)
+            {
+                if(thirstChevrons.activeInHierarchy) thirstChevrons.SetActive(false);
+
+                return;
+            }
+            
+            if(!thirstChevrons.activeInHierarchy) thirstChevrons.SetActive(true);
 
             switch (currentAwakeness)
             {
@@ -184,7 +205,14 @@ namespace Managers
 
         private void ReduceTemperature()
         {
-            if (currentTemp <= 0) return;
+            if (currentTemp <= 0)
+            {
+                if(tempChevrons.activeInHierarchy) tempChevrons.SetActive(false);
+
+                return;
+            }
+            
+            if(!tempChevrons.activeInHierarchy) tempChevrons.SetActive(true);
             
             if (feelsLikeTemp <= chevronThresholds[0] && feelsLikeTemp >= chevronThresholds[1])
             {

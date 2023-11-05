@@ -11,6 +11,7 @@ public class VitalUI : MonoBehaviour
 
     [Header("Meters")] 
     public Slider healthMeter;
+    public Image healthBarFill;
     public Image warmthMeter;
     public Image fatigueMeter;
     public Image thirstMeter;
@@ -37,6 +38,7 @@ public class VitalUI : MonoBehaviour
     private void UpdateNeedsUI()
     {
         healthMeter.value = healthPercent;
+        healthBarFill.color = lowValueGradient.Evaluate(healthPercent);
         
         warmthMeter.fillAmount = temperaturePercent;
         warmthMeter.color = lowValueGradient.Evaluate(temperaturePercent);

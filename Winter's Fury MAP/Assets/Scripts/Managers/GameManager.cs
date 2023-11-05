@@ -1,5 +1,4 @@
-﻿using System;
-using Pinwheel.Jupiter;
+﻿using Pinwheel.Jupiter;
 using UnityEngine;
 
 namespace Managers
@@ -8,7 +7,8 @@ namespace Managers
     {
         public JDayNightCycle cycle;
 
-        public bool autoCycle = true;
+        public bool autoCycle;
+        public bool fog;
         
         public static GameManager Instance;
 
@@ -20,6 +20,7 @@ namespace Managers
         private void Start()
         {
             cycle.AutoTimeIncrement = autoCycle;
+            RenderSettings.fog = fog;
         }
     }
 }

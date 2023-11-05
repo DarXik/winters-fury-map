@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
@@ -22,7 +23,10 @@ public class ItemPickup : MonoBehaviour
 
     private void PickupItem()
     {
-        Debug.Log(hit.transform.GetComponent<ItemController>().itemData.itemName);
+        // Create a copy of the itemData
+        ItemData itemDataCopy = Instantiate(hit.transform.GetComponent<ItemController>().itemData);
+        
+        InventoryManager.Instance.AddItem(itemDataCopy);
         
         Destroy(hit.transform.gameObject);
     }
