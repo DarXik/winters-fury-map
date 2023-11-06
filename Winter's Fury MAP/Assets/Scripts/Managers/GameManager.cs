@@ -22,5 +22,18 @@ namespace Managers
             cycle.AutoTimeIncrement = autoCycle;
             RenderSettings.fog = fog;
         }
+
+        private void Update()
+        {
+            CheckUserInput();
+        }
+
+        private void CheckUserInput()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                InventoryManager.Instance.ToggleInventory();
+            }
+        }
     }
 }

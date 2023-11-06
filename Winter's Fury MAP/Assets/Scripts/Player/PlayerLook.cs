@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Player
@@ -7,14 +8,35 @@ namespace Player
         public float sensitivity;
         public Transform playerBody;
 
+        private bool rotationBlocked = false;
         private float _xAxisClamp;
+
+        public static PlayerLook Instance { get; private set; }
+        
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            UnblockRotation();
 
             _xAxisClamp = 0;
+        }
+
+        public void BlockRotation()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            rotationBlocked = true;
+        }
+
+        public void UnblockRotation()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            rotationBlocked = false;
         }
 
         private void LateUpdate()
@@ -24,6 +46,8 @@ namespace Player
 
         private void RotateCamera()
         {
+            if (rotationBlocked) return;
+            
             float mouseX = Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime;
             float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime;
 

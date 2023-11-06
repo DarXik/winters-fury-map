@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
-  m_Name: Bacon_Uncooked
+  m_Name: Peanut_Butter
   m_EditorClassIdentifier: 
-  itemName: Raw Bacon
-  itemDescription: Delicious but risky; cook it to avoid potential food poisoning.
-  itemWeight: 0.014
+  itemName: Peanut Butter
+  itemDescription: Jar of peanut butter. Very good source of energy.
+  itemWeight: 0.5
   itemCondition: 100
-  conditionPerDay: 50
+  conditionPerDay: 0
   itemIcon: {fileID: 0}
-  waterIntake: 0
-  caloriesIntake: 150
+  waterIntake: -100
+  caloriesIntake: 900

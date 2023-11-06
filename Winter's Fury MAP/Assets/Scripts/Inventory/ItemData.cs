@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptables/Item", order = 1)]
 public class ItemData : ScriptableObject
 {
-    public GameObject itemObj;
     public string itemName;
     [TextArea]
     public string itemDescription;
