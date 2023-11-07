@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using Player;
 using TMPro;
 using UnityEngine;
@@ -15,6 +17,15 @@ namespace Managers
         [SerializeField] private GameObject inventory;
         [SerializeField] private GameObject inventoryUIItem;
         [SerializeField] private Transform itemContent;
+        [SerializeField] private GameObject itemDetail;
+
+        [Header("Item Detail References")] 
+        [SerializeField] private TextMeshProUGUI itemName;
+        [SerializeField] private TextMeshProUGUI itemDescription;
+        [SerializeField] private Image itemIcon;
+        [SerializeField] private TextMeshProUGUI itemCount;
+        [SerializeField] private TextMeshProUGUI itemCondition;
+        [SerializeField] private TextMeshProUGUI itemWeight;
 
         private Dictionary<string, int> itemCounts;
         private float timeIncrement;
@@ -31,6 +42,7 @@ namespace Managers
             timeIncrement = GameManager.Instance.cycle.TimeIncrement;
             
             inventory.SetActive(false);
+            itemDetail.SetActive(false);
         }
 
         private void Update()
@@ -46,6 +58,7 @@ namespace Managers
                 
                 PlayerLook.Instance.UnblockRotation();
                 inventory.SetActive(false);
+                itemDetail.SetActive(false);
             }
             else
             {
@@ -95,6 +108,7 @@ namespace Managers
 
                 itemCount.text = "x " + item.Value;
                 itemIcon.sprite = itemIcons[num];
+                itemIcon.preserveAspect = true;
 
                 num++;
             }
@@ -102,7 +116,34 @@ namespace Managers
 
         private void ShowItemDetail(string itemName)
         {
-            
+            itemDetail.SetActive(true);
+
+            // Loop through every item and find a match according to the parameter
+            foreach (var item in items)
+            {
+                if (item.itemName == itemName)
+                {
+                    var itemCountValue = 0;
+
+                    this.itemName.text = item.itemName;
+                    itemDescription.text = item.itemDescription;
+                    itemIcon.sprite = item.itemIcon;
+                    itemIcon.preserveAspect = true;
+                    itemCondition.text = Mathf.Round(item.itemCondition) + "%";
+
+                    // Loop through every item count to find how many items we have
+                    foreach (var count in itemCounts)
+                    {
+                        if (count.Key == itemName)
+                        {
+                            itemCountValue = count.Value;
+                        }
+                    }
+
+                    itemCount.text = "x " + itemCountValue;
+                    itemWeight.text = (itemCountValue * item.itemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
+                }
+            }
         }
 
         private void DeleteInventoryContents()
@@ -118,8 +159,8 @@ namespace Managers
             foreach (var item in items)
             {
                 if(item.itemCondition <= 0f) continue;
-                
-                item.itemCondition -= Mathf.Round(item.conditionPerDay / 24f * (Time.deltaTime * timeIncrement));
+
+                item.itemCondition -= (item.conditionPerDay / 24f) * (Time.deltaTime * timeIncrement);
             }
         }
     }

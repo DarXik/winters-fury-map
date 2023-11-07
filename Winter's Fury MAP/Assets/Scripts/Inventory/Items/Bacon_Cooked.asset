@@ -17,6 +17,6 @@ MonoBehaviour:
   itemWeight: 0.014
   itemCondition: 100
   conditionPerDay: 25
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 722a3ee05e738444daa0d0718686b061, type: 3}
   waterIntake: 0
   caloriesIntake: 125
