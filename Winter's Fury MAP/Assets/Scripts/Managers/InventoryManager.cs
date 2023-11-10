@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Player;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -26,9 +27,19 @@ namespace Managers
         [SerializeField] private TextMeshProUGUI itemCount;
         [SerializeField] private TextMeshProUGUI itemCondition;
         [SerializeField] private TextMeshProUGUI itemWeight;
+        [SerializeField] private Button dropItemButton;
+
+        [Header("Drop Window References")] 
+        [SerializeField] private GameObject dropItemWindow;
+        [SerializeField] private TextMeshProUGUI alertHeader;
+        [SerializeField] private Slider dropItemSlider;
+        [SerializeField] private TextMeshProUGUI dropCounterText;
+        [SerializeField] private Button dropSelectedButton;
+        [SerializeField] private Button dropAllButton;
 
         private Dictionary<string, int> itemCounts;
         private float timeIncrement;
+        private Ray ray;
         
         public static InventoryManager Instance { get; private set; }
 
@@ -43,6 +54,7 @@ namespace Managers
             
             inventory.SetActive(false);
             itemDetail.SetActive(false);
+            dropItemWindow.SetActive(false);
         }
 
         private void Update()
@@ -142,8 +154,58 @@ namespace Managers
 
                     itemCount.text = "x " + itemCountValue;
                     itemWeight.text = (itemCountValue * item.itemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
+                    
+                    dropItemButton.onClick.AddListener(() => DropItem(itemName));
                 }
             }
+        }
+
+        private void DropItem(string itemName)
+        {
+            dropItemWindow.SetActive(true);
+
+            alertHeader.text = $"Discard item: {itemName}";
+            
+            // Loop through the items in dictionary and discover their count
+            foreach (var item in itemCounts)
+            {
+                if (item.Key == itemName)
+                {
+                    dropItemSlider.minValue = 1;
+                    dropItemSlider.maxValue = item.Value;
+                    dropItemSlider.onValueChanged.AddListener(delegate {UpdateDropCounterText(dropItemSlider.value);});
+                    
+                    dropAllButton.onClick.AddListener(() => DropAll(itemName));
+                }
+            }
+        }
+
+        private void DropAll(string itemName)
+        {
+            var playerPos = PlayerController.Instance.GetPlayerPosition();
+            
+            for (var i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                if (item.itemName == itemName)
+                {
+                    if (Physics.Raycast(playerPos, Vector3.down, out var hit, 10f))
+                    {
+                        Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+                    }
+                    
+                    items.RemoveAt(i);
+                }
+            }
+            
+            dropItemWindow.SetActive(false);
+            itemDetail.SetActive(false);
+            ListItems();
+        }
+
+        private void UpdateDropCounterText(float sliderValue)
+        {
+            dropCounterText.text = $"{sliderValue}x";
         }
 
         private void DeleteInventoryContents()

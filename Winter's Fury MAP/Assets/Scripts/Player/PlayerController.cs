@@ -1,7 +1,6 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public enum PlayerActivity
 {
@@ -51,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Utilities")] public Headbob headBob = new();
 
-    public static PlayerController Instance;
+    public static PlayerController Instance { get; private set; }
 
     private void Awake()
     {
@@ -206,5 +205,10 @@ public class PlayerController : MonoBehaviour
     private void HandleUI()
     {
         
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return transform.position;
     }
 }

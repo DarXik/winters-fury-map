@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
   m_Name: Peanut_Butter
   m_EditorClassIdentifier: 
+  itemObj: {fileID: 8248983133078230432, guid: 67ff39e0a4032fd4cae6290c1e524bfb, type: 3}
   itemName: Peanut Butter
   itemDescription: Jar of peanut butter. Very good source of energy.
   itemWeight: 0.5

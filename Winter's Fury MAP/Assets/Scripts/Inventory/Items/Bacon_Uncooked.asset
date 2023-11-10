@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
   m_Name: Bacon_Uncooked
   m_EditorClassIdentifier: 
+  itemObj: {fileID: 7289933726378285110, guid: 523448f8c43fe2248b964211131ef9cd, type: 3}
   itemName: Raw Bacon
   itemDescription: Delicious but risky; cook it to avoid potential food poisoning.
   itemWeight: 0.014
