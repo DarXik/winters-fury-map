@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Player;
 using TMPro;
 using Unity.Mathematics;
@@ -39,7 +40,7 @@ namespace Managers
 
         private Dictionary<string, int> itemCounts;
         private float timeIncrement;
-        private Ray ray;
+        private bool inventoryOpened = false;
         
         public static InventoryManager Instance { get; private set; }
 
@@ -64,9 +65,10 @@ namespace Managers
 
         public void ToggleInventory()
         {
-            if (inventory.activeInHierarchy)
+            if (inventoryOpened)
             {
-                // Inventory closed
+                // Close inventory
+                inventoryOpened = false;
                 
                 PlayerLook.Instance.UnblockRotation();
                 inventory.SetActive(false);
@@ -74,7 +76,8 @@ namespace Managers
             }
             else
             {
-                // Inventory opened
+                // Open inventory
+                inventoryOpened = true;
                 
                 PlayerLook.Instance.BlockRotation();
                 inventory.SetActive(true);
@@ -155,52 +158,68 @@ namespace Managers
                     itemCount.text = "x " + itemCountValue;
                     itemWeight.text = (itemCountValue * item.itemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
                     
-                    dropItemButton.onClick.AddListener(() => DropItem(itemName));
+                    dropItemButton.onClick.AddListener(() => OpenDropWindow(itemName));
+
+                    break;
                 }
             }
         }
 
-        private void DropItem(string itemName)
+        private void OpenDropWindow(string itemName)
         {
             dropItemWindow.SetActive(true);
+            dropItemButton.onClick.RemoveAllListeners();
 
             alertHeader.text = $"Discard item: {itemName}";
+
+            Debug.Log("Opening drop window for: " + itemName);
             
-            // Loop through the items in dictionary and discover their count
+            
+            // Loop through the items in dictionary
             foreach (var item in itemCounts)
             {
                 if (item.Key == itemName)
                 {
+                    Debug.Log($"Found: {item.Key}");
+                    
                     dropItemSlider.minValue = 1;
                     dropItemSlider.maxValue = item.Value;
                     dropItemSlider.onValueChanged.AddListener(delegate {UpdateDropCounterText(dropItemSlider.value);});
                     
                     dropAllButton.onClick.AddListener(() => DropAll(itemName));
+
+                    break;
                 }
             }
         }
 
         private void DropAll(string itemName)
         {
-            var playerPos = PlayerController.Instance.GetPlayerPosition();
+            Debug.Log("Dropping all items of: " + itemName);
             
-            for (var i = 0; i < items.Count; i++)
+            dropAllButton.onClick.RemoveAllListeners();
+            
+            var playerPos = PlayerController.Instance.GetPlayerPosition();
+            float offset = 0f;
+            
+            for (var i = items.Count - 1; i >= 0; i--)
             {
                 var item = items[i];
                 if (item.itemName == itemName)
                 {
-                    if (Physics.Raycast(playerPos, Vector3.down, out var hit, 10f))
+                    if (Physics.Raycast(playerPos + new Vector3(0, 0, offset), Vector3.down, out var hit, 10f))
                     {
-                        Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+                       var droppedItem = Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+
+                       offset += droppedItem.transform.localScale.x;
                     }
-                    
+
                     items.RemoveAt(i);
                 }
             }
             
             dropItemWindow.SetActive(false);
-            itemDetail.SetActive(false);
-            ListItems();
+            ToggleInventory();
         }
 
         private void UpdateDropCounterText(float sliderValue)
