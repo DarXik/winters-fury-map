@@ -15,6 +15,7 @@ MonoBehaviour:
   itemObj: {fileID: 8248983133078230432, guid: 67ff39e0a4032fd4cae6290c1e524bfb, type: 3}
   itemName: Peanut Butter
   itemDescription: Jar of peanut butter. Very good source of energy.
+  itemType: 0
   itemWeight: 0.5
   itemCondition: 100
   conditionPerDay: 0

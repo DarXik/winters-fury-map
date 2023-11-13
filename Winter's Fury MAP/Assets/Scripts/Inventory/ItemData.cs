@@ -1,5 +1,10 @@
 using UnityEngine;
 
+public enum ItemType
+{
+    Food
+}
+
 [System.Serializable]
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptables/Item", order = 1)]
 public class ItemData : ScriptableObject
@@ -8,6 +13,7 @@ public class ItemData : ScriptableObject
     public string itemName;
     [TextArea]
     public string itemDescription;
+    public ItemType itemType;
     public float itemWeight;
     [Range(0, 100)] public float itemCondition;
     public float conditionPerDay;
