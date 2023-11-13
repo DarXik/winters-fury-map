@@ -15,11 +15,17 @@ namespace Managers
     {
         [SerializeField] private List<ItemData> items = new();
 
+        [Header("Core Values")] 
+        public float maxWeight;
+        [HideInInspector] public float currentWeight;
+        
         [Header("UI References")]
         [SerializeField] private GameObject inventory;
         [SerializeField] private GameObject inventoryUIItem;
         [SerializeField] private Transform itemContent;
         [SerializeField] private GameObject itemDetail;
+        [SerializeField] private Slider weightBar;
+        [SerializeField] private TextMeshProUGUI weightValues;
 
         [Header("Item Detail References")] 
         [SerializeField] private TextMeshProUGUI itemName;
@@ -56,6 +62,8 @@ namespace Managers
             inventory.SetActive(false);
             itemDetail.SetActive(false);
             dropItemWindow.SetActive(false);
+
+            weightBar.maxValue = maxWeight;
         }
 
         private void Update()
@@ -89,12 +97,16 @@ namespace Managers
         public void AddItem(ItemData itemData)
         {
             items.Add(itemData);
+
+            currentWeight += itemData.itemWeight;
         }
 
         private void ListItems()
         {
             DeleteInventoryContents();
-
+            
+            itemDetail.SetActive(false);
+            
             itemCounts = new Dictionary<string, int>();
             List<Sprite> itemIcons = new();
 
@@ -111,6 +123,8 @@ namespace Managers
                     itemIcons.Add(item.itemIcon);
                 }
             }
+
+            weightBar.value = currentWeight;
 
             int num = 0;
 
@@ -132,6 +146,11 @@ namespace Managers
         private void ShowItemDetail(string itemName)
         {
             itemDetail.SetActive(true);
+            
+            dropItemSlider.onValueChanged.RemoveAllListeners();
+            dropItemButton.onClick.RemoveAllListeners();
+            dropSelectedButton.onClick.RemoveAllListeners();
+            dropAllButton.onClick.RemoveAllListeners();
 
             // Loop through every item and find a match according to the parameter
             foreach (var item in items)
@@ -168,7 +187,6 @@ namespace Managers
         private void OpenDropWindow(string itemName)
         {
             dropItemWindow.SetActive(true);
-            dropItemButton.onClick.RemoveAllListeners();
 
             alertHeader.text = $"Discard item: {itemName}";
 
@@ -180,12 +198,12 @@ namespace Managers
             {
                 if (item.Key == itemName)
                 {
-                    Debug.Log($"Found: {item.Key}");
-                    
+                    dropItemSlider.value = 1;
                     dropItemSlider.minValue = 1;
                     dropItemSlider.maxValue = item.Value;
                     dropItemSlider.onValueChanged.AddListener(delegate {UpdateDropCounterText(dropItemSlider.value);});
                     
+                    dropSelectedButton.onClick.AddListener(() => {DropSelected(itemName, dropItemSlider.value);});
                     dropAllButton.onClick.AddListener(() => DropAll(itemName));
 
                     break;
@@ -193,11 +211,44 @@ namespace Managers
             }
         }
 
+        // Drop selected according to the slider value
+        private void DropSelected(string itemName, float countToDrop)
+        {
+            Debug.Log("Dropping selected count for: " + itemName);
+            Debug.Log("Count is: " + countToDrop);
+
+            var playerPos = PlayerController.Instance.GetPlayerPosition();
+            float offset = 0f;
+            float totalCount = 0f;
+
+            for (int i = items.Count - 1; i >= 0; i--)
+            {
+                var item = items[i];
+
+                if (item.itemName == itemName && totalCount < countToDrop)
+                {
+                    if (Physics.Raycast(playerPos + new Vector3(0, 0, offset), Vector3.down, out var hit, 10f))
+                    {
+                        var droppedItem = Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+
+                        offset += droppedItem.transform.localScale.x;
+                    }
+
+                    currentWeight -= item.itemWeight;
+
+                    items.RemoveAt(i);
+                    totalCount++;
+                }
+            }
+
+            dropItemWindow.SetActive(false);
+            ListItems();
+        }
+
+        // Drop all items of same name
         private void DropAll(string itemName)
         {
             Debug.Log("Dropping all items of: " + itemName);
-            
-            dropAllButton.onClick.RemoveAllListeners();
             
             var playerPos = PlayerController.Instance.GetPlayerPosition();
             float offset = 0f;
@@ -213,13 +264,15 @@ namespace Managers
 
                        offset += droppedItem.transform.localScale.x;
                     }
+                    
+                    currentWeight -= item.itemWeight;
 
                     items.RemoveAt(i);
                 }
             }
             
             dropItemWindow.SetActive(false);
-            ToggleInventory();
+            ListItems();
         }
 
         private void UpdateDropCounterText(float sliderValue)
@@ -243,6 +296,12 @@ namespace Managers
 
                 item.itemCondition -= (item.conditionPerDay / 24f) * (Time.deltaTime * timeIncrement);
             }
+        }
+
+        public void UpdateWeightValues()
+        {
+            weightValues.text = currentWeight.ToString("0.0", CultureInfo.InvariantCulture) + " / " +
+                                maxWeight.ToString("0.0", CultureInfo.InvariantCulture) + " kg";
         }
     }
 }

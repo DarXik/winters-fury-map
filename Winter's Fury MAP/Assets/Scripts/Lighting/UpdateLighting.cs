@@ -8,7 +8,7 @@ namespace Lighting
         public ReflectionProbe reflectionProbe;
         public float giUpdateTime;
 
-        private void Awake()
+        private void Start()
         {
             StartCoroutine(UpdateEnvironmentLighting());
         }

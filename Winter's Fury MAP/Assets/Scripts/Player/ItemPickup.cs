@@ -25,6 +25,9 @@ public class ItemPickup : MonoBehaviour
     {
         // Create a copy of the itemData
         ItemData itemDataCopy = Instantiate(hit.transform.GetComponent<ItemController>().itemData);
+
+        if (InventoryManager.Instance.currentWeight + itemDataCopy.itemWeight >
+            InventoryManager.Instance.maxWeight) return;
         
         InventoryManager.Instance.AddItem(itemDataCopy);
         
