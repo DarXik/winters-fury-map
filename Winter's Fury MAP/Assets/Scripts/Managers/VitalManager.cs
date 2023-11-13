@@ -141,6 +141,12 @@ namespace Managers
             }
         }
 
+        public void Eat(float caloriesIntake)
+        {
+            currentCalories += caloriesIntake;
+            currentCalories = Mathf.Clamp(currentCalories, 0f, maxCalories);
+        }
+
         private void ReduceHunger()
         {
             if (currentCalories <= 0)
@@ -172,6 +178,12 @@ namespace Managers
             {
                 hungerChevrons.transform.GetChild(i).gameObject.SetActive(i < hungerChevronsToReveal);
             }
+        }
+
+        public void Drink(float waterIntake)
+        {
+            currentThirst += waterIntake;
+            currentThirst = Mathf.Clamp(currentThirst, 0f, maxThirst);
         }
 
         private void ReduceThirst()

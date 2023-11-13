@@ -38,7 +38,8 @@ namespace Managers
         [SerializeField] private TextMeshProUGUI itemCondition;
         [SerializeField] private TextMeshProUGUI itemWeight;
         [SerializeField] private Button dropItemButton;
-        [SerializeField] private GameObject eatActionButton;
+        [SerializeField] private GameObject actionButtonObj;
+        [SerializeField] private Button actionBtn;
 
         [Header("Drop Window References")] [SerializeField]
         private GameObject dropItemWindow;
@@ -68,6 +69,7 @@ namespace Managers
             inventory.SetActive(false);
             itemDetail.SetActive(false);
             dropItemWindow.SetActive(false);
+            actionButtonObj.SetActive(false);
 
             weightBar.maxValue = maxWeight;
         }
@@ -103,15 +105,12 @@ namespace Managers
         public void AddItem(ItemData itemData)
         {
             items.Add(itemData);
-
-            currentWeight += itemData.itemWeight;
-            weightBar.value = currentWeight;
-            weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
         }
 
         private void ListItems()
         {
             DeleteInventoryContents();
+            currentWeight = 0f;
 
             itemDetail.SetActive(false);
 
@@ -130,7 +129,12 @@ namespace Managers
 
                     itemIcons.Add(item.itemIcon);
                 }
+
+                currentWeight += item.itemWeight;
             }
+
+            weightBar.value = currentWeight;
+            weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
 
             int num = 0;
 
@@ -188,7 +192,17 @@ namespace Managers
                     switch (item.itemType)
                     {
                         case ItemType.Food:
-                            eatActionButton.SetActive(true);
+                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Eat";
+                            actionButtonObj.SetActive(true);
+                            actionBtn.onClick.AddListener(() =>
+                            {
+                                VitalManager.Instance.Eat(item.caloriesIntake);
+                            });
+                            actionBtn.onClick.AddListener(() =>
+                            {
+                                VitalManager.Instance.Drink(item.waterIntake);
+                                DeleteItem(item);
+                            });
                             break;
                     }
 
@@ -197,11 +211,22 @@ namespace Managers
             }
         }
 
+        private void DeleteItem(ItemData itemData)
+        {
+            var itemIndex = items.IndexOf(itemData);
+            
+            items.RemoveAt(itemIndex);
+            
+            ListItems();
+            itemDetail.SetActive(false);
+        }
+
         private void OpenDropWindow(string itemName)
         {
             dropItemWindow.SetActive(true);
 
             alertHeader.text = $"Discard item: {itemName}";
+            dropCounterText.text = "1x";
 
             Debug.Log("Opening drop window for: " + itemName);
 
@@ -287,6 +312,9 @@ namespace Managers
                     {
                         var droppedItem = Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
 
+                        // assign itemData from inventory to replace the new one
+                        droppedItem.GetComponent<ItemController>().itemData = item;
+
                         offset += droppedItem.transform.localScale.x / 2f;
                     }
 
@@ -304,7 +332,7 @@ namespace Managers
         {
             dropCounterText.text = $"{sliderValue}x";
         }
-        
+
         private void DeleteInventoryContents()
         {
             foreach (Transform content in itemContent)
