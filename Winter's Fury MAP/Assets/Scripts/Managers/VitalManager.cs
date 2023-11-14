@@ -141,11 +141,20 @@ namespace Managers
             }
         }
 
-        public void Eat(float caloriesIntake)
+        public float Eat(float caloriesIntake)
         {
-            currentCalories += caloriesIntake;
-            currentCalories = Mathf.Clamp(currentCalories, 0f, maxCalories);
+            float totalCalories = currentCalories + caloriesIntake;
+            float excessCalories = 0;
+
+            if (totalCalories >= maxCalories)
+            {
+                excessCalories = totalCalories - maxCalories;
+                currentCalories = maxCalories;
+            }
+
+            return Mathf.Round(excessCalories);
         }
+
 
         private void ReduceHunger()
         {
@@ -180,10 +189,18 @@ namespace Managers
             }
         }
 
-        public void Drink(float waterIntake)
+        public float Drink(float waterIntake)
         {
-            currentThirst += waterIntake;
-            currentThirst = Mathf.Clamp(currentThirst, 0f, maxThirst);
+            float totalWater = currentThirst + waterIntake;
+            float excessWater = 0;
+
+            if (totalWater >= maxThirst)
+            {
+                excessWater = totalWater - maxThirst;
+                currentThirst = maxThirst;
+            }
+
+            return Mathf.Round(excessWater);
         }
 
         private void ReduceThirst()

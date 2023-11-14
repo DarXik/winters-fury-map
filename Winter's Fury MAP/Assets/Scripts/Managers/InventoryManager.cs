@@ -34,10 +34,12 @@ namespace Managers
 
         [SerializeField] private TextMeshProUGUI itemDescription;
         [SerializeField] private Image itemIcon;
-        [SerializeField] private TextMeshProUGUI itemCount;
+        [SerializeField] private GameObject needs;
+        [SerializeField] private GameObject detailNeedItem;
         [SerializeField] private TextMeshProUGUI itemCondition;
         [SerializeField] private TextMeshProUGUI itemWeight;
         [SerializeField] private Button dropItemButton;
+        [SerializeField] private Sprite stomach, water;
         [SerializeField] private GameObject actionButtonObj;
         [SerializeField] private Button actionBtn;
 
@@ -110,6 +112,7 @@ namespace Managers
         private void ListItems()
         {
             DeleteInventoryContents();
+            DeleteNeedContents();
             currentWeight = 0f;
 
             itemDetail.SetActive(false);
@@ -145,7 +148,7 @@ namespace Managers
                 var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
                 obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(item.Key); });
 
-                itemCount.text = "x " + item.Value;
+                itemCount.text = "x" + item.Value;
                 itemIcon.sprite = itemIcons[num];
                 itemIcon.preserveAspect = true;
 
@@ -155,12 +158,15 @@ namespace Managers
 
         private void ShowItemDetail(string itemName)
         {
+            DeleteNeedContents();
+            
             itemDetail.SetActive(true);
 
             dropItemSlider.onValueChanged.RemoveAllListeners();
             dropItemButton.onClick.RemoveAllListeners();
             dropSelectedButton.onClick.RemoveAllListeners();
             dropAllButton.onClick.RemoveAllListeners();
+            actionBtn.onClick.RemoveAllListeners();
 
             // Loop through every item and find a match according to the parameter
             foreach (var item in items)
@@ -184,7 +190,6 @@ namespace Managers
                         }
                     }
 
-                    itemCount.text = "x " + itemCountValue;
                     itemWeight.text = (itemCountValue * item.itemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
 
                     dropItemButton.onClick.AddListener(() => OpenDropWindow(itemName));
@@ -192,17 +197,15 @@ namespace Managers
                     switch (item.itemType)
                     {
                         case ItemType.Food:
+
+                            var needItemFood = Instantiate(detailNeedItem, needs.transform);
+                            needItemFood.transform.Find("Image").GetComponent<Image>().sprite = stomach;
+                            needItemFood.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
+                                item.caloriesIntake.ToString(CultureInfo.InvariantCulture);
+
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Eat";
                             actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() =>
-                            {
-                                VitalManager.Instance.Eat(item.caloriesIntake);
-                            });
-                            actionBtn.onClick.AddListener(() =>
-                            {
-                                VitalManager.Instance.Drink(item.waterIntake);
-                                DeleteItem(item);
-                            });
+                            actionBtn.onClick.AddListener(() => { TryEat(item.caloriesIntake, item); });
                             break;
                     }
 
@@ -211,12 +214,50 @@ namespace Managers
             }
         }
 
+        private void TryDrink(float waterIntake, ItemData itemData)
+        {
+            var returnedWater = VitalManager.Instance.Drink(waterIntake);
+
+            if (returnedWater == 0)
+            {
+                DeleteItem(itemData);
+            }
+            else
+            {
+                var itemIndex = items.IndexOf(itemData);
+
+                items[itemIndex].waterIntake = returnedWater;
+            }
+
+            ListItems();
+            ShowItemDetail(itemData.itemName);
+        }
+
+        private void TryEat(float caloriesIntake, ItemData itemData)
+        {
+            var returnedCalories = VitalManager.Instance.Eat(caloriesIntake);
+
+            if (returnedCalories == 0)
+            {
+                DeleteItem(itemData);
+            }
+            else
+            {
+                var itemIndex = items.IndexOf(itemData);
+
+                items[itemIndex].caloriesIntake = returnedCalories;
+            }
+
+            ListItems();
+            ShowItemDetail(itemData.itemName);
+        }
+
         private void DeleteItem(ItemData itemData)
         {
             var itemIndex = items.IndexOf(itemData);
-            
+
             items.RemoveAt(itemIndex);
-            
+
             ListItems();
             itemDetail.SetActive(false);
         }
@@ -257,6 +298,7 @@ namespace Managers
         public void CloseDropWindow()
         {
             dropItemWindow.SetActive(false);
+            ListItems();
 
             ShowItemDetail(currentDetailedItem);
         }
@@ -280,6 +322,8 @@ namespace Managers
                     if (Physics.Raycast(playerPos + new Vector3(0, 0, offset), Vector3.down, out var hit, 10f))
                     {
                         var droppedItem = Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+
+                        droppedItem.GetComponent<ItemController>().itemData = item;
 
                         offset += droppedItem.transform.localScale.x / 2f;
                     }
@@ -338,6 +382,14 @@ namespace Managers
             foreach (Transform content in itemContent)
             {
                 Destroy(content.gameObject);
+            }
+        }
+
+        private void DeleteNeedContents()
+        {
+            foreach (Transform needItem in needs.transform)
+            {
+                Destroy(needItem.gameObject);
             }
         }
 
