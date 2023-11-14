@@ -52,7 +52,7 @@ namespace Managers
         [SerializeField] private Button dropSelectedButton;
         [SerializeField] private Button dropAllButton;
 
-        private Dictionary<string, int> itemCounts;
+        private Dictionary<string, List<Tuple<int, float>>> itemCounts;
         private float timeIncrement;
         private bool inventoryOpened;
         private string currentDetailedItem;
@@ -69,7 +69,7 @@ namespace Managers
             timeIncrement = GameManager.Instance.cycle.TimeIncrement;
 
             inventory.SetActive(false);
-            itemDetail.SetActive(false);
+            HideItemDetail();
             dropItemWindow.SetActive(false);
             actionButtonObj.SetActive(false);
 
@@ -90,7 +90,7 @@ namespace Managers
 
                 PlayerLook.Instance.UnblockRotation();
                 inventory.SetActive(false);
-                itemDetail.SetActive(false);
+                HideItemDetail();
             }
             else
             {
@@ -115,42 +115,65 @@ namespace Managers
             DeleteNeedContents();
             currentWeight = 0f;
 
-            itemDetail.SetActive(false);
+            HideItemDetail();
 
-            itemCounts = new Dictionary<string, int>();
-            List<Sprite> itemIcons = new();
+            itemCounts = new Dictionary<string, List<Tuple<int, float>>>();
+            List<Sprite> itemIcons = new List<Sprite>();
 
             foreach (var item in items)
             {
                 if (itemCounts.ContainsKey(item.itemName))
                 {
-                    itemCounts[item.itemName]++;
+                    var existingList = itemCounts[item.itemName];
+
+                    // Check if there is an existing tuple with the same condition
+                    var existingTuple = existingList.FirstOrDefault(tuple => tuple.Item2 == Mathf.Round(item.itemCondition));
+
+                    if (existingTuple != null)
+                    {
+                        // Increment the item count for the existing tuple
+                        var index = existingList.IndexOf(existingTuple);
+                        var updatedTuple = Tuple.Create(existingTuple.Item1 + 1, existingTuple.Item2);
+                        existingList[index] = updatedTuple;
+                    }
+                    else
+                    {
+                        // Add a new tuple for a different condition
+                        existingList.Add(new Tuple<int, float>(1, Mathf.Round(item.itemCondition)));
+                    }
                 }
                 else
                 {
-                    itemCounts[item.itemName] = 1;
-
+                    itemCounts[item.itemName] = new List<Tuple<int, float>> { new Tuple<int, float>(1, Mathf.Round(item.itemCondition)) };
                     itemIcons.Add(item.itemIcon);
                 }
 
                 currentWeight += item.itemWeight;
             }
-
+            
             weightBar.value = currentWeight;
             weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
 
             int num = 0;
 
-            foreach (var item in itemCounts)
+            foreach (var kvp in itemCounts)
             {
-                GameObject obj = Instantiate(inventoryUIItem, itemContent);
-                var itemCount = obj.transform.Find("ItemCount").GetComponent<TextMeshProUGUI>();
-                var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
-                obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(item.Key); });
+                string itemName = kvp.Key;
+                List<Tuple<int, float>> itemDataList = kvp.Value;
 
-                itemCount.text = "x" + item.Value;
-                itemIcon.sprite = itemIcons[num];
-                itemIcon.preserveAspect = true;
+                foreach (var itemData in itemDataList)
+                {
+                    GameObject obj = Instantiate(inventoryUIItem, itemContent);
+                    var itemCount = obj.transform.Find("ItemCount").GetComponent<TextMeshProUGUI>();
+                    var itemConditionText = obj.transform.Find("ItemCondition").GetComponent<TextMeshProUGUI>();
+                    var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+                    obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(itemName); });
+
+                    itemCount.text = "x" + itemData.Item1;
+                    itemConditionText.text = itemData.Item2 + "%";
+                    itemIcon.sprite = itemIcons[num];
+                    itemIcon.preserveAspect = true;
+                }
 
                 num++;
             }
@@ -159,7 +182,7 @@ namespace Managers
         private void ShowItemDetail(string itemName)
         {
             DeleteNeedContents();
-            
+
             itemDetail.SetActive(true);
 
             dropItemSlider.onValueChanged.RemoveAllListeners();
@@ -186,7 +209,7 @@ namespace Managers
                     {
                         if (count.Key == itemName)
                         {
-                            itemCountValue = count.Value;
+                            itemCountValue = count.Value.Sum(tuple => tuple.Item1);
                         }
                     }
 
@@ -197,7 +220,6 @@ namespace Managers
                     switch (item.itemType)
                     {
                         case ItemType.Food:
-
                             var needItemFood = Instantiate(detailNeedItem, needs.transform);
                             needItemFood.transform.Find("Image").GetComponent<Image>().sprite = stomach;
                             needItemFood.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
@@ -216,21 +238,15 @@ namespace Managers
 
         private void TryDrink(float waterIntake, ItemData itemData)
         {
-            var returnedWater = VitalManager.Instance.Drink(waterIntake);
-
-            if (returnedWater == 0)
+            switch (waterIntake)
             {
-                DeleteItem(itemData);
+                case 0:
+                    return;
+                case > 0:
+                    break;
+                case < 0:
+                    break;
             }
-            else
-            {
-                var itemIndex = items.IndexOf(itemData);
-
-                items[itemIndex].waterIntake = returnedWater;
-            }
-
-            ListItems();
-            ShowItemDetail(itemData.itemName);
         }
 
         private void TryEat(float caloriesIntake, ItemData itemData)
@@ -240,6 +256,8 @@ namespace Managers
             if (returnedCalories == 0)
             {
                 DeleteItem(itemData);
+                
+                HideItemDetail();
             }
             else
             {
@@ -259,7 +277,7 @@ namespace Managers
             items.RemoveAt(itemIndex);
 
             ListItems();
-            itemDetail.SetActive(false);
+            HideItemDetail();
         }
 
         private void OpenDropWindow(string itemName)
@@ -271,7 +289,6 @@ namespace Managers
 
             Debug.Log("Opening drop window for: " + itemName);
 
-
             // Loop through the items in dictionary
             foreach (var item in itemCounts)
             {
@@ -281,7 +298,7 @@ namespace Managers
 
                     dropItemSlider.value = 1;
                     dropItemSlider.minValue = 1;
-                    dropItemSlider.maxValue = item.Value;
+                    dropItemSlider.maxValue = item.Value.Sum(tuple => tuple.Item1);
                     dropItemSlider.onValueChanged.AddListener(delegate
                     {
                         UpdateDropCounterText(dropItemSlider.value);
@@ -301,6 +318,11 @@ namespace Managers
             ListItems();
 
             ShowItemDetail(currentDetailedItem);
+        }
+
+        private void HideItemDetail()
+        {
+            itemDetail.SetActive(false);
         }
 
         // Drop selected according to the slider value

@@ -20,6 +20,6 @@ MonoBehaviour:
   itemCondition: 100
   conditionPerDay: 0
   itemIcon: {fileID: 21300000, guid: 615e3ecf2dd323d499fabeb5b728eeb2, type: 3}
-  waterIntake: 0
+  waterIntake: -5
   caloriesIntake: 900
   fatigueReduce: 0
