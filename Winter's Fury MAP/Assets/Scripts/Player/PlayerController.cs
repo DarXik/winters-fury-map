@@ -25,9 +25,11 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerActivity currentActivity;
     [HideInInspector] public PlayerAwakeness currentAwakeness;
 
-    [Header("Movement")] public float walkSpeed;
+    [Header("Movement")]
+    public float walkSpeed;
     public float runningSpeed;
     public float crouchSpeed;
+    public float slopeSpeed;
     private float movementSpeed;
     private bool isRunning;
 
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour
         initialCameraPos = cameraTransform.localPosition;
         currentStamina = maxStamina;
 
-        headBob.Setup();
+        //headBob.Setup();
 
         currentAwakeness = PlayerAwakeness.Awake;
     }
@@ -78,19 +80,19 @@ public class PlayerController : MonoBehaviour
         CrouchHandler();
         HandleUI();
 
-        CheckForHeadBob();
-        headBob.ResetHeadBob();
+        /*CheckForHeadBob();
+        headBob.ResetHeadBob();*/
         
         if(isRegenerating) RegenerateStamina();
     }
 
-    private void CheckForHeadBob()
+    /*private void CheckForHeadBob()
     {
         if (isRunning)
         {
             headBob.StartHeadBob();
         }
-    }
+    }*/
 
     private void CrouchHandler()
     {
@@ -113,7 +115,11 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if (verticalInput == 0 && horizontalInput == 0) currentActivity = PlayerActivity.Standing;
+        if (verticalInput == 0 && horizontalInput == 0)
+        {
+            currentActivity = PlayerActivity.Standing;
+            isRunning = false;
+        }
 
         Vector3 forwardMovement = transform.forward * verticalInput;
         Vector3 rightMovement = transform.right * horizontalInput;

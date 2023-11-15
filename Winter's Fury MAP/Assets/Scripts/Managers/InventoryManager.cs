@@ -52,7 +52,7 @@ namespace Managers
         [SerializeField] private Button dropSelectedButton;
         [SerializeField] private Button dropAllButton;
 
-        private Dictionary<string, List<Tuple<int, float>>> itemCounts;
+        private List<Tuple<string, int, float>> itemCounts;
         private float timeIncrement;
         private bool inventoryOpened;
         private string currentDetailedItem;
@@ -115,65 +115,56 @@ namespace Managers
             DeleteNeedContents();
             currentWeight = 0f;
 
-            HideItemDetail();
-
-            itemCounts = new Dictionary<string, List<Tuple<int, float>>>();
-            List<Sprite> itemIcons = new List<Sprite>();
+            itemCounts = new List<Tuple<string, int, float>>();
+            List<Sprite> itemIcons = new();
 
             foreach (var item in items)
             {
-                if (itemCounts.ContainsKey(item.itemName))
+                if (itemCounts.Any(tuple => tuple.Item1 == item.itemName))
                 {
-                    var existingList = itemCounts[item.itemName];
-
-                    // Check if there is an existing tuple with the same condition
-                    var existingTuple = existingList.FirstOrDefault(tuple => tuple.Item2 == Mathf.Round(item.itemCondition));
+                    var existingTuple =
+                        itemCounts.FirstOrDefault(tuple => tuple.Item1 == item.itemName && tuple.Item3 == Mathf.Round(item.itemCondition));
 
                     if (existingTuple != null)
                     {
-                        // Increment the item count for the existing tuple
-                        var index = existingList.IndexOf(existingTuple);
-                        var updatedTuple = Tuple.Create(existingTuple.Item1 + 1, existingTuple.Item2);
-                        existingList[index] = updatedTuple;
+                        var index = itemCounts.IndexOf(existingTuple);
+                        var updatedTuple = Tuple.Create(existingTuple.Item1, existingTuple.Item2 + 1,
+                            existingTuple.Item3);
+                        itemCounts[index] = updatedTuple;
                     }
                     else
                     {
-                        // Add a new tuple for a different condition
-                        existingList.Add(new Tuple<int, float>(1, Mathf.Round(item.itemCondition)));
+                        itemCounts.Add(new Tuple<string, int, float>(item.itemName, 1,
+                            Mathf.Round(item.itemCondition)));
                     }
                 }
                 else
                 {
-                    itemCounts[item.itemName] = new List<Tuple<int, float>> { new Tuple<int, float>(1, Mathf.Round(item.itemCondition)) };
+                    itemCounts.Add(new Tuple<string, int, float>(item.itemName, 1, Mathf.Round(item.itemCondition)));
                     itemIcons.Add(item.itemIcon);
                 }
 
+
                 currentWeight += item.itemWeight;
             }
-            
+
             weightBar.value = currentWeight;
             weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
 
             int num = 0;
 
-            foreach (var kvp in itemCounts)
+            foreach (var count in itemCounts)
             {
-                string itemName = kvp.Key;
-                List<Tuple<int, float>> itemDataList = kvp.Value;
+                GameObject obj = Instantiate(inventoryUIItem, itemContent);
+                var itemCount = obj.transform.Find("ItemInfo").Find("ItemCount").GetComponent<TextMeshProUGUI>();
+                var itemConditionText = obj.transform.Find("ItemInfo").Find("ItemCondition").GetComponent<TextMeshProUGUI>();
+                var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+                obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(count.Item1); });
 
-                foreach (var itemData in itemDataList)
-                {
-                    GameObject obj = Instantiate(inventoryUIItem, itemContent);
-                    var itemCount = obj.transform.Find("ItemCount").GetComponent<TextMeshProUGUI>();
-                    var itemConditionText = obj.transform.Find("ItemCondition").GetComponent<TextMeshProUGUI>();
-                    var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
-                    obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(itemName); });
-
-                    itemCount.text = "x" + itemData.Item1;
-                    itemConditionText.text = itemData.Item2 + "%";
-                    itemIcon.sprite = itemIcons[num];
-                    itemIcon.preserveAspect = true;
-                }
+                itemCount.text = "x" + count.Item2;
+                itemConditionText.text = count.Item3 + "%";
+                itemIcon.sprite = itemIcons[num];
+                itemIcon.preserveAspect = true;
 
                 num++;
             }
@@ -207,9 +198,9 @@ namespace Managers
                     // Loop through every item count to find how many items we have
                     foreach (var count in itemCounts)
                     {
-                        if (count.Key == itemName)
+                        if (count.Item1 == itemName)
                         {
-                            itemCountValue = count.Value.Sum(tuple => tuple.Item1);
+                            itemCountValue = count.Item2;
                         }
                     }
 
@@ -256,7 +247,7 @@ namespace Managers
             if (returnedCalories == 0)
             {
                 DeleteItem(itemData);
-                
+
                 HideItemDetail();
             }
             else
@@ -290,15 +281,15 @@ namespace Managers
             Debug.Log("Opening drop window for: " + itemName);
 
             // Loop through the items in dictionary
-            foreach (var item in itemCounts)
+            foreach (var count in itemCounts)
             {
-                if (item.Key == itemName)
+                if (count.Item1 == itemName)
                 {
                     currentDetailedItem = itemName;
 
                     dropItemSlider.value = 1;
                     dropItemSlider.minValue = 1;
-                    dropItemSlider.maxValue = item.Value.Sum(tuple => tuple.Item1);
+                    dropItemSlider.maxValue = count.Item2;
                     dropItemSlider.onValueChanged.AddListener(delegate
                     {
                         UpdateDropCounterText(dropItemSlider.value);
