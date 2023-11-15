@@ -34,6 +34,21 @@ namespace Managers
             {
                 InventoryManager.Instance.ToggleInventory();
             }
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                PassTimeManager.Instance.TogglePassTimeWindow();
+            }
+        }
+
+        public float GetCurrentTime()
+        {
+            return cycle.Time;
+        }
+
+        public float GetTimeIncrement()
+        {
+            return cycle.TimeIncrement;
         }
     }
 }
