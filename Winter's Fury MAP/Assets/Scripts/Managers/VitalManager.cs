@@ -1,4 +1,5 @@
 using Pinwheel.Jupiter;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,7 +57,9 @@ namespace Managers
         public float TemperaturePercent => currentTemp / maxTempBar;
 
         public static VitalManager Instance { get; private set; }
+
         private float timeIncrement;
+        private float previousTimeIncrement;
 
         private void Awake()
         {
@@ -70,8 +73,10 @@ namespace Managers
             currentThirst = maxThirst;
             currentTemp = maxTempBar;
             currentFatigue = maxFatigueBar;
+            
+            previousTimeIncrement = GameManager.Instance.cycle.TimeIncrement;
+            timeIncrement = previousTimeIncrement;
 
-            timeIncrement = GameManager.Instance.cycle.TimeIncrement;
             currentAwakeness = PlayerController.Instance.currentAwakeness;
         }
 
@@ -87,6 +92,14 @@ namespace Managers
             ReduceHealth();
 
             currentActivity = PlayerController.Instance.currentActivity;
+
+            var currentIncrement = GameManager.Instance.cycle.TimeIncrement;
+            if (previousTimeIncrement != currentIncrement)
+            {
+                timeIncrement = currentIncrement;
+
+                previousTimeIncrement = currentIncrement;
+            }
         }
 
         private void ReduceHealth()
