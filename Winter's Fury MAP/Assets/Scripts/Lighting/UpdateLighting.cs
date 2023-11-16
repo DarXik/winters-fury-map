@@ -10,6 +10,9 @@ namespace Lighting
 
         private void Start()
         {
+            DynamicGI.UpdateEnvironment();
+            reflectionProbe.RenderProbe();
+            
             StartCoroutine(UpdateEnvironmentLighting());
         }
 

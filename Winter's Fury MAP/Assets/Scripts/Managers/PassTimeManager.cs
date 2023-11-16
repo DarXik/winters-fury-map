@@ -52,6 +52,7 @@ public class PassTimeManager : MonoBehaviour
             PlayerLook.Instance.UnblockRotation();
 
             windowOpened = false;
+            hoursToPass = 1;
         }
     }
 

@@ -1,7 +1,4 @@
-using Pinwheel.Jupiter;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Managers
 {
@@ -163,6 +160,10 @@ namespace Managers
             {
                 excessCalories = totalCalories - maxCalories;
                 currentCalories = maxCalories;
+            }
+            else
+            {
+                currentCalories = totalCalories;
             }
 
             return Mathf.Round(excessCalories);

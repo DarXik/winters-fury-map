@@ -25,7 +25,7 @@ namespace Managers
 
         private void Update()
         {
-            CheckUserInput();
+            //CheckUserInput();
         }
 
         private void CheckUserInput()

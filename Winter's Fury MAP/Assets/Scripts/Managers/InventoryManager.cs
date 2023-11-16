@@ -54,6 +54,7 @@ namespace Managers
 
         private List<Tuple<string, int, float>> itemCounts;
         private float timeIncrement;
+        private float previousTimeIncrement;
         private bool inventoryOpened;
         private string currentDetailedItem;
 
@@ -79,6 +80,14 @@ namespace Managers
         private void Update()
         {
             if (items.Count > 0) ReduceItemsCondition();
+            
+            var currentIncrement = GameManager.Instance.cycle.TimeIncrement;
+            if (previousTimeIncrement != currentIncrement)
+            {
+                timeIncrement = currentIncrement;
+
+                previousTimeIncrement = currentIncrement;
+            }
         }
 
         public void ToggleInventory()
@@ -113,6 +122,7 @@ namespace Managers
         {
             DeleteInventoryContents();
             DeleteNeedContents();
+            HideItemDetail();
             currentWeight = 0f;
 
             itemCounts = new List<Tuple<string, int, float>>();
@@ -136,6 +146,7 @@ namespace Managers
                     {
                         itemCounts.Add(new Tuple<string, int, float>(item.itemName, 1,
                             Mathf.Round(item.itemCondition)));
+                        itemIcons.Add(item.itemIcon);
                     }
                 }
                 else
@@ -248,17 +259,17 @@ namespace Managers
             {
                 DeleteItem(itemData);
 
-                HideItemDetail();
+                ListItems();
             }
             else
             {
                 var itemIndex = items.IndexOf(itemData);
 
                 items[itemIndex].caloriesIntake = returnedCalories;
+                
+                ListItems();
+                ShowItemDetail(itemData.itemName);
             }
-
-            ListItems();
-            ShowItemDetail(itemData.itemName);
         }
 
         private void DeleteItem(ItemData itemData)
