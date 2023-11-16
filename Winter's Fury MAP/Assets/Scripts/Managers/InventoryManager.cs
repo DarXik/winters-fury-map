@@ -36,7 +36,7 @@ namespace Managers
         [SerializeField] private Image itemIcon;
         [SerializeField] private GameObject needs;
         [SerializeField] private GameObject detailNeedItem;
-        [SerializeField] private TextMeshProUGUI itemCondition;
+        [FormerlySerializedAs("itemCondition")] [SerializeField] private TextMeshProUGUI itemConditionText;
         [SerializeField] private TextMeshProUGUI itemWeight;
         [SerializeField] private Button dropItemButton;
         [SerializeField] private Sprite stomach, water;
@@ -57,6 +57,7 @@ namespace Managers
         private float previousTimeIncrement;
         private bool inventoryOpened;
         private string currentDetailedItem;
+        private float currentDetailedCondition;
 
         public static InventoryManager Instance { get; private set; }
 
@@ -170,7 +171,7 @@ namespace Managers
                 var itemCount = obj.transform.Find("ItemInfo").Find("ItemCount").GetComponent<TextMeshProUGUI>();
                 var itemConditionText = obj.transform.Find("ItemInfo").Find("ItemCondition").GetComponent<TextMeshProUGUI>();
                 var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
-                obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(count.Item1); });
+                obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(count.Item1, count.Item3); });
 
                 itemCount.text = "x" + count.Item2;
                 itemConditionText.text = count.Item3 + "%";
@@ -181,7 +182,7 @@ namespace Managers
             }
         }
 
-        private void ShowItemDetail(string itemName)
+        private void ShowItemDetail(string itemName, float itemCondition)
         {
             DeleteNeedContents();
 
@@ -196,7 +197,7 @@ namespace Managers
             // Loop through every item and find a match according to the parameter
             foreach (var item in items)
             {
-                if (item.itemName == itemName)
+                if (item.itemName == itemName && Mathf.Round(item.itemCondition) == itemCondition)
                 {
                     var itemCountValue = 0;
 
@@ -204,7 +205,7 @@ namespace Managers
                     itemDescription.text = item.itemDescription;
                     itemIcon.sprite = item.itemIcon;
                     itemIcon.preserveAspect = true;
-                    itemCondition.text = Mathf.Round(item.itemCondition) + "%";
+                    itemConditionText.text = Mathf.Round(item.itemCondition) + "%";
 
                     // Loop through every item count to find how many items we have
                     foreach (var count in itemCounts)
@@ -268,7 +269,7 @@ namespace Managers
                 items[itemIndex].caloriesIntake = returnedCalories;
                 
                 ListItems();
-                ShowItemDetail(itemData.itemName);
+                ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
         }
 
@@ -297,6 +298,7 @@ namespace Managers
                 if (count.Item1 == itemName)
                 {
                     currentDetailedItem = itemName;
+                    currentDetailedCondition = count.Item3;
 
                     dropItemSlider.value = 1;
                     dropItemSlider.minValue = 1;
@@ -319,7 +321,7 @@ namespace Managers
             dropItemWindow.SetActive(false);
             ListItems();
 
-            ShowItemDetail(currentDetailedItem);
+            ShowItemDetail(currentDetailedItem, currentDetailedCondition);
         }
 
         private void HideItemDetail()
