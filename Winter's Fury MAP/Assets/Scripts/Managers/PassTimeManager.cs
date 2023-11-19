@@ -34,7 +34,10 @@ public class PassTimeManager : MonoBehaviour
 
     private void Update()
     {
-        if (windowOpened) UpdateWindowUI();
+        if (windowOpened)
+        {
+            UpdateWindowUI();
+        }
     }
 
     public void TogglePassTimeWindow()
