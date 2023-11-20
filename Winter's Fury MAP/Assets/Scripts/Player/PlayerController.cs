@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
         initialCameraPos = cameraTransform.localPosition;
         currentStamina = maxStamina;
 
-        //headBob.Setup();
+        headBob.Setup();
 
         currentAwakeness = PlayerAwakeness.Awake;
     }
@@ -80,19 +80,19 @@ public class PlayerController : MonoBehaviour
         CrouchHandler();
         HandleUI();
 
-        /*CheckForHeadBob();
-        headBob.ResetHeadBob();*/
+        CheckForHeadBob();
+        if(!isCrouching) headBob.ResetHeadBob();
         
         if(isRegenerating) RegenerateStamina();
     }
 
-    /*private void CheckForHeadBob()
+    private void CheckForHeadBob()
     {
         if (isRunning)
         {
             headBob.StartHeadBob();
         }
-    }*/
+    }
 
     private void CrouchHandler()
     {
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
     private void MovingStateHandler()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching && currentStamina > 0f && !staminaDepleted)
+        if (Input.GetKey(KeyCode.LeftShift) && !isCrouching && !staminaDepleted && Mathf.Approximately(charController.height, standingHeight))
         {
             movementSpeed = runningSpeed;
 

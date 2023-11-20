@@ -75,22 +75,29 @@ public class PassTimeManager : MonoBehaviour
     private IEnumerator PassTime()
     {
         var finalTime = GameManager.Instance.GetCurrentTime() + hoursToPass;
+        finalTime %= 24f;
+        
         var normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
         
         passButton.SetActive(false);
         leftArrow.SetActive(false);
         rightArrow.SetActive(false);
         
-        while (GameManager.Instance.GetCurrentTime() < finalTime)
+        while (GameManager.Instance.GetCurrentTime() < finalTime && windowOpened)
         {
+            float remainingHours = finalTime - GameManager.Instance.GetCurrentTime();
+            hoursToPass = (int)Mathf.Max(1, remainingHours + 1);
+            
             GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
 
-            yield return new WaitForSeconds(0);
+            yield return null;
         }
 
         GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
         UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
-        TogglePassTimeWindow();
+        passButton.SetActive(true);
+        leftArrow.SetActive(true);
+        rightArrow.SetActive(true);
     } 
 
     public void LowerHour()
