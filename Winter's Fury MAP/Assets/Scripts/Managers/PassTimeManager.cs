@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Lighting;
 using Managers;
 using Player;
 using TMPro;
@@ -9,6 +10,7 @@ public class PassTimeManager : MonoBehaviour
 {
     [Header("UI References")] 
     [SerializeField] private GameObject passTimeWindow;
+    [SerializeField] private GameObject passButton, leftArrow, rightArrow;
     [SerializeField] private TextMeshProUGUI hoursText;
 
     [Header("Setup")] 
@@ -37,6 +39,7 @@ public class PassTimeManager : MonoBehaviour
         if (windowOpened)
         {
             UpdateWindowUI();
+            Clock.Instance.RotateClock();
         }
     }
 
@@ -45,8 +48,13 @@ public class PassTimeManager : MonoBehaviour
         if (!windowOpened)
         {
             passTimeWindow.SetActive(true);
+            passButton.SetActive(true);
+            leftArrow.SetActive(true);
+            rightArrow.SetActive(true);
             PlayerLook.Instance.BlockRotation();
-
+            
+            Clock.Instance.SetClock();
+            
             windowOpened = true;
         }
         else
@@ -68,7 +76,11 @@ public class PassTimeManager : MonoBehaviour
     {
         var finalTime = GameManager.Instance.GetCurrentTime() + hoursToPass;
         var normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
-
+        
+        passButton.SetActive(false);
+        leftArrow.SetActive(false);
+        rightArrow.SetActive(false);
+        
         while (GameManager.Instance.GetCurrentTime() < finalTime)
         {
             GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
@@ -77,6 +89,8 @@ public class PassTimeManager : MonoBehaviour
         }
 
         GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
+        UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
+        TogglePassTimeWindow();
     } 
 
     public void LowerHour()

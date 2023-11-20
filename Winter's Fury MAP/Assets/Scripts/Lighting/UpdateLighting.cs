@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,8 +6,15 @@ namespace Lighting
 {
     public class UpdateLighting : MonoBehaviour
     {
-        public ReflectionProbe reflectionProbe;
-        public float giUpdateTime;
+        [SerializeField] private ReflectionProbe reflectionProbe;
+        [SerializeField] private float giUpdateTime;
+        
+        public static UpdateLighting Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -25,6 +33,12 @@ namespace Lighting
                 
                 yield return new WaitForSeconds(giUpdateTime);
             }
-        } 
+        }
+
+        public void ForceUpdateEnvironmentLighting()
+        {
+            DynamicGI.UpdateEnvironment();
+            reflectionProbe.RenderProbe();
+        }
     }
 }
