@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
-  m_Name: Bacon_Cooked
+  m_Name: Water_Bottle
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 8574366006020177933, guid: 48901b36a520f6f4bac191238b91288c, type: 3}
-  itemName: Cooked Bacon
-  itemDescription: Delicious and not so risky; contains plenty of calories
-  itemType: 0
-  itemWeight: 0.1
+  itemObj: {fileID: 6816101791449471384, guid: f9e6f2db40b906341b39f98168a602fd, type: 3}
+  itemName: Water (Potable)
+  itemDescription: Safe, drinking water.
+  itemType: 1
+  itemWeight: 0.5
   itemCondition: 100
-  conditionPerDay: 25
-  itemIcon: {fileID: 21300000, guid: 722a3ee05e738444daa0d0718686b061, type: 3}
-  waterIntake: 0
-  caloriesIntake: 125
+  conditionPerDay: 0
+  itemIcon: {fileID: 0}
+  waterIntake: 500
+  caloriesIntake: 0
   fatigueReduce: 0
   temperatureIncrease: 0
   burnTime: 0

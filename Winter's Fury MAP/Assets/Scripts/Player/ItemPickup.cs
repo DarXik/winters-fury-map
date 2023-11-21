@@ -24,13 +24,13 @@ public class ItemPickup : MonoBehaviour
     private void PickupItem()
     {
         // Create a copy of the itemData
-        ItemData itemDataCopy = Instantiate(hit.transform.GetComponent<ItemController>().itemData);
+        ItemData itemDataCopy = Instantiate(hit.transform.root.GetComponent<ItemController>().itemData);
 
         if (InventoryManager.Instance.currentWeight + itemDataCopy.itemWeight >
             InventoryManager.Instance.maxWeight) return;
         
         InventoryManager.Instance.AddItem(itemDataCopy);
         
-        Destroy(hit.transform.gameObject);
+        Destroy(hit.transform.root.gameObject);
     }
 }

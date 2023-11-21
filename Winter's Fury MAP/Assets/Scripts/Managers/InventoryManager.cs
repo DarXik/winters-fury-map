@@ -5,6 +5,8 @@ using System.Linq;
 using Player;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -232,6 +234,21 @@ namespace Managers
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() => { TryEat(item.caloriesIntake, item); });
                             break;
+                        case ItemType.Drink:
+                            var needItemDrink = Instantiate(detailNeedItem, needs.transform);
+                            needItemDrink.transform.Find("Image").GetComponent<Image>().sprite = water;
+                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
+                                item.waterIntake.ToString(CultureInfo.InvariantCulture);
+
+                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
+                            actionButtonObj.SetActive(true);
+                            actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
+                            break;
+                        case ItemType.Wood:
+                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";
+                            actionButtonObj.SetActive(true);
+                            actionBtn.onClick.AddListener(() => { TryStartFire(item); });
+                            break;
                     }
 
                     break;
@@ -239,16 +256,29 @@ namespace Managers
             }
         }
 
+        private void TryStartFire(ItemData itemData)
+        {
+            
+        }
+
         private void TryDrink(float waterIntake, ItemData itemData)
         {
-            switch (waterIntake)
+            var returnedWater = VitalManager.Instance.Drink(waterIntake);
+
+            if (returnedWater == 0)
             {
-                case 0:
-                    return;
-                case > 0:
-                    break;
-                case < 0:
-                    break;
+                DeleteItem(itemData);
+                
+                ListItems();
+            }
+            else
+            {
+                var itemIndex = items.IndexOf(itemData);
+
+                items[itemIndex].waterIntake = returnedWater;
+                
+                ListItems();
+                ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
         }
 

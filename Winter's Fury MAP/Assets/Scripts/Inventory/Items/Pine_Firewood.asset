@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
-  m_Name: Bacon_Cooked
+  m_Name: Pine_Firewood
   m_EditorClassIdentifier: 
-  itemObj: {fileID: 8574366006020177933, guid: 48901b36a520f6f4bac191238b91288c, type: 3}
-  itemName: Cooked Bacon
-  itemDescription: Delicious and not so risky; contains plenty of calories
-  itemType: 0
-  itemWeight: 0.1
+  itemObj: {fileID: 196214, guid: b48cacf514511f84cab2f759b6d76879, type: 3}
+  itemName: Pine Firewood
+  itemDescription: Represents resilience in the frozen night, but doesn't burn for
+    very long.
+  itemType: 2
+  itemWeight: 1
   itemCondition: 100
-  conditionPerDay: 25
-  itemIcon: {fileID: 21300000, guid: 722a3ee05e738444daa0d0718686b061, type: 3}
+  conditionPerDay: 0
+  itemIcon: {fileID: 21300000, guid: db6130751fda75241afcc67ae09fa684, type: 3}
   waterIntake: 0
-  caloriesIntake: 125
+  caloriesIntake: 0
   fatigueReduce: 0
-  temperatureIncrease: 0
-  burnTime: 0
+  temperatureIncrease: 9
+  burnTime: 90

@@ -213,6 +213,10 @@ namespace Managers
                 excessWater = totalWater - maxThirst;
                 currentThirst = maxThirst;
             }
+            else
+            {
+                currentThirst = totalWater;
+            }
 
             return Mathf.Round(excessWater);
         }
