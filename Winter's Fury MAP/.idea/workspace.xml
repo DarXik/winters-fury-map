@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd37ab48-7d7f-4cee-b206-64ea15fc3dc0" name="Changes" comment="" />
+    <list default="true" id="cd37ab48-7d7f-4cee-b206-64ea15fc3dc0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Downloaded/RGB PALETTE NextG png.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Downloaded/RGB PALETTE NextG png.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Downloaded/Water_bottle_01_SkF.fbx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Downloaded/Water_bottle_01_SkF.fbx.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Pine_Firewood.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Pine_Firewood.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Water_Bottle.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Water_Bottle.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food/Bacon Cooked.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food/Bacon Cooked.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food/Bacon Uncooked.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food/Bacon Uncooked.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food/Peanut Butter.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Food/Peanut Butter.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Wood.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Wood/pine_firewood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UI/Icons/Items/Wood/pine_firewood.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UsedModels/Items/Drinks.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UsedModels/Items/Drinks/Water_Bottle.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UsedModels/Items/Drinks/Water_Bottle.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UsedModels/Items/Wood.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UsedModels/Items/Wood/Pine_Firewood.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/UsedModels/Items/Wood/Pine_Firewood.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.plastic/plastic.changes" beforeDir="false" afterPath="$PROJECT_DIR$/.plastic/plastic.changes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.plastic/plastic.wktree" beforeDir="false" afterPath="$PROJECT_DIR$/.plastic/plastic.wktree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Downloaded/Low Poly Trees Pack/Tree Assets/Prefabs/Firewood/LOD/Pine_Firewood/Pine_Firewood_05_LOD.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Downloaded/Low Poly Trees Pack/Tree Assets/Prefabs/Firewood/LOD/Pine_Firewood/Pine_Firewood_05_LOD.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Downloaded/Low Poly Trees Pack/Tree Assets/Prefabs/Firewood_Snow/LOD/Pine Firewood/Pine_Firewood_Snow_05_LOD.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Downloaded/Low Poly Trees Pack/Tree Assets/Prefabs/Firewood_Snow/LOD/Pine Firewood/Pine_Firewood_Snow_05_LOD.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Glaciar Frontier.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Glaciar Frontier.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/ItemData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/ItemData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Bacon_Cooked.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Bacon_Cooked.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Peanut_Butter.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Items/Peanut_Butter.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InventoryManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InventoryManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/VitalManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/VitalManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/ItemPickup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/ItemPickup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/To-Do.md" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/To-Do.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Assets/NotoSansJP-VariableFont_wght SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI/Fonts/Assets/NotoSansJP-VariableFont_wght SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items/Bacon Cooked.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items/Bacon Cooked.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items/Bacon Uncooked.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items/Bacon Uncooked.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items/Peanut Butter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Icons/Food Items/Peanut Butter.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UsedModels/Items/cactus-big.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UsedModels/Items/cactus-big.prefab.meta" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2WQdSdBSV15AhBmjTJQqUkVIrNP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -20,6 +73,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -32,6 +87,7 @@
       <option name="presentableId" value="Default" />
       <updated>1696668740597</updated>
       <workItem from="1696668743265" duration="1000" />
+      <workItem from="1700568912998" duration="11000" />
     </task>
     <servers />
   </component>
