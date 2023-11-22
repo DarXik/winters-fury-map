@@ -26,3 +26,4 @@ MonoBehaviour:
   fatigueReduce: 0
   temperatureIncrease: 9
   burnTime: 90
+  chanceBonus: 10

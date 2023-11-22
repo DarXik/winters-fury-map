@@ -15,7 +15,7 @@ namespace Managers
 {
     public class InventoryManager : MonoBehaviour
     {
-        [SerializeField] private List<ItemData> items = new();
+        public List<ItemData> items = new();
 
         [Header("Core Values")] public float maxWeight;
         [SerializeField] private Gradient weightGradient;
@@ -247,7 +247,7 @@ namespace Managers
                         case ItemType.Wood:
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";
                             actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() => { TryStartFire(item); });
+                            actionBtn.onClick.AddListener(() => { TryStartFire(item, itemCountValue); });
                             break;
                     }
 
@@ -256,9 +256,10 @@ namespace Managers
             }
         }
 
-        private void TryStartFire(ItemData itemData)
+        private void TryStartFire(ItemData itemData, int itemCount)
         {
-            
+            ToggleInventory();
+            FirestartManager.Instance.OpenFireStartWindow(itemData, itemCount);
         }
 
         private void TryDrink(float waterIntake, ItemData itemData)

@@ -28,7 +28,8 @@ public class ItemData : ScriptableObject
 
     [Header("Heatsource Data")] 
     [HideInInspector] public float temperatureIncrease;
-    [HideInInspector] public float burnTime;
+    [HideInInspector] public int burnTime;
+    [HideInInspector] public float chanceBonus;
 }
 
 [CustomEditor(typeof(ItemData))]
@@ -39,6 +40,7 @@ public class ItemDataEditor : Editor
     private SerializedProperty fatigueReduceProp;
     private SerializedProperty temperatureIncreaseProp;
     private SerializedProperty burnTimeProp;
+    private SerializedProperty chanceProp;
 
     void OnEnable()
     {
@@ -48,6 +50,7 @@ public class ItemDataEditor : Editor
 
         temperatureIncreaseProp = serializedObject.FindProperty("temperatureIncrease");
         burnTimeProp = serializedObject.FindProperty("burnTime");
+        chanceProp = serializedObject.FindProperty("chanceBonus");
     }
 
     public override void OnInspectorGUI()
@@ -70,6 +73,7 @@ public class ItemDataEditor : Editor
         {
             EditorGUILayout.PropertyField(temperatureIncreaseProp);
             EditorGUILayout.PropertyField(burnTimeProp);
+            EditorGUILayout.PropertyField(chanceProp);
         }
 
         serializedObject.ApplyModifiedProperties();
