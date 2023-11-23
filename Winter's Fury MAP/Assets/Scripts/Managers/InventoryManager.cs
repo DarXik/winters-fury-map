@@ -4,9 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Player;
 using TMPro;
-using Unity.Mathematics;
-using Unity.VisualScripting;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -15,7 +12,7 @@ namespace Managers
 {
     public class InventoryManager : MonoBehaviour
     {
-        public List<ItemData> items = new();
+        [SerializeField] private List<ItemData> items = new();
 
         [Header("Core Values")] public float maxWeight;
         [SerializeField] private Gradient weightGradient;
@@ -244,7 +241,7 @@ namespace Managers
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
                             break;
-                        case ItemType.Wood:
+                        case ItemType.Fuelsource:
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() => { TryStartFire(item, itemCountValue); });
@@ -464,6 +461,16 @@ namespace Managers
         {
             weightValues.text = currentWeight.ToString("0.0", CultureInfo.InvariantCulture) + " / " +
                                 maxWeight.ToString("0.0", CultureInfo.InvariantCulture) + " kg";
+        }
+
+        public List<ItemData> GetFuelItems()
+        {
+            return items.FindAll(item => item.itemType == ItemType.Fuelsource);
+        }
+
+        public List<Tuple<string, int, float>> GetItemCounts()
+        {
+            return itemCounts;
         }
     }
 }

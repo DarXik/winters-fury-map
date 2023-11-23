@@ -5,7 +5,7 @@ public enum ItemType
 {
     Food,
     Drink,
-    Wood
+    Fuelsource
 }
 
 [System.Serializable]
@@ -69,7 +69,7 @@ public class ItemDataEditor : Editor
             EditorGUILayout.PropertyField(caloriesIntakeProp);
             EditorGUILayout.PropertyField(fatigueReduceProp);
         }
-        else if (itemData.itemType == ItemType.Wood)
+        else if (itemData.itemType == ItemType.Fuelsource)
         {
             EditorGUILayout.PropertyField(temperatureIncreaseProp);
             EditorGUILayout.PropertyField(burnTimeProp);

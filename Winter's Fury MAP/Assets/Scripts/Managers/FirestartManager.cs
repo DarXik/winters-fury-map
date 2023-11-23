@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using Player;
 using TMPro;
 using UnityEngine;
@@ -11,8 +12,10 @@ public class FirestartManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI baseChanceText, chanceOfSuccessText, fireDurText, fuelNameText, fuelAmountText;
     [SerializeField] private Image fuelIcon;
 
-    [Header("Values")] 
+    [Header("Values")]
     [SerializeField] private float baseFireStartingChance;
+    [SerializeField] private float fireStartingTime; // in-game time to start the fire
+    private ItemData currentItem;
     private int maxFuelCount;
     private int chosenFuelCount = 1;
     private float chanceOfSuccess;
@@ -32,24 +35,31 @@ public class FirestartManager : MonoBehaviour
         chanceOfSuccess = baseFireStartingChance;
         baseChanceText.text = baseFireStartingChance + "%";
     }
-
-
+    
     public void OpenFireStartWindow(ItemData fuelItem, int fuelCount)
     {
         PlayerLook.Instance.BlockRotation();
         fireStartWindow.SetActive(true);
 
-        chanceOfSuccessText.text = chanceOfSuccess + fuelItem.chanceBonus + "%";
+        currentItem = fuelItem;
 
-        startingFuelDuration = fuelItem.burnTime;
-        fuelDuration = startingFuelDuration;
-
-        fireDurText.text = $"{GetFuelHours()}H {GetFuelMinutes()}M";
-        fuelNameText.text = fuelItem.itemName;
+        AssignFuelInfoToUI();
 
         maxFuelCount = fuelCount;
         
         fuelAmountText.text = $"{chosenFuelCount} of {maxFuelCount}";
+    }
+
+    public void CloseFireStartWindow()
+    {
+        fireStartWindow.SetActive(false);
+        
+        InventoryManager.Instance.ToggleInventory();
+    }
+
+    public void StartFire()
+    {
+        
     }
 
     public void AddFuel()
@@ -70,6 +80,47 @@ public class FirestartManager : MonoBehaviour
             chosenFuelCount--;
             fuelDuration -= startingFuelDuration;
         }
+        
+        UpdateFuelInfoText();
+    }
+
+    public void SwitchFuelSource()
+    {
+        var fuelItems = InventoryManager.Instance.GetFuelItems();
+        var itemCounts = InventoryManager.Instance.GetItemCounts();
+        
+        foreach (var fuelItem in fuelItems)
+        {
+            if (fuelItem != currentItem)
+            {
+                currentItem = fuelItem;
+                break;
+            }
+        }
+
+        foreach (var count in itemCounts)
+        {
+            if (count.Item1 == currentItem.itemName)
+            {
+                maxFuelCount = count.Item2;
+                break;
+            }
+        }
+        
+        AssignFuelInfoToUI();
+    }
+
+    private void AssignFuelInfoToUI()
+    {
+        chanceOfSuccessText.text = chanceOfSuccess + currentItem.chanceBonus + "%";
+        
+        startingFuelDuration = currentItem.burnTime;
+        fuelDuration = startingFuelDuration;
+
+        fireDurText.text = $"{GetFuelHours()}H {GetFuelMinutes()}M";
+        fuelNameText.text = currentItem.itemName;
+
+        fuelIcon.sprite = currentItem.itemIcon;
         
         UpdateFuelInfoText();
     }
