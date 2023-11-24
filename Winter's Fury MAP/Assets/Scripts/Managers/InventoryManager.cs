@@ -301,16 +301,6 @@ namespace Managers
             }
         }
 
-        private void DeleteItem(ItemData itemData)
-        {
-            var itemIndex = items.IndexOf(itemData);
-
-            items.RemoveAt(itemIndex);
-
-            ListItems();
-            HideItemDetail();
-        }
-
         private void OpenDropWindow(string itemName)
         {
             dropItemWindow.SetActive(true);
@@ -467,12 +457,15 @@ namespace Managers
         {
             return items.FindAll(item => item.itemType == ItemType.Fuelsource);
         }
-
-        public void DeleteItemData(ItemData itemToDelete)
+        
+        public void DeleteItem(ItemData itemToDelete)
         {
-            var itemIndex = items.FindIndex(item => itemToDelete == item);
-            
+            var itemIndex = items.IndexOf(itemToDelete);
+
             items.RemoveAt(itemIndex);
+
+            ListItems();
+            HideItemDetail();
         }
 
         public List<Tuple<string, int, float>> GetItemCounts()

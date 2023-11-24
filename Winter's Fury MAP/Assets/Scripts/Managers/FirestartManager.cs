@@ -99,7 +99,7 @@ public class FirestartManager : MonoBehaviour
 
         if (chance <= chanceOfSuccess)
         {
-            InventoryManager.Instance.DeleteItemData(currentItem);
+            InventoryManager.Instance.DeleteItem(currentItem);
 
             var playerPos = PlayerController.Instance.GetPlayerPosition();
 
