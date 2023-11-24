@@ -83,8 +83,9 @@ public class FirestartManager : MonoBehaviour
     private IEnumerator StartFireProgress()
     {
         float chance = Mathf.Round(Random.value * 100);
-
+        
         progressIcon.fillAmount = 0f;
+        
         var timeElapsed = 0f;
 
         while (timeElapsed < realStartingTime)
