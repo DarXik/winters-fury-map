@@ -468,6 +468,13 @@ namespace Managers
             return items.FindAll(item => item.itemType == ItemType.Fuelsource);
         }
 
+        public void DeleteItemData(ItemData itemToDelete)
+        {
+            var itemIndex = items.FindIndex(item => itemToDelete == item);
+            
+            items.RemoveAt(itemIndex);
+        }
+
         public List<Tuple<string, int, float>> GetItemCounts()
         {
             return itemCounts;

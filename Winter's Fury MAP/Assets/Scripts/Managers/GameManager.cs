@@ -50,5 +50,10 @@ namespace Managers
         {
             return cycle.TimeIncrement;
         }
+
+        public void AddMinutes(float minutes)
+        {
+            cycle.Time += minutes / 60f;
+        }
     }
 }

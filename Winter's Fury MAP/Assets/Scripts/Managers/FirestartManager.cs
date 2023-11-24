@@ -1,20 +1,31 @@
 using System;
+using System.Collections;
 using Managers;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class FirestartManager : MonoBehaviour
 {
+    [SerializeField] private GameObject campfire;
+    
     [Header("UI References")] 
     [SerializeField] private GameObject fireStartWindow;
     [SerializeField] private TextMeshProUGUI baseChanceText, chanceOfSuccessText, fireDurText, fuelNameText, fuelAmountText;
     [SerializeField] private Image fuelIcon;
+    [SerializeField] private GameObject selector, progress;
+    [SerializeField] private Image progressIcon;
 
     [Header("Values")]
     [SerializeField] private float baseFireStartingChance;
-    [SerializeField] private float fireStartingTime; // in-game time to start the fire
+    [Tooltip("Real-world seconds for the fire to start.")]
+    [SerializeField] private float realStartingTime;
+    [Tooltip("In-game minutes that will be added after attempting to start the fire.")]
+    [SerializeField] private float inGameStartingTime;
+    
     private ItemData currentItem;
     private int maxFuelCount;
     private int chosenFuelCount = 1;
@@ -40,6 +51,8 @@ public class FirestartManager : MonoBehaviour
     {
         PlayerLook.Instance.BlockRotation();
         fireStartWindow.SetActive(true);
+        
+        chanceOfSuccess = baseFireStartingChance;
 
         currentItem = fuelItem;
 
@@ -53,13 +66,50 @@ public class FirestartManager : MonoBehaviour
     public void CloseFireStartWindow()
     {
         fireStartWindow.SetActive(false);
+        selector.SetActive(true);
+        progress.SetActive(false);
         
         InventoryManager.Instance.ToggleInventory();
     }
 
     public void StartFire()
     {
+        selector.SetActive(false);
+        progress.SetActive(true);
+
+        StartCoroutine(StartFireProgress());
+    }
+
+    private IEnumerator StartFireProgress()
+    {
+        float chance = Mathf.Round(Random.value * 100);
+
+        progressIcon.fillAmount = 0f;
+        var timeElapsed = 0f;
+
+        while (timeElapsed < realStartingTime)
+        {
+            progressIcon.fillAmount = Mathf.Lerp(0f, 1f, timeElapsed / realStartingTime);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        progressIcon.fillAmount = 1f;
+
+        if (chance <= chanceOfSuccess)
+        {
+            InventoryManager.Instance.DeleteItemData(currentItem);
+
+            var playerPos = PlayerController.Instance.GetPlayerPosition();
+
+            if (Physics.Raycast(playerPos, Vector3.down, out var hit, 10f))
+            {
+                Instantiate(campfire, hit.point, Quaternion.identity);
+            }
+        }
         
+        GameManager.Instance.AddMinutes(inGameStartingTime);
+        CloseFireStartWindow();
     }
 
     public void AddFuel()
@@ -89,6 +139,8 @@ public class FirestartManager : MonoBehaviour
         var fuelItems = InventoryManager.Instance.GetFuelItems();
         var itemCounts = InventoryManager.Instance.GetItemCounts();
         
+        chanceOfSuccess = baseFireStartingChance;
+        
         foreach (var fuelItem in fuelItems)
         {
             if (fuelItem != currentItem)
@@ -112,7 +164,9 @@ public class FirestartManager : MonoBehaviour
 
     private void AssignFuelInfoToUI()
     {
-        chanceOfSuccessText.text = chanceOfSuccess + currentItem.chanceBonus + "%";
+        chanceOfSuccess += currentItem.chanceBonus;
+        
+        chanceOfSuccessText.text = chanceOfSuccess + "%";
         
         startingFuelDuration = currentItem.burnTime;
         fuelDuration = startingFuelDuration;
@@ -121,6 +175,7 @@ public class FirestartManager : MonoBehaviour
         fuelNameText.text = currentItem.itemName;
 
         fuelIcon.sprite = currentItem.itemIcon;
+        fuelIcon.preserveAspect = true;
         
         UpdateFuelInfoText();
     }
