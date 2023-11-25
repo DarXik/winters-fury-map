@@ -1,4 +1,5 @@
-﻿using Pinwheel.Jupiter;
+﻿using Heat;
+using Pinwheel.Jupiter;
 using UnityEngine;
 
 namespace Managers
@@ -12,6 +13,8 @@ namespace Managers
         
         public static GameManager Instance;
 
+        private float previousTimeIncrement, timeIncrement;
+
         private void Awake()
         {
             Instance = this;
@@ -21,21 +24,36 @@ namespace Managers
         {
             cycle.AutoTimeIncrement = autoCycle;
             RenderSettings.fog = fog;
+
+            previousTimeIncrement = cycle.TimeIncrement;
         }
 
         private void Update()
         {
             CheckUserInput();
+            CheckTimeIncrement();
+        }
+
+        private void CheckTimeIncrement()
+        {
+            var currentIncrement = GetTimeIncrement();
+            if (previousTimeIncrement != currentIncrement)
+            {
+                VitalManager.timeIncrement = currentIncrement;
+                HeatSource.timeIncrement = currentIncrement;
+
+                previousTimeIncrement = currentIncrement;
+            }
         }
 
         private void CheckUserInput()
         {
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.I) && !FirestartManager.fireWindowOpened && !PassTimeManager.passTimeWindowOpened)
             {
                 InventoryManager.Instance.ToggleInventory();
             }
 
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened)
             {
                 PassTimeManager.Instance.TogglePassTimeWindow();
             }

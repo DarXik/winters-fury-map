@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
+using Heat;
 using Managers;
 using Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class FirestartManager : MonoBehaviour
 {
+    public static bool fireWindowOpened;
+    
     [SerializeField] private GameObject campfire;
     
     [Header("UI References")] 
@@ -30,7 +32,8 @@ public class FirestartManager : MonoBehaviour
     private int maxFuelCount;
     private int chosenFuelCount = 1;
     private float chanceOfSuccess;
-    private int startingFuelDuration, fuelDuration;
+    private int startingBurnTime, burnTime;
+    private float temperatureIncrease;
     
     public static FirestartManager Instance { get; private set; }
 
@@ -51,12 +54,13 @@ public class FirestartManager : MonoBehaviour
     {
         PlayerLook.Instance.BlockRotation();
         fireStartWindow.SetActive(true);
+        fireWindowOpened = true;
         
         chanceOfSuccess = baseFireStartingChance;
 
         currentItem = fuelItem;
 
-        AssignFuelInfoToUI();
+        AssignFuelInfo();
 
         maxFuelCount = fuelCount;
         
@@ -65,6 +69,8 @@ public class FirestartManager : MonoBehaviour
 
     public void CloseFireStartWindow()
     {
+        fireWindowOpened = false;
+        
         fireStartWindow.SetActive(false);
         selector.SetActive(true);
         progress.SetActive(false);
@@ -102,10 +108,15 @@ public class FirestartManager : MonoBehaviour
             InventoryManager.Instance.DeleteItem(currentItem);
 
             var playerPos = PlayerController.Instance.GetPlayerPosition();
+            var playerTransform = PlayerController.Instance.GetPlayerTransform();
 
-            if (Physics.Raycast(playerPos, Vector3.down, out var hit, 10f))
+            if (Physics.Raycast(playerPos,  playerTransform.forward * 2 + Vector3.down, out var hit, 10f))
             {
-                Instantiate(campfire, hit.point, Quaternion.identity);
+                var fire = Instantiate(campfire, hit.point, Quaternion.identity);
+                var heatSource = fire.GetComponent<HeatSource>();
+
+                heatSource.burnTime += burnTime / 60f;
+                heatSource.temperature += temperatureIncrease;
             }
         }
         
@@ -118,7 +129,7 @@ public class FirestartManager : MonoBehaviour
         if (chosenFuelCount < maxFuelCount)
         {
             chosenFuelCount++;
-            fuelDuration += startingFuelDuration;
+            burnTime += startingBurnTime;
         }
         
         UpdateFuelInfoText();
@@ -129,7 +140,7 @@ public class FirestartManager : MonoBehaviour
         if (chosenFuelCount > 1)
         {
             chosenFuelCount--;
-            fuelDuration -= startingFuelDuration;
+            burnTime -= startingBurnTime;
         }
         
         UpdateFuelInfoText();
@@ -160,23 +171,25 @@ public class FirestartManager : MonoBehaviour
             }
         }
         
-        AssignFuelInfoToUI();
+        AssignFuelInfo();
     }
 
-    private void AssignFuelInfoToUI()
+    private void AssignFuelInfo()
     {
         chanceOfSuccess += currentItem.chanceBonus;
         
         chanceOfSuccessText.text = chanceOfSuccess + "%";
         
-        startingFuelDuration = currentItem.burnTime;
-        fuelDuration = startingFuelDuration;
+        startingBurnTime = currentItem.burnTime;
+        burnTime = startingBurnTime;
 
         fireDurText.text = $"{GetFuelHours()}H {GetFuelMinutes()}M";
         fuelNameText.text = currentItem.itemName;
 
         fuelIcon.sprite = currentItem.itemIcon;
         fuelIcon.preserveAspect = true;
+
+        temperatureIncrease = currentItem.temperatureIncrease;
         
         UpdateFuelInfoText();
     }
@@ -189,11 +202,11 @@ public class FirestartManager : MonoBehaviour
 
     private int GetFuelHours()
     {
-        return fuelDuration / 60;
+        return burnTime / 60;
     }
 
     private int GetFuelMinutes()
     {
-        return fuelDuration % 60;
+        return burnTime % 60;
     }
 }

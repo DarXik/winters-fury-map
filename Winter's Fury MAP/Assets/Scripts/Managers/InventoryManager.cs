@@ -54,7 +54,7 @@ namespace Managers
         private List<Tuple<string, int, float>> itemCounts;
         private float timeIncrement;
         private float previousTimeIncrement;
-        private bool inventoryOpened;
+        public static bool inventoryOpened;
         private string currentDetailedItem;
         private float currentDetailedCondition;
 

@@ -18,7 +18,7 @@ public class PassTimeManager : MonoBehaviour
     public float passingTimeIncrement;
     private int hoursToPass;
 
-    private bool windowOpened;
+    public static bool passTimeWindowOpened;
     
     public static PassTimeManager Instance { get; private set; }
 
@@ -36,7 +36,7 @@ public class PassTimeManager : MonoBehaviour
 
     private void Update()
     {
-        if (windowOpened)
+        if (passTimeWindowOpened)
         {
             UpdateWindowUI();
             Clock.Instance.RotateClock();
@@ -45,7 +45,7 @@ public class PassTimeManager : MonoBehaviour
 
     public void TogglePassTimeWindow()
     {
-        if (!windowOpened)
+        if (!passTimeWindowOpened)
         {
             passTimeWindow.SetActive(true);
             passButton.SetActive(true);
@@ -55,14 +55,14 @@ public class PassTimeManager : MonoBehaviour
             
             Clock.Instance.SetClock();
             
-            windowOpened = true;
+            passTimeWindowOpened = true;
         }
         else
         {
             passTimeWindow.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
 
-            windowOpened = false;
+            passTimeWindowOpened = false;
             hoursToPass = 1;
         }
     }
@@ -83,7 +83,7 @@ public class PassTimeManager : MonoBehaviour
         leftArrow.SetActive(false);
         rightArrow.SetActive(false);
         
-        while (GameManager.Instance.GetCurrentTime() < finalTime && windowOpened)
+        while (GameManager.Instance.GetCurrentTime() < finalTime && passTimeWindowOpened)
         {
             float remainingHours = finalTime - GameManager.Instance.GetCurrentTime();
             hoursToPass = (int)Mathf.Max(1, remainingHours + 1);

@@ -217,4 +217,9 @@ public class PlayerController : MonoBehaviour
     {
         return transform.position;
     }
+
+    public Transform GetPlayerTransform()
+    {
+        return transform;
+    }
 }
