@@ -13,8 +13,8 @@ namespace Heat
         [SerializeField] private float heatRange;
 
         // hide in inspector
-        public float burnTime;
-        public float temperature;
+        [HideInInspector] public float burnTime;
+        [HideInInspector] public float temperature;
 
         private Vector3 playerPos;
         public static float timeIncrement;
@@ -22,8 +22,6 @@ namespace Heat
         
         private void Start()
         {
-            playerPos = PlayerController.Instance.GetPlayerPosition();
-
             timeIncrement = GameManager.Instance.GetTimeIncrement();
         }
 
@@ -32,11 +30,22 @@ namespace Heat
             if (burnTime > 0)
             {
                 LowerValues();
+                HeatPlayer();
             }
             else
             {
                 DestroyCampfire();
             }
+        }
+
+        private void HeatPlayer()
+        {
+            var playerPos = PlayerController.Instance.GetPlayerPosition();
+            if (VitalManager.Instance.tempFromFire > 0) VitalManager.Instance.tempFromFire = 0;
+
+            if (Vector3.Distance(transform.position, playerPos) > heatRange) return;
+
+            VitalManager.Instance.tempFromFire = temperature;
         }
 
         private void LowerValues()

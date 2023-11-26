@@ -25,7 +25,7 @@ public class FirestartManager : MonoBehaviour
     [SerializeField] private float baseFireStartingChance;
     [Tooltip("Real-world seconds for the fire to start.")]
     [SerializeField] private float realStartingTime;
-    [Tooltip("In-game minutes that will be added after attempting to start the fire.")]
+    [Tooltip("In-game minutes of attempting to start the fire.")]
     [SerializeField] private float inGameStartingTime;
     
     private ItemData currentItem;
@@ -115,7 +115,8 @@ public class FirestartManager : MonoBehaviour
                 var fire = Instantiate(campfire, hit.point, Quaternion.identity);
                 var heatSource = fire.GetComponent<HeatSource>();
 
-                heatSource.burnTime += burnTime / 60f;
+                // add burnTime to fire minus the 5 minutes of the inGameStartingTime
+                heatSource.burnTime += (burnTime / 60f) - (inGameStartingTime / 60f);
                 heatSource.temperature += temperatureIncrease;
             }
         }

@@ -120,7 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27953f448be44b0fbc999c0dd5403bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatRange: 0
+  campFireExtinguished: {fileID: 1000010733288284, guid: 4d9abe81d0e1c004db48ea5ff13c8011,
+    type: 3}
+  heatRange: 5
   burnTime: 0
   temperature: 0
 --- !u!1 &1000011131169804

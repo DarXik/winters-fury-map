@@ -261,7 +261,7 @@ namespace Managers
 
         private void TryDrink(float waterIntake, ItemData itemData)
         {
-            var returnedWater = VitalManager.Instance.Drink(waterIntake);
+            var returnedWater = VitalManager.Instance.AddThirst(waterIntake);
 
             if (returnedWater == 0)
             {
@@ -282,7 +282,7 @@ namespace Managers
 
         private void TryEat(float caloriesIntake, ItemData itemData)
         {
-            var returnedCalories = VitalManager.Instance.Eat(caloriesIntake);
+            var returnedCalories = VitalManager.Instance.AddHunger(caloriesIntake);
 
             if (returnedCalories == 0)
             {
