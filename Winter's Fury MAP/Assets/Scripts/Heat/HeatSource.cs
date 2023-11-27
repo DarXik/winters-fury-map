@@ -13,8 +13,8 @@ namespace Heat
         [SerializeField] private float heatRange;
 
         // hide in inspector
-        [HideInInspector] public float burnTime;
-        [HideInInspector] public float temperature;
+        public float burnTime;
+        public float temperature;
 
         private Vector3 playerPos;
         public static float timeIncrement;

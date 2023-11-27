@@ -18,15 +18,16 @@ namespace Managers
         [SerializeField] private Gradient weightGradient;
         [HideInInspector] public float currentWeight;
 
-        [Header("UI References")] [SerializeField]
-        private GameObject inventory;
-
+        [Header("UI References")] 
+        [SerializeField] private GameObject inventory;
         [SerializeField] private GameObject inventoryUIItem;
         [SerializeField] private Transform itemContent;
         [SerializeField] private GameObject itemDetail;
         [SerializeField] private Slider weightBar;
         [SerializeField] private Image weightBarFill;
         [SerializeField] private TextMeshProUGUI weightValues;
+        [SerializeField] private GameObject backpack, crafting;
+        [SerializeField] private Image backpackBtn, craftingBtn;
 
         [Header("Item Detail References")] [SerializeField]
         private TextMeshProUGUI itemName;
@@ -42,8 +43,8 @@ namespace Managers
         [SerializeField] private GameObject actionButtonObj;
         [SerializeField] private Button actionBtn;
 
-        [Header("Drop Window References")] [SerializeField]
-        private GameObject dropItemWindow;
+        [Header("Drop Window References")] 
+        [SerializeField] private GameObject dropItemWindow;
 
         [SerializeField] private TextMeshProUGUI alertHeader;
         [SerializeField] private Slider dropItemSlider;
@@ -73,6 +74,8 @@ namespace Managers
             HideItemDetail();
             dropItemWindow.SetActive(false);
             actionButtonObj.SetActive(false);
+            backpack.SetActive(true);
+            crafting.SetActive(false);
 
             weightBar.maxValue = maxWeight;
         }
@@ -445,6 +448,24 @@ namespace Managers
 
                 item.itemCondition -= (item.conditionPerDay / 24f) * (Time.deltaTime * timeIncrement);
             }
+        }
+
+        public void DisplayBackpack()
+        {
+            backpack.SetActive(true);
+            crafting.SetActive(false);
+
+            backpackBtn.color = new Color32(255, 255, 255, 255);
+            craftingBtn.color = new Color32(255, 255, 255, 51);
+        }
+
+        public void DisplayCrafting()
+        {
+            backpack.SetActive(false);
+            crafting.SetActive(true);
+            
+            backpackBtn.color = new Color32(255, 255, 255, 51);
+            craftingBtn.color = new Color32(255, 255, 255, 255);
         }
 
         public void UpdateWeightValues()

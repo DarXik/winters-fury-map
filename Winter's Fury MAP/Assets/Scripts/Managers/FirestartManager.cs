@@ -11,30 +11,38 @@ using Random = UnityEngine.Random;
 public class FirestartManager : MonoBehaviour
 {
     public static bool fireWindowOpened;
-    
+
     [SerializeField] private GameObject campfire;
-    
-    [Header("UI References")] 
-    [SerializeField] private GameObject fireStartWindow;
-    [SerializeField] private TextMeshProUGUI baseChanceText, chanceOfSuccessText, fireDurText, fuelNameText, fuelAmountText;
+
+    [Header("UI References")] [SerializeField]
+    private GameObject fireStartWindow;
+
+    [SerializeField] private TextMeshProUGUI baseChanceText,
+        chanceOfSuccessText,
+        bonusChanceText,
+        fireDurText,
+        fuelNameText,
+        fuelAmountText;
+
     [SerializeField] private Image fuelIcon;
     [SerializeField] private GameObject selector, progress;
     [SerializeField] private Image progressIcon;
 
-    [Header("Values")]
-    [SerializeField] private float baseFireStartingChance;
-    [Tooltip("Real-world seconds for the fire to start.")]
-    [SerializeField] private float realStartingTime;
-    [Tooltip("In-game minutes of attempting to start the fire.")]
-    [SerializeField] private float inGameStartingTime;
-    
+    [Header("Values")] [SerializeField] private float baseFireStartingChance;
+
+    [Tooltip("Real-world seconds for the fire to start.")] [SerializeField]
+    private float realStartingTime;
+
+    [Tooltip("In-game minutes of attempting to start the fire.")] [SerializeField]
+    private float inGameStartingTime;
+
     private ItemData currentItem;
     private int maxFuelCount;
     private int chosenFuelCount = 1;
     private float chanceOfSuccess;
     private int startingBurnTime, burnTime;
-    private float temperatureIncrease;
-    
+    private float startingTempIncrease, temperatureIncrease;
+
     public static FirestartManager Instance { get; private set; }
 
     private void Awake()
@@ -49,13 +57,13 @@ public class FirestartManager : MonoBehaviour
         chanceOfSuccess = baseFireStartingChance;
         baseChanceText.text = baseFireStartingChance + "%";
     }
-    
+
     public void OpenFireStartWindow(ItemData fuelItem, int fuelCount)
     {
         PlayerLook.Instance.BlockRotation();
         fireStartWindow.SetActive(true);
         fireWindowOpened = true;
-        
+
         chanceOfSuccess = baseFireStartingChance;
 
         currentItem = fuelItem;
@@ -63,18 +71,18 @@ public class FirestartManager : MonoBehaviour
         AssignFuelInfo();
 
         maxFuelCount = fuelCount;
-        
+
         fuelAmountText.text = $"{chosenFuelCount} of {maxFuelCount}";
     }
 
     public void CloseFireStartWindow()
     {
         fireWindowOpened = false;
-        
+
         fireStartWindow.SetActive(false);
         selector.SetActive(true);
         progress.SetActive(false);
-        
+
         InventoryManager.Instance.ToggleInventory();
     }
 
@@ -89,9 +97,9 @@ public class FirestartManager : MonoBehaviour
     private IEnumerator StartFireProgress()
     {
         float chance = Mathf.Round(Random.value * 100);
-        
+
         progressIcon.fillAmount = 0f;
-        
+
         var timeElapsed = 0f;
 
         while (timeElapsed < realStartingTime)
@@ -105,12 +113,15 @@ public class FirestartManager : MonoBehaviour
 
         if (chance <= chanceOfSuccess)
         {
-            InventoryManager.Instance.DeleteItem(currentItem);
+            for (int i = 0; i < chosenFuelCount; i++)
+            {
+                InventoryManager.Instance.DeleteItem(currentItem);
+            }
 
             var playerPos = PlayerController.Instance.GetPlayerPosition();
             var playerTransform = PlayerController.Instance.GetPlayerTransform();
 
-            if (Physics.Raycast(playerPos,  playerTransform.forward * 2 + Vector3.down, out var hit, 10f))
+            if (Physics.Raycast(playerPos, playerTransform.forward * 2 + Vector3.down, out var hit, 10f))
             {
                 var fire = Instantiate(campfire, hit.point, Quaternion.identity);
                 var heatSource = fire.GetComponent<HeatSource>();
@@ -120,7 +131,7 @@ public class FirestartManager : MonoBehaviour
                 heatSource.temperature += temperatureIncrease;
             }
         }
-        
+
         GameManager.Instance.AddMinutes(inGameStartingTime);
         CloseFireStartWindow();
     }
@@ -131,8 +142,9 @@ public class FirestartManager : MonoBehaviour
         {
             chosenFuelCount++;
             burnTime += startingBurnTime;
+            temperatureIncrease += startingTempIncrease;
         }
-        
+
         UpdateFuelInfoText();
     }
 
@@ -142,8 +154,9 @@ public class FirestartManager : MonoBehaviour
         {
             chosenFuelCount--;
             burnTime -= startingBurnTime;
+            temperatureIncrease -= startingTempIncrease;
         }
-        
+
         UpdateFuelInfoText();
     }
 
@@ -151,9 +164,10 @@ public class FirestartManager : MonoBehaviour
     {
         var fuelItems = InventoryManager.Instance.GetFuelItems();
         var itemCounts = InventoryManager.Instance.GetItemCounts();
-        
+
         chanceOfSuccess = baseFireStartingChance;
-        
+        chosenFuelCount = 1;
+
         foreach (var fuelItem in fuelItems)
         {
             if (fuelItem != currentItem)
@@ -171,16 +185,17 @@ public class FirestartManager : MonoBehaviour
                 break;
             }
         }
-        
+
         AssignFuelInfo();
     }
 
     private void AssignFuelInfo()
     {
         chanceOfSuccess += currentItem.chanceBonus;
-        
+
         chanceOfSuccessText.text = chanceOfSuccess + "%";
-        
+        bonusChanceText.text = $"+{currentItem.chanceBonus}%";
+
         startingBurnTime = currentItem.burnTime;
         burnTime = startingBurnTime;
 
@@ -190,8 +205,9 @@ public class FirestartManager : MonoBehaviour
         fuelIcon.sprite = currentItem.itemIcon;
         fuelIcon.preserveAspect = true;
 
-        temperatureIncrease = currentItem.temperatureIncrease;
-        
+        startingTempIncrease = currentItem.temperatureIncrease;
+        temperatureIncrease = startingTempIncrease;
+
         UpdateFuelInfoText();
     }
 

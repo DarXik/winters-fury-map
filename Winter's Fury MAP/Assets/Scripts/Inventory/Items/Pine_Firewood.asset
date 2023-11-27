@@ -24,6 +24,6 @@ MonoBehaviour:
   waterIntake: 0
   caloriesIntake: 0
   fatigueReduce: 0
-  temperatureIncrease: 16
+  temperatureIncrease: 9
   burnTime: 90
   chanceBonus: 60
