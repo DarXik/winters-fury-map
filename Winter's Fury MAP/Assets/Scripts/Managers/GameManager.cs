@@ -48,12 +48,12 @@ namespace Managers
 
         private void CheckUserInput()
         {
-            if (Input.GetKeyDown(KeyCode.I) && !FirestartManager.fireWindowOpened && !PassTimeManager.passTimeWindowOpened)
+            if (Input.GetKeyDown(KeyCode.I) && !FirestartManager.fireWindowOpened && !PassTimeManager.passTimeWindowOpened && !AddFuelManager.addFuelWindowOpened)
             {
                 InventoryManager.Instance.ToggleInventory();
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened)
+            if (Input.GetKeyDown(KeyCode.T) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened && !AddFuelManager.addFuelWindowOpened)
             {
                 PassTimeManager.Instance.TogglePassTimeWindow();
             }

@@ -14,7 +14,7 @@ namespace Heat
 
         // hide in inspector
         public float burnTime;
-        public float temperature;
+        public float heatOutput;
 
         private Vector3 playerPos;
         public static float timeIncrement;
@@ -45,7 +45,7 @@ namespace Heat
 
             if (Vector3.Distance(transform.position, playerPos) > heatRange) return;
 
-            VitalManager.Instance.tempFromFire = temperature;
+            VitalManager.Instance.tempFromFire = heatOutput;
         }
 
         private void LowerValues()
