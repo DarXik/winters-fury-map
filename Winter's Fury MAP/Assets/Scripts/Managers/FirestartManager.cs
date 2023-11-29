@@ -199,7 +199,7 @@ public class FirestartManager : MonoBehaviour
         startingBurnTime = currentItem.burnTime;
         burnTime = startingBurnTime;
 
-        fireDurText.text = $"{GetFuelHours()}H {GetFuelMinutes()}M";
+        fireDurText.text = $"{BurnConverter.GetFuelHours(burnTime)}H {BurnConverter.GetFuelMinutes(burnTime)}M";
         fuelNameText.text = currentItem.itemName;
 
         fuelIcon.sprite = currentItem.itemIcon;
@@ -214,16 +214,6 @@ public class FirestartManager : MonoBehaviour
     private void UpdateFuelInfoText()
     {
         fuelAmountText.text = $"{chosenFuelCount} of {maxFuelCount}";
-        fireDurText.text = $"{GetFuelHours()}H {GetFuelMinutes()}M";
-    }
-
-    private int GetFuelHours()
-    {
-        return burnTime / 60;
-    }
-
-    private int GetFuelMinutes()
-    {
-        return burnTime % 60;
+        fireDurText.text = $"{BurnConverter.GetFuelHours(burnTime)}H {BurnConverter.GetFuelMinutes(burnTime)}M";
     }
 }

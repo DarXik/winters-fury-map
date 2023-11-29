@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23000011202434458}
   - component: {fileID: 64314257532258086}
   - component: {fileID: 2933605437138349445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CampfireBurning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
     type: 3}
   heatRange: 5
   burnTime: 0
-  temperature: 0
+  heatOutput: 0
 --- !u!1 &1000011131169804
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 4000011979404852}
   - component: {fileID: 198000014213473078}
   - component: {fileID: 199000013998962040}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4959,7 +4959,7 @@ GameObject:
   - component: {fileID: 4000010288709798}
   - component: {fileID: 198000010140291010}
   - component: {fileID: 199000010368811552}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SnokeParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9773,7 +9773,7 @@ GameObject:
   - component: {fileID: 4000011592890156}
   - component: {fileID: 108000013311425858}
   - component: {fileID: 114000013824857536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}

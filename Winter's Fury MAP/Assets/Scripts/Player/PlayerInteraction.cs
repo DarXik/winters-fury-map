@@ -1,5 +1,4 @@
-﻿using System;
-using Heat;
+﻿using Heat;
 using Managers;
 using UnityEngine;
 
@@ -7,7 +6,6 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        public LayerMask[] layers;
         public float maxInteractDistance;
 
         private RaycastHit hit;
@@ -19,6 +17,9 @@ namespace Player
 
         private void CheckHit()
         {
+            if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
+                AddFuelManager.addFuelWindowOpened) return;
+            
             if (Physics.Raycast(transform.position, transform.forward, out hit, maxInteractDistance,
                     LayerMask.GetMask("Item")))
             {
