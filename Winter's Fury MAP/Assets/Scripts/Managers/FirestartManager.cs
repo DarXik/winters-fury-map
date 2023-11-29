@@ -123,8 +123,14 @@ public class FirestartManager : MonoBehaviour
 
             if (Physics.Raycast(playerPos, playerTransform.forward * 2 + Vector3.down, out var hit, 10f))
             {
-                var fire = Instantiate(campfire, hit.point, Quaternion.identity);
-                var heatSource = fire.GetComponent<HeatSource>();
+                var campfire = Instantiate(this.campfire, hit.point, Quaternion.identity);
+
+                if (Physics.Raycast(campfire.transform.position, Vector3.down, out var hit2, 10f))
+                {
+                    campfire.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit2.normal);
+                }
+                
+                var heatSource = campfire.GetComponent<HeatSource>();
 
                 // add burnTime to fire minus the 5 minutes of the inGameStartingTime
                 heatSource.burnTime += (burnTime / 60f) - (inGameStartingTime / 60f);

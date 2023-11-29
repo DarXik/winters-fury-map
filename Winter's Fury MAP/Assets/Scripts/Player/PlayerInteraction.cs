@@ -7,6 +7,7 @@ namespace Player
     public class PlayerInteraction : MonoBehaviour
     {
         public float maxInteractDistance;
+        public static HeatSource interactedCampfire;
 
         private RaycastHit hit;
 
@@ -28,10 +29,11 @@ namespace Player
             else if (Physics.Raycast(transform.position, transform.forward, out hit, maxInteractDistance,
                          LayerMask.GetMask("Campfire")))
             {
-                var fireDuration = hit.transform.GetComponent<HeatSource>().burnTime;
-                var heatOutput = hit.transform.GetComponent<HeatSource>().heatOutput;
+                interactedCampfire = hit.transform.GetComponent<HeatSource>();
+                var fireDuration = interactedCampfire.burnTime;
+                var heatOutput = interactedCampfire.heatOutput;
                 
-                AddFuelManager.Instance.OpenAddFuelWindow(fireDuration, heatOutput);
+                AddFuelManager.Instance.OpenAddFuelWindow(fireDuration, heatOutput, hit.transform);
             }
         }
         

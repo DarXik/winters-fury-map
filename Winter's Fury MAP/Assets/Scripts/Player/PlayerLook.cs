@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Player
@@ -11,6 +12,7 @@ namespace Player
 
         private bool rotationBlocked = false;
         private float _xAxisClamp;
+        private Quaternion startingRotation;
 
         public static PlayerLook Instance { get; private set; }
         
@@ -43,6 +45,11 @@ namespace Player
         private void LateUpdate()
         {
             RotateCamera();
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                transform.rotation = startingRotation;
+            }
         }
 
         private void RotateCamera()
@@ -79,6 +86,23 @@ namespace Player
 
             eulerRotation.x = value;
             transform.eulerAngles = eulerRotation;
+        }
+
+        public IEnumerator LookAt(Transform target)
+        {
+            var speed = 1f;
+            var timeElapsed = 0f;
+
+            var targetRotation = Quaternion.LookRotation(target.position - transform.position);
+            
+            while (timeElapsed < speed)
+            {
+                transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, Quaternion.Euler(targetRotation.eulerAngles.x, 0, 0), timeElapsed / speed);
+                playerBody.rotation = Quaternion.SlerpUnclamped(playerBody.rotation, Quaternion.Euler(0, targetRotation.eulerAngles.y, 0), timeElapsed / speed);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            
         }
     }
 }

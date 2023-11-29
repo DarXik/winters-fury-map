@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Heat;
+using System.Linq;
 using Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Managers
@@ -19,7 +18,8 @@ namespace Managers
         [SerializeField] private GameObject addFuelWindow;
         [SerializeField] private TextMeshProUGUI fireDurText, heatOutText;
 
-        private int chosenFuelIndex;
+        private List<ItemData> usedFuelItems;
+        private int? chosenFuelIndex = null;
 
         public static bool addFuelWindowOpened;
         public static AddFuelManager Instance { get; set; }
@@ -36,6 +36,8 @@ namespace Managers
 
         private void ChooseFuelItem(int index)
         {
+            if (chosenFuelIndex == index) return;
+            
             for (int i = 0; i < fuelChooser.childCount; i++)
             {
                 Image itemImage = fuelChooser.GetChild(i).GetComponent<Image>();
@@ -43,6 +45,7 @@ namespace Managers
                 if (i == index)
                 {
                     itemImage.color = selectedColor;
+                    chosenFuelIndex = i;
                 }
                 else
                 {
@@ -51,11 +54,12 @@ namespace Managers
             }
         }
 
-        public void OpenAddFuelWindow(float fireDuration, float heatOutput)
+        public void OpenAddFuelWindow(float fireDuration, float heatOutput, Transform campfire)
         {
             addFuelWindow.SetActive(true);
             addFuelWindowOpened = true;
             PlayerLook.Instance.BlockRotation();
+            StartCoroutine(PlayerLook.Instance.LookAt(campfire));
 
             var duration = Mathf.RoundToInt(fireDuration * 60f);
 
@@ -72,7 +76,7 @@ namespace Managers
             // create Fuel Items
             var fuelItems = InventoryManager.Instance.GetFuelItems();
             var itemCounts = InventoryManager.Instance.GetItemCounts();
-            List<string> usedItems = new();
+            usedFuelItems = new();
 
             foreach (var fuelItem in fuelItems)
             {
@@ -83,7 +87,7 @@ namespace Managers
                     
                     if (itemCount.Item1 == fuelItem.itemName)
                     {
-                        if (!usedItems.Contains(itemCount.Item1))
+                        if (!usedFuelItems.Contains(fuelItem))
                         {
                             var uiFuelItem = Instantiate(UIFuelItem, fuelChooser);
 
@@ -96,14 +100,41 @@ namespace Managers
                                 ChooseFuelItem(index);
                             });
 
-                            usedItems.Add(itemCount.Item1);
+                            usedFuelItems.Add(fuelItem);
                         }
                     }
                 }
             }
             
-            // choose immediately the first item
+            // highlight first item
             ChooseFuelItem(0);
+        }
+
+        public void AddFuel()
+        {
+            int index = Convert.ToInt32(chosenFuelIndex);
+            var chosenFuelItem = usedFuelItems[index];
+            
+            // add fuel item into HeatSource
+            PlayerInteraction.interactedCampfire.burnTime += chosenFuelItem.burnTime / 60f;
+            PlayerInteraction.interactedCampfire.heatOutput += chosenFuelItem.temperatureIncrease;
+            
+            // update UI text
+            var duration = Mathf.RoundToInt(PlayerInteraction.interactedCampfire.burnTime * 60f);
+            
+            if (duration > 60)
+            {
+                fireDurText.text = $"{BurnConverter.GetFuelHours(duration)}H {BurnConverter.GetFuelMinutes(duration)}M";
+            }
+            else
+            {
+                fireDurText.text = $"{BurnConverter.GetFuelMinutes(duration)}M";
+            }
+
+            heatOutText.text = $"{PlayerInteraction.interactedCampfire.heatOutput}°C";
+            
+            // delete fuel item
+            InventoryManager.Instance.DeleteItem(chosenFuelItem);
         }
 
         public void CloseAddFuelWindow()
@@ -112,6 +143,7 @@ namespace Managers
             addFuelWindow.SetActive(false);
             addFuelWindowOpened = false;
             PlayerLook.Instance.UnblockRotation();
+            chosenFuelIndex = null;
         }
 
         private void DeleteFuelChooserItems()

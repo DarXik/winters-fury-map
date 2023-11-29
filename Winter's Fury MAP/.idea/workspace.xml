@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd37ab48-7d7f-4cee-b206-64ea15fc3dc0" name="Changes" comment="" />
+    <list default="true" id="cd37ab48-7d7f-4cee-b206-64ea15fc3dc0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.plastic/plastic.changes" beforeDir="false" afterPath="$PROJECT_DIR$/.plastic/plastic.changes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.plastic/plastic.wktree" beforeDir="false" afterPath="$PROJECT_DIR$/.plastic/plastic.wktree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FuturaRenner-Regular.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FuturaRenner-Regular.otf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Grip-p7WZv.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Grip-p7WZv.otf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/Menu-main.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/Menu-main.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Assets/NotoSansJP-VariableFont_wght SDF.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Assets/NotoSansJP-VariableFont_wght SDF.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Basic/NotoSansJP-VariableFont_wght.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Basic/NotoSansJP-VariableFont_wght.ttf.meta" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +52,7 @@
       <workItem from="1696668743265" duration="1000" />
       <workItem from="1700568912998" duration="11000" />
       <workItem from="1700570697576" duration="13000" />
+      <workItem from="1701292190576" duration="10000" />
     </task>
     <servers />
   </component>
