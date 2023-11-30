@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -15,7 +12,6 @@ public class DepthOfFieldController : MonoBehaviour
     
     private Ray raycast;
     private RaycastHit hit;
-    private bool isHit;
     private float hitDistance;
 
     private void Start()
@@ -27,11 +23,8 @@ public class DepthOfFieldController : MonoBehaviour
     {
         raycast = new Ray(transform.position, transform.forward * maxFocusDistance);
 
-        isHit = false;
-
         if (Physics.Raycast(raycast, out hit, 100f))
         {
-            isHit = true;
             hitDistance = Vector3.Distance(transform.position, hit.point);
         }
         else

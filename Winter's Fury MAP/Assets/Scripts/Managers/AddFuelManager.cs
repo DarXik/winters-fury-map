@@ -13,8 +13,9 @@ namespace Managers
         [SerializeField] private GameObject UIFuelItem;
         [SerializeField] private Color selectedColor;
 
-        [Header("UI References")] 
-        [SerializeField] private Transform fuelChooser;
+        [Header("UI References")] [SerializeField]
+        private Transform fuelChooser;
+
         [SerializeField] private GameObject addFuelWindow;
         [SerializeField] private TextMeshProUGUI fireDurText, heatOutText;
 
@@ -31,17 +32,17 @@ namespace Managers
 
         private void Start()
         {
-            addFuelWindow.SetActive(false); 
+            addFuelWindow.SetActive(false);
         }
 
         private void ChooseFuelItem(int index)
         {
             if (chosenFuelIndex == index) return;
-            
+
             for (int i = 0; i < fuelChooser.childCount; i++)
             {
                 Image itemImage = fuelChooser.GetChild(i).GetComponent<Image>();
-                
+
                 if (i == index)
                 {
                     itemImage.color = selectedColor;
@@ -71,8 +72,9 @@ namespace Managers
             {
                 fireDurText.text = $"{BurnConverter.GetFuelMinutes(duration)}M";
             }
+
             heatOutText.text = $"{heatOutput}°C";
-            
+
             CreateUIFuelItems();
         }
 
@@ -80,14 +82,14 @@ namespace Managers
         {
             int index = Convert.ToInt32(chosenFuelIndex);
             var chosenFuelItem = usedFuelItems[index];
-            
+
             // add fuel item into HeatSource
             PlayerInteraction.interactedCampfire.burnTime += chosenFuelItem.burnTime / 60f;
             PlayerInteraction.interactedCampfire.heatOutput += chosenFuelItem.temperatureIncrease;
-            
+
             // update UI text
             var duration = Mathf.RoundToInt(PlayerInteraction.interactedCampfire.burnTime * 60f);
-            
+
             if (duration > 60)
             {
                 fireDurText.text = $"{BurnConverter.GetFuelHours(duration)}H {BurnConverter.GetFuelMinutes(duration)}M";
@@ -98,16 +100,31 @@ namespace Managers
             }
 
             heatOutText.text = $"{PlayerInteraction.interactedCampfire.heatOutput}°C";
-            
+
             // delete fuel item
             InventoryManager.Instance.DeleteItem(chosenFuelItem);
-            CreateUIFuelItems();
+            //UpdateUIFuelItems();
+        }
+
+        private void UpdateUIFuelItems()
+        {
+            var itemCounts = InventoryManager.Instance.GetItemCounts();
+            var index = Convert.ToInt32(chosenFuelIndex);
+            var fuelName = fuelChooser.GetChild(index).Find("Fuel Name").GetComponent<TextMeshProUGUI>().text;
+
+            foreach (var itemCount in itemCounts)
+            {
+                if (itemCount.Item1 == fuelName)
+                {
+                    fuelChooser.GetChild(index).Find("Fuel Amount").GetComponent<TextMeshProUGUI>().text =
+                        $"1 OF {itemCount.Item2}";
+                    break;
+                }
+            }
         }
 
         private void CreateUIFuelItems()
         {
-            DeleteFuelChooserItems();
-            
             var fuelItems = InventoryManager.Instance.GetFuelItems();
             var itemCounts = InventoryManager.Instance.GetItemCounts();
             usedFuelItems = new();
@@ -118,7 +135,7 @@ namespace Managers
                 {
                     var itemCount = itemCounts[i];
                     var index = i;
-                    
+
                     if (itemCount.Item1 == fuelItem.itemName)
                     {
                         if (!usedFuelItems.Contains(fuelItem))
@@ -129,17 +146,14 @@ namespace Managers
                                 itemCount.Item1;
                             uiFuelItem.transform.Find("Fuel Amount").GetComponent<TextMeshProUGUI>().text =
                                 $"1 OF {itemCount.Item2}";
-                            uiFuelItem.GetComponent<Button>().onClick.AddListener(delegate
-                            {
-                                ChooseFuelItem(index);
-                            });
+                            uiFuelItem.GetComponent<Button>().onClick.AddListener(delegate { ChooseFuelItem(index); });
 
                             usedFuelItems.Add(fuelItem);
                         }
                     }
                 }
             }
-            
+
             ChooseFuelItem(0);
         }
 
@@ -156,7 +170,7 @@ namespace Managers
         {
             foreach (Transform item in fuelChooser)
             {
-               Destroy(item.gameObject); 
+                Destroy(item.gameObject);
             }
         }
     }

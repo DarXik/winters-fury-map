@@ -121,7 +121,7 @@ namespace Managers
             items.Add(itemData);
         }
 
-        private void ListItems()
+        public void ListItems()
         {
             DeleteInventoryContents();
             DeleteNeedContents();
