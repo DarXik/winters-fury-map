@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 248948158}
   - component: {fileID: 248948157}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -540,8 +540,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -542, y: 216}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -598, y: 199}
+  m_SizeDelta: {x: 234.2458, y: 81.5904}
   m_Pivot: {x: 0.50000006, y: 0.5}
 --- !u!114 &248948157
 MonoBehaviour:
@@ -565,8 +565,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Winter's Fury
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2d65e07ece0445b4cb36d13caf03af8d, type: 2}
+  m_sharedMaterial: {fileID: -1450458223248180348, guid: 2d65e07ece0445b4cb36d13caf03af8d,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -37,6 +37,7 @@ public class FirestartManager : MonoBehaviour
     private float inGameStartingTime;
 
     private ItemData currentItem;
+    private int currentItemIndex;
     private int maxFuelCount;
     private int chosenFuelCount = 1;
     private float chanceOfSuccess;
@@ -66,8 +67,17 @@ public class FirestartManager : MonoBehaviour
 
         chanceOfSuccess = baseFireStartingChance;
 
-        currentItem = fuelItem;
+        var fuelItems = InventoryManager.Instance.GetFuelItems();
 
+        for (int i = 0; i < fuelItems.Count; i++)
+        {
+            if (fuelItems[i] == fuelItem)
+            {
+                currentItem = fuelItem;
+                currentItemIndex = i;
+            }
+        }
+        
         AssignFuelInfo();
 
         maxFuelCount = fuelCount;
@@ -129,7 +139,7 @@ public class FirestartManager : MonoBehaviour
                 {
                     campfire.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit2.normal);
                 }
-                
+
                 var heatSource = campfire.GetComponent<HeatSource>();
 
                 // add burnTime to fire minus the 5 minutes of the inGameStartingTime
@@ -174,14 +184,18 @@ public class FirestartManager : MonoBehaviour
         chanceOfSuccess = baseFireStartingChance;
         chosenFuelCount = 1;
 
-        foreach (var fuelItem in fuelItems)
+        if (currentItemIndex < fuelItems.Count - 1)
         {
-            if (fuelItem != currentItem)
-            {
-                currentItem = fuelItem;
-                break;
-            }
+            currentItemIndex += 1;
+            
+            currentItemIndex = fuelItems.FindLastIndex(item => item == fuelItems[currentItemIndex]);
         }
+        else
+        {
+            currentItemIndex = fuelItems.FindLastIndex(item => item == fuelItems[0]);
+        }
+
+        currentItem = fuelItems[currentItemIndex];
 
         foreach (var count in itemCounts)
         {

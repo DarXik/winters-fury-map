@@ -95,6 +95,7 @@ namespace Player
 
             var targetRotation = Quaternion.LookRotation(target.position - transform.position);
             
+            
             while (timeElapsed < speed)
             {
                 transform.localRotation = Quaternion.SlerpUnclamped(transform.localRotation, Quaternion.Euler(targetRotation.eulerAngles.x, 0, 0), timeElapsed / speed);

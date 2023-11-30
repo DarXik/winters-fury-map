@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
+  m_Name: Stick
+  m_EditorClassIdentifier: 
+  itemObj: {fileID: 7585413835570720021, guid: 70a048e9cf7879241b642c397b3dc0be, type: 3}
+  itemName: Stick
+  itemDescription: Small stick that will burn, but not for very long.
+  itemType: 2
+  itemWeight: 0.15
+  itemCondition: 100
+  conditionPerDay: 0
+  itemIcon: {fileID: 21300000, guid: fd239b07af81b2744a9d6b62b52f6a5a, type: 3}
+  waterIntake: 0
+  caloriesIntake: 0
+  fatigueReduce: 0
+  temperatureIncrease: 1
+  burnTime: 8
+  chanceBonus: 15

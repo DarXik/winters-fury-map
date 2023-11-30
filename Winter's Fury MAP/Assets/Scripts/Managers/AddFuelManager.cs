@@ -73,7 +73,41 @@ namespace Managers
             }
             heatOutText.text = $"{heatOutput}°C";
             
-            // create Fuel Items
+            CreateUIFuelItems();
+        }
+
+        public void AddFuel()
+        {
+            int index = Convert.ToInt32(chosenFuelIndex);
+            var chosenFuelItem = usedFuelItems[index];
+            
+            // add fuel item into HeatSource
+            PlayerInteraction.interactedCampfire.burnTime += chosenFuelItem.burnTime / 60f;
+            PlayerInteraction.interactedCampfire.heatOutput += chosenFuelItem.temperatureIncrease;
+            
+            // update UI text
+            var duration = Mathf.RoundToInt(PlayerInteraction.interactedCampfire.burnTime * 60f);
+            
+            if (duration > 60)
+            {
+                fireDurText.text = $"{BurnConverter.GetFuelHours(duration)}H {BurnConverter.GetFuelMinutes(duration)}M";
+            }
+            else
+            {
+                fireDurText.text = $"{BurnConverter.GetFuelMinutes(duration)}M";
+            }
+
+            heatOutText.text = $"{PlayerInteraction.interactedCampfire.heatOutput}°C";
+            
+            // delete fuel item
+            InventoryManager.Instance.DeleteItem(chosenFuelItem);
+            CreateUIFuelItems();
+        }
+
+        private void CreateUIFuelItems()
+        {
+            DeleteFuelChooserItems();
+            
             var fuelItems = InventoryManager.Instance.GetFuelItems();
             var itemCounts = InventoryManager.Instance.GetItemCounts();
             usedFuelItems = new();
@@ -106,35 +140,7 @@ namespace Managers
                 }
             }
             
-            // highlight first item
             ChooseFuelItem(0);
-        }
-
-        public void AddFuel()
-        {
-            int index = Convert.ToInt32(chosenFuelIndex);
-            var chosenFuelItem = usedFuelItems[index];
-            
-            // add fuel item into HeatSource
-            PlayerInteraction.interactedCampfire.burnTime += chosenFuelItem.burnTime / 60f;
-            PlayerInteraction.interactedCampfire.heatOutput += chosenFuelItem.temperatureIncrease;
-            
-            // update UI text
-            var duration = Mathf.RoundToInt(PlayerInteraction.interactedCampfire.burnTime * 60f);
-            
-            if (duration > 60)
-            {
-                fireDurText.text = $"{BurnConverter.GetFuelHours(duration)}H {BurnConverter.GetFuelMinutes(duration)}M";
-            }
-            else
-            {
-                fireDurText.text = $"{BurnConverter.GetFuelMinutes(duration)}M";
-            }
-
-            heatOutText.text = $"{PlayerInteraction.interactedCampfire.heatOutput}°C";
-            
-            // delete fuel item
-            InventoryManager.Instance.DeleteItem(chosenFuelItem);
         }
 
         public void CloseAddFuelWindow()
