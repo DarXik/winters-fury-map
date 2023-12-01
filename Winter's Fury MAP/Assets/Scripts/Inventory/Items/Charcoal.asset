@@ -16,13 +16,14 @@ MonoBehaviour:
   itemName: Charcoal
   itemDescription: Small pieces of charcoal.
   itemType: 2
-  itemWeight: 0.5
   itemCondition: 100
   conditionPerDay: 0
   itemIcon: {fileID: 21300000, guid: 91af48ba53cb0be4d9b323bd8de6016a, type: 3}
+  calorieDensity: 0
   waterIntake: 0
   caloriesIntake: 0
   fatigueReduce: 0
+  fuelItemWeight: 0.3
   temperatureIncrease: 20
   burnTime: 60
   chanceBonus: 0

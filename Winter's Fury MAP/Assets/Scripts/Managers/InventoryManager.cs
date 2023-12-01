@@ -78,6 +78,7 @@ namespace Managers
             crafting.SetActive(false);
 
             weightBar.maxValue = maxWeight;
+            weightBar.value = 0;
         }
 
         private void Update()
@@ -159,7 +160,7 @@ namespace Managers
                 }
 
 
-                currentWeight += item.itemWeight;
+                currentWeight += item.ItemWeight;
             }
 
             weightBar.value = currentWeight;
@@ -218,7 +219,7 @@ namespace Managers
                         }
                     }
 
-                    itemWeight.text = (itemCountValue * item.itemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
+                    itemWeight.text = (itemCountValue * item.ItemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
 
                     dropItemButton.onClick.AddListener(() => OpenDropWindow(itemName));
 
@@ -237,8 +238,7 @@ namespace Managers
                         case ItemType.Drink:
                             var needItemDrink = Instantiate(detailNeedItem, needs.transform);
                             needItemDrink.transform.Find("Image").GetComponent<Image>().sprite = water;
-                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
-                                item.waterIntake.ToString(CultureInfo.InvariantCulture);
+                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = $"{(item.waterIntake * itemCountValue / 1000).ToString(CultureInfo.InvariantCulture)} L";
 
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
                             actionButtonObj.SetActive(true);
@@ -375,7 +375,7 @@ namespace Managers
                         offset += droppedItem.transform.localScale.x / 2f;
                     }
 
-                    currentWeight -= item.itemWeight;
+                    currentWeight -= item.ItemWeight;
 
                     items.RemoveAt(i);
                     totalCount++;
@@ -409,7 +409,7 @@ namespace Managers
                         offset += droppedItem.transform.localScale.x / 2f;
                     }
 
-                    currentWeight -= item.itemWeight;
+                    currentWeight -= item.ItemWeight;
 
                     items.RemoveAt(i);
                 }

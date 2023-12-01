@@ -42,7 +42,7 @@ namespace Player
             // Create a copy of the itemData
             ItemData itemDataCopy = Instantiate(hit.transform.root.GetComponent<ItemController>().itemData);
 
-            if (InventoryManager.Instance.currentWeight + itemDataCopy.itemWeight >
+            if (InventoryManager.Instance.currentWeight + itemDataCopy.ItemWeight >
                 InventoryManager.Instance.maxWeight) return;
         
             InventoryManager.Instance.AddItem(itemDataCopy);
