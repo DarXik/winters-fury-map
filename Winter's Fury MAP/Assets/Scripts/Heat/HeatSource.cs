@@ -1,7 +1,6 @@
 ﻿using System;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Heat
 {
@@ -12,9 +11,8 @@ namespace Heat
         [Header("Properties")] 
         [SerializeField] private float heatRange;
 
-        // hide in inspector
-        public float burnTime;
-        public float heatOutput;
+        [HideInInspector] public float burnTime;
+        [HideInInspector] public float heatOutput;
 
         private Vector3 playerPos;
         public static float timeIncrement;

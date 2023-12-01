@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour
         MovingStateHandler();
         MovePlayer();
         CrouchHandler();
-        HandleUI();
 
         CheckForHeadBob();
         if(!isCrouching) headBob.ResetHeadBob();
@@ -173,9 +172,7 @@ public class PlayerController : MonoBehaviour
 
     private bool OnSlope()
     {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, currentHeight / 2f * slopeForceRayLength))
+        if (Physics.Raycast(transform.position, Vector3.down, out var hit, currentHeight / 2f * slopeForceRayLength))
         {
             if (hit.normal != Vector3.up) return true;
         }
@@ -206,11 +203,6 @@ public class PlayerController : MonoBehaviour
         {
             isRegenerating = false;
         }
-    }
-
-    private void HandleUI()
-    {
-        
     }
 
     public Vector3 GetPlayerPosition()

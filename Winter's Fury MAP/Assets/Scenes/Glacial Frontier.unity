@@ -34145,8 +34145,9 @@ MonoBehaviour:
   selector: {fileID: 813753007}
   progress: {fileID: 13080333}
   progressIcon: {fileID: 403625021}
+  distanceFromPlayer: 2.5
   baseFireStartingChance: 40
-  realStartingTime: 2
+  realStartingTime: 12
   inGameStartingTime: 5
 --- !u!114 &1603449270
 MonoBehaviour:

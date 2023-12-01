@@ -28,13 +28,16 @@ public class FirestartManager : MonoBehaviour
     [SerializeField] private GameObject selector, progress;
     [SerializeField] private Image progressIcon;
 
-    [Header("Values")] [SerializeField] private float baseFireStartingChance;
+    [Header("Values")] 
+    [Tooltip("Distance from player at which the campfire spawns.")]
+    [SerializeField] private float distanceFromPlayer;
+    [SerializeField] private float baseFireStartingChance;
 
-    [Tooltip("Real-world seconds for the fire to start.")] [SerializeField]
-    private float realStartingTime;
+    [Tooltip("Real-world seconds for the fire to start.")] 
+    [SerializeField] private float realStartingTime;
 
-    [Tooltip("In-game minutes of attempting to start the fire.")] [SerializeField]
-    private float inGameStartingTime;
+    [Tooltip("In-game minutes of attempting to start the fire.")] 
+    [SerializeField] private float inGameStartingTime;
 
     private ItemData currentItem;
     private int currentItemIndex;
@@ -131,14 +134,10 @@ public class FirestartManager : MonoBehaviour
             var playerPos = PlayerController.Instance.GetPlayerPosition();
             var playerTransform = PlayerController.Instance.GetPlayerTransform();
 
-            if (Physics.Raycast(playerPos, playerTransform.forward * 2 + Vector3.down, out var hit, 10f))
+            if (Physics.Raycast(playerPos, playerTransform.forward * distanceFromPlayer + Vector3.down, out var hit, 10f))
             {
                 var campfire = Instantiate(this.campfire, hit.point, Quaternion.identity);
-
-                if (Physics.Raycast(campfire.transform.position, Vector3.down, out var hit2, 10f))
-                {
-                    campfire.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit2.normal);
-                }
+                campfire.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
                 var heatSource = campfire.GetComponent<HeatSource>();
 

@@ -35,10 +35,8 @@ namespace Managers
             addFuelWindow.SetActive(false);
         }
 
-        private void ChooseFuelItem(int index)
+        private void ChooseFuelItem(int? index)
         {
-            if (chosenFuelIndex == index) return;
-
             for (int i = 0; i < fuelChooser.childCount; i++)
             {
                 Image itemImage = fuelChooser.GetChild(i).GetComponent<Image>();
@@ -101,26 +99,10 @@ namespace Managers
 
             heatOutText.text = $"{PlayerInteraction.interactedCampfire.heatOutput}°C";
 
-            // delete fuel item
+            // delete fuel item and update UI
             InventoryManager.Instance.DeleteItem(chosenFuelItem);
-            //UpdateUIFuelItems();
-        }
-
-        private void UpdateUIFuelItems()
-        {
-            var itemCounts = InventoryManager.Instance.GetItemCounts();
-            var index = Convert.ToInt32(chosenFuelIndex);
-            var fuelName = fuelChooser.GetChild(index).Find("Fuel Name").GetComponent<TextMeshProUGUI>().text;
-
-            foreach (var itemCount in itemCounts)
-            {
-                if (itemCount.Item1 == fuelName)
-                {
-                    fuelChooser.GetChild(index).Find("Fuel Amount").GetComponent<TextMeshProUGUI>().text =
-                        $"1 OF {itemCount.Item2}";
-                    break;
-                }
-            }
+            DeleteFuelChooserItems();
+            CreateUIFuelItems();
         }
 
         private void CreateUIFuelItems()
@@ -154,7 +136,8 @@ namespace Managers
                 }
             }
 
-            ChooseFuelItem(0);
+            if(chosenFuelIndex == null) ChooseFuelItem(0);
+            else ChooseFuelItem(chosenFuelIndex);
         }
 
         public void CloseAddFuelWindow()
@@ -172,6 +155,8 @@ namespace Managers
             {
                 Destroy(item.gameObject);
             }
+            
+            fuelChooser.DetachChildren();
         }
     }
 }
