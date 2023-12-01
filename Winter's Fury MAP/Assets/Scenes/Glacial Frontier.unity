@@ -15,12 +15,12 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.88199687, g: 0.9239415, b: 0.87913406, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.015
-  m_LinearFogStart: 30
-  m_LinearFogEnd: 500
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 250
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -2751,6 +2751,82 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 112510131}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &113858445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 113858448}
+  - component: {fileID: 113858447}
+  - component: {fileID: 113858446}
+  m_Layer: 5
+  m_Name: Caution
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &113858446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113858445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f8b669d30b29bf54cba97fdda57617c1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &113858447
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113858445}
+  m_CullTransparentMesh: 1
+--- !u!224 &113858448
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113858445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1689890489}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -107.8, y: -5}
+  m_SizeDelta: {x: 15, y: 15}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &119860502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5183,7 +5259,7 @@ GameObject:
   - component: {fileID: 254833822}
   - component: {fileID: 254833823}
   - component: {fileID: 254833824}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerCam
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -19740,7 +19816,7 @@ GameObject:
   - component: {fileID: 915188274}
   - component: {fileID: 915188273}
   - component: {fileID: 915188279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: -- PLAYER --
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34147,7 +34223,7 @@ MonoBehaviour:
   progressIcon: {fileID: 403625021}
   distanceFromPlayer: 2.5
   baseFireStartingChance: 40
-  realStartingTime: 12
+  realStartingTime: 1
   inGameStartingTime: 5
 --- !u!114 &1603449270
 MonoBehaviour:
@@ -35232,6 +35308,7 @@ RectTransform:
   m_Children:
   - {fileID: 984060320}
   - {fileID: 1338387785}
+  - {fileID: 113858448}
   m_Father: {fileID: 614469139}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -38096,10 +38173,12 @@ MonoBehaviour:
   thirstChevrons: {fileID: 254200464}
   hungerChevrons: {fileID: 1319788626}
   maxHealth: 100
+  healthRecoveryRate: 1.04
   warmthDrainRate: 18.75
   fatigueDrainRate: 1.04
   thirstDrainRate: 2.08
   hungerDrainRate: 1.04
+  burnDamage: 33
   maxTempBar: 100
   reduceThresholds:
   - -1
@@ -38169,10 +38248,12 @@ MonoBehaviour:
   fatigueMeter: {fileID: 1184323490}
   thirstMeter: {fileID: 545979231}
   hungerMeter: {fileID: 1747847554}
+  healthIcon: {fileID: 1338387786}
   warmthIcon: {fileID: 1404851004}
   fatigueIcon: {fileID: 1567728621}
   thirstIcon: {fileID: 1513554791}
   hungerIcon: {fileID: 394432645}
+  cautionIcon: {fileID: 113858445}
 --- !u!1001 &1846488513
 PrefabInstance:
   m_ObjectHideFlags: 0

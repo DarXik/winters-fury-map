@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,11 +14,14 @@ namespace Managers
         public GameObject thirstChevrons;
         public GameObject hungerChevrons;
 
-        [Header("Health")] public float maxHealth;
+        [Header("Health")] 
+        public float maxHealth;
+        public float healthRecoveryRate;    
         public float warmthDrainRate;
         public float fatigueDrainRate;
         public float thirstDrainRate;
         public float hungerDrainRate;
+        public float burnDamage;
         private float currentHealth;
 
         [Header("Temperature")] public float maxTempBar;
@@ -75,7 +79,7 @@ namespace Managers
             timeIncrement = GameManager.Instance.GetTimeIncrement();
 
             currentAwakeness = PlayerController.Instance.currentAwakeness;
-            
+
             HideIncreaseChevrons();
             HideReduceChevrons();
         }
@@ -90,8 +94,28 @@ namespace Managers
             ReduceTemperature();
             ReduceFatigue();
             ReduceHealth();
-
+            
+            // if all four needs are above 0, recover health
+            if (currentCalories > 0 && currentFatigue > 0 && currentThirst > 0 && currentTemp > 0)
+            {
+                RecoverHealth();   
+            }
+            
             currentActivity = PlayerController.Instance.currentActivity;
+        }
+
+        public void BurnPlayer()
+        {
+            currentHealth -= burnDamage * Time.deltaTime;
+            
+            // add visual effect
+        }
+
+        private void RecoverHealth()
+        {
+            if (currentHealth >= maxHealth) return;
+
+            currentHealth += healthRecoveryRate * (Time.deltaTime * timeIncrement);
         }
 
         private void ReduceHealth()
@@ -249,6 +273,13 @@ namespace Managers
         {
             if (feelsLikeTemp <= 0) return;
             
+            if (currentTemp >= maxTempBar)
+            {
+                if (increaseTempChevrons.activeInHierarchy) increaseTempChevrons.SetActive(false);
+
+                return;
+            }
+
             HideReduceChevrons();
 
             if (feelsLikeTemp >= increaseThresholds[0] && feelsLikeTemp <= increaseThresholds[1])
@@ -279,7 +310,7 @@ namespace Managers
         private void ReduceTemperature()
         {
             if (feelsLikeTemp > 0) return;
-            
+
             if (currentTemp <= 0)
             {
                 if (reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(false);
@@ -288,7 +319,7 @@ namespace Managers
             }
 
             if (!reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(true);
-            
+
             HideIncreaseChevrons();
 
             if (feelsLikeTemp <= reduceThresholds[0] && feelsLikeTemp >= reduceThresholds[1])

@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public Resolution[] resolutions; // prázdná array pro rozlišení z pc
     public TMP_Dropdown resolutionDropdown; // zobrazí to input v unity pro připojení objektu
 
-    void Start()
+    private void Start()
     {
         // vezme dostupná rozlišení, pro každý pc jiné
         resolutions = Screen.resolutions;
@@ -24,7 +22,7 @@ public class MainMenu : MonoBehaviour
         int crntResolutionIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
-            // projedek každým rozlišením a uloží zformátované ve stringu
+            // projede každým rozlišením a uloží zformátované ve stringu
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
 

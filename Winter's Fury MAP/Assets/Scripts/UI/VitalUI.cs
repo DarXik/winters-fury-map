@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Managers;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class VitalUI : MonoBehaviour
@@ -18,10 +16,12 @@ public class VitalUI : MonoBehaviour
     public Image hungerMeter;
 
     [Header("Icons")] 
+    public Image healthIcon;
     public Image warmthIcon;
     public Image fatigueIcon;
     public Image thirstIcon;
     public Image hungerIcon;
+    public GameObject cautionIcon;
 
     private float healthPercent;
     private float temperaturePercent;
@@ -29,16 +29,46 @@ public class VitalUI : MonoBehaviour
     private float thirstPercent;
     private float hungerPercent;
 
+    private bool cautionDisplayed;
+
+    private void Start()
+    {
+        cautionIcon.SetActive(false);
+    }
+
     private void Update()
     {
         GetPercents();
         UpdateNeedsUI();
+
+        if (temperaturePercent <= 0 || fatiguePercent <= 0 || thirstPercent <= 0 || hungerPercent <= 0)
+            DisplayCaution();
+        
+        if (temperaturePercent > 0 && fatiguePercent > 0 && thirstPercent > 0 && hungerPercent > 0)
+            HideCaution();
+    }
+
+    private void DisplayCaution()
+    {
+        if (cautionDisplayed) return;
+        
+        cautionIcon.SetActive(true);
+        cautionDisplayed = true;
+    }
+
+    private void HideCaution()
+    {
+        if (!cautionDisplayed) return;
+        
+        cautionIcon.SetActive(false);
+        cautionDisplayed = false;
     }
 
     private void UpdateNeedsUI()
     {
         healthMeter.value = healthPercent;
         healthBarFill.color = lowValueGradient.Evaluate(healthPercent);
+        healthIcon.color = lowValueGradient.Evaluate(healthPercent);
         
         warmthMeter.fillAmount = temperaturePercent;
         warmthMeter.color = lowValueGradient.Evaluate(temperaturePercent);

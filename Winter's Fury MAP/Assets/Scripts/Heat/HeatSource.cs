@@ -27,8 +27,11 @@ namespace Heat
         {
             if (burnTime > 0)
             {
+                playerPos = PlayerController.Instance.GetPlayerPosition();
+                
                 LowerValues();
                 HeatPlayer();
+                DamagePlayerIfClose();
             }
             else
             {
@@ -38,7 +41,6 @@ namespace Heat
 
         private void HeatPlayer()
         {
-            var playerPos = PlayerController.Instance.GetPlayerPosition();
             if (VitalManager.Instance.tempFromFire > 0) VitalManager.Instance.tempFromFire = 0;
 
             if (Vector3.Distance(transform.position, playerPos) > heatRange) return;
@@ -56,6 +58,14 @@ namespace Heat
             Instantiate(campFireExtinguished, transform.position, Quaternion.identity);
             
             Destroy(gameObject);
+        }
+
+        private void DamagePlayerIfClose()
+        {
+            if (Physics.Raycast(transform.position, transform.up, 5f, LayerMask.GetMask("Player")))
+            {
+                VitalManager.Instance.BurnPlayer();
+            }
         }
     }
 }

@@ -4,16 +4,11 @@
     <list default="true" id="cd37ab48-7d7f-4cee-b206-64ea15fc3dc0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.plastic/plastic.changes" beforeDir="false" afterPath="$PROJECT_DIR$/.plastic/plastic.changes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.plastic/plastic.wktree" beforeDir="false" afterPath="$PROJECT_DIR$/.plastic/plastic.wktree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/FuturaRenner-Regular.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/FuturaRenner-Regular.otf.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Grip-p7WZv.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Grip-p7WZv.otf.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/Menu-main.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/Menu-main.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Assets/NotoSansJP-VariableFont_wght SDF.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Assets/NotoSansJP-VariableFont_wght SDF.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Basic/NotoSansJP-VariableFont_wght.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI/Fonts/Basic/NotoSansJP-VariableFont_wght.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Heat/HeatSource.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Heat/HeatSource.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/VitalManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/VitalManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/To-Do.md" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/To-Do.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UsedModels/Props/CampfireBurning.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UsedModels/Props/CampfireBurning.prefab" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +48,7 @@
       <workItem from="1700568912998" duration="11000" />
       <workItem from="1700570697576" duration="13000" />
       <workItem from="1701292190576" duration="10000" />
+      <workItem from="1701456873146" duration="12000" />
     </task>
     <servers />
   </component>
