@@ -6,10 +6,14 @@ using UnityEngine.Audio;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject startObj;
+    public GameObject optionsObj;
     public AudioMixer audioMixer; // zobrazí input v unity pro objekt z audiomixeru
-    public Resolution[] resolutions; // prázdná array pro rozlišení z pc
+    private Resolution[] resolutions; // prázdná array pro rozlišení z pc
     public TMP_Dropdown resolutionDropdown; // zobrazí to input v unity pro připojení objektu
 
+    private bool optionsOpened;
+    
     private void Start()
     {
         // vezme dostupná rozlišení, pro každý pc jiné
@@ -38,6 +42,9 @@ public class MainMenu : MonoBehaviour
         // nastaví rozlišení na dropdown na naše aktuální
         resolutionDropdown.value = crntResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+        
+        startObj.SetActive(true);
+        optionsObj.SetActive(false);
     }
 
     public void UpdateResolution(int resolutionIndex)
@@ -66,5 +73,21 @@ public class MainMenu : MonoBehaviour
     public void SetFullScreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+    }
+
+    public void ToggleOptions()
+    {
+        if (!optionsOpened)
+        {
+            startObj.SetActive(false);
+            optionsObj.SetActive(true);
+            optionsOpened = true;
+        }
+        else
+        {
+            startObj.SetActive(true);
+            optionsObj.SetActive(false);
+            optionsOpened = false;
+        }
     }
 }
