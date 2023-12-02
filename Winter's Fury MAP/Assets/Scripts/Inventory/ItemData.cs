@@ -28,12 +28,12 @@ public class ItemData : ScriptableObject
         {
             if (itemType == ItemType.Food)
             {
-                return caloriesIntake / calorieDensity;
+                return Mathf.Round(caloriesIntake / calorieDensity * 100) / 100f;
             }
 
             if (itemType == ItemType.Drink)
             {
-                return waterIntake / 1000;
+                return Mathf.Round(waterIntake / 1000f * 100) / 100f;
             }
 
             if (itemType == ItemType.Fuelsource)

@@ -1,53 +1,66 @@
 ﻿using Heat;
 using Managers;
+using TMPro;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
+        public TextMeshProUGUI itemText;
+        
         public float maxInteractDistance;
         public static HeatSource interactedCampfire;
 
-        private RaycastHit hit;
+        private RaycastHit clickHit;
+        private RaycastHit hoverHit;
 
         private void Update()
         {
+            if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
+                AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened) return;
+            
+            CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
+        }
+
+        private void CheckHover()
+        {
+            if (Physics.Raycast(transform.position, transform.forward, out hoverHit, maxInteractDistance))
+            {
+                itemText.text = hoverHit.transform.root.TryGetComponent(out ItemController item) ? item.itemData.itemName : "";
+            }
         }
 
         private void CheckHit()
         {
-            if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
-                AddFuelManager.addFuelWindowOpened) return;
-            
-            if (Physics.Raycast(transform.position, transform.forward, out hit, maxInteractDistance,
+            if (Physics.Raycast(transform.position, transform.forward, out clickHit, maxInteractDistance,
                     LayerMask.GetMask("Item")))
             {
                 PickupItem();
             }
-            else if (Physics.Raycast(transform.position, transform.forward, out hit, maxInteractDistance,
+            else if (Physics.Raycast(transform.position, transform.forward, out clickHit, maxInteractDistance,
                          LayerMask.GetMask("Campfire")))
             {
-                interactedCampfire = hit.transform.GetComponent<HeatSource>();
+                interactedCampfire = clickHit.transform.GetComponent<HeatSource>();
                 var fireDuration = interactedCampfire.burnTime;
                 var heatOutput = interactedCampfire.heatOutput;
                 
-                AddFuelManager.Instance.OpenAddFuelWindow(fireDuration, heatOutput, hit.transform);
+                AddFuelManager.Instance.OpenAddFuelWindow(fireDuration, heatOutput, clickHit.transform);
             }
         }
         
         private void PickupItem()
         {
             // Create a copy of the itemData
-            ItemData itemDataCopy = Instantiate(hit.transform.root.GetComponent<ItemController>().itemData);
+            ItemData itemDataCopy = Instantiate(clickHit.transform.root.GetComponent<ItemController>().itemData);
 
             if (InventoryManager.Instance.currentWeight + itemDataCopy.ItemWeight >
                 InventoryManager.Instance.maxWeight) return;
         
             InventoryManager.Instance.AddItem(itemDataCopy);
         
-            Destroy(hit.transform.root.gameObject);
+            Destroy(clickHit.transform.root.gameObject);
         }
     }
 }

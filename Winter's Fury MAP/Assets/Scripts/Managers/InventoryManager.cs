@@ -122,7 +122,7 @@ namespace Managers
             items.Add(itemData);
         }
 
-        public void ListItems()
+        private void ListItems()
         {
             DeleteInventoryContents();
             DeleteNeedContents();
@@ -238,7 +238,7 @@ namespace Managers
                         case ItemType.Drink:
                             var needItemDrink = Instantiate(detailNeedItem, needs.transform);
                             needItemDrink.transform.Find("Image").GetComponent<Image>().sprite = water;
-                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = $"{(item.waterIntake * itemCountValue / 1000).ToString(CultureInfo.InvariantCulture)} L";
+                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = $"{(item.waterIntake * itemCountValue / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
 
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
                             actionButtonObj.SetActive(true);

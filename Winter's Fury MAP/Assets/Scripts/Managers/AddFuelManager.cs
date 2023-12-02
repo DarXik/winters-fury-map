@@ -62,7 +62,7 @@ namespace Managers
 
             var duration = Mathf.RoundToInt(fireDuration * 60f);
 
-            if (duration > 60)
+            if (duration >= 60)
             {
                 fireDurText.text = $"{BurnConverter.GetFuelHours(duration)}H {BurnConverter.GetFuelMinutes(duration)}M";
             }
@@ -88,7 +88,7 @@ namespace Managers
             // update UI text
             var duration = Mathf.RoundToInt(PlayerInteraction.interactedCampfire.burnTime * 60f);
 
-            if (duration > 60)
+            if (duration >= 60)
             {
                 fireDurText.text = $"{BurnConverter.GetFuelHours(duration)}H {BurnConverter.GetFuelMinutes(duration)}M";
             }
