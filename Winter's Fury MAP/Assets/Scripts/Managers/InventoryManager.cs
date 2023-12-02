@@ -159,7 +159,7 @@ namespace Managers
                     itemIcons.Add(item.itemIcon);
                 }
 
-
+                Debug.Log(item.ItemWeight);
                 currentWeight += item.ItemWeight;
             }
 

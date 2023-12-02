@@ -30,6 +30,10 @@ namespace Player
             {
                 itemText.text = hoverHit.transform.root.TryGetComponent(out ItemController item) ? item.itemData.itemName : "";
             }
+            else
+            {
+                itemText.text = "";
+            }
         }
 
         private void CheckHit()
