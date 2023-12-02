@@ -61,7 +61,9 @@ namespace Player
 
             if (InventoryManager.Instance.currentWeight + itemDataCopy.ItemWeight >
                 InventoryManager.Instance.maxWeight) return;
-        
+
+            itemDataCopy.itemCondition -= (int)Random.Range(0, itemDataCopy.conditionVariability);
+            
             InventoryManager.Instance.AddItem(itemDataCopy);
         
             Destroy(clickHit.transform.root.gameObject);

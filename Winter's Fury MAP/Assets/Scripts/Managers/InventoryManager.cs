@@ -31,12 +31,12 @@ namespace Managers
 
         [Header("Item Detail References")] [SerializeField]
         private TextMeshProUGUI itemName;
-
         [SerializeField] private TextMeshProUGUI itemDescription;
         [SerializeField] private Image itemIcon;
         [SerializeField] private GameObject needs;
         [SerializeField] private GameObject detailNeedItem;
-        [FormerlySerializedAs("itemCondition")] [SerializeField] private TextMeshProUGUI itemConditionText;
+        [SerializeField] private TextMeshProUGUI itemConditionText;
+        [SerializeField] private Gradient conditionGradient;
         [SerializeField] private TextMeshProUGUI itemWeight;
         [SerializeField] private Button dropItemButton;
         [SerializeField] private Sprite stomach, water;
@@ -45,7 +45,6 @@ namespace Managers
 
         [Header("Drop Window References")] 
         [SerializeField] private GameObject dropItemWindow;
-
         [SerializeField] private TextMeshProUGUI alertHeader;
         [SerializeField] private Slider dropItemSlider;
         [SerializeField] private TextMeshProUGUI dropCounterText;
@@ -159,7 +158,6 @@ namespace Managers
                     itemIcons.Add(item.itemIcon);
                 }
 
-                Debug.Log(item.ItemWeight);
                 currentWeight += item.ItemWeight;
             }
 
@@ -178,6 +176,7 @@ namespace Managers
 
                 itemCount.text = "x" + count.Item2;
                 itemConditionText.text = count.Item3 + "%";
+                itemConditionText.color = conditionGradient.Evaluate(count.Item3 / 100f);
                 itemIcon.sprite = itemIcons[num];
                 itemIcon.preserveAspect = true;
 
@@ -202,24 +201,26 @@ namespace Managers
             {
                 if (item.itemName == itemName && Mathf.Round(item.itemCondition) == itemCondition)
                 {
-                    var itemCountValue = 0;
-
                     this.itemName.text = item.itemName;
                     itemDescription.text = item.itemDescription;
                     itemIcon.sprite = item.itemIcon;
                     itemIcon.preserveAspect = true;
                     itemConditionText.text = Mathf.Round(item.itemCondition) + "%";
+                    itemConditionText.color = conditionGradient.Evaluate(item.itemCondition / 100f);
 
+                    var totalWeight = items.Where(thisItem => thisItem.itemName == item.itemName).Sum(thisItem => thisItem.ItemWeight);
+                    var totalWaterIntake = items.Where(thisItem => thisItem.itemName == item.itemName)
+                        .Sum(thisItem => thisItem.waterIntake);
+
+                    var itemCountValue = 0;
+                    
                     // Loop through every item count to find how many items we have
-                    foreach (var count in itemCounts)
+                    foreach (var count in itemCounts.Where(count => count.Item1 == itemName))
                     {
-                        if (count.Item1 == itemName)
-                        {
-                            itemCountValue = count.Item2;
-                        }
+                        itemCountValue = count.Item2;
                     }
 
-                    itemWeight.text = (itemCountValue * item.ItemWeight).ToString(CultureInfo.InvariantCulture) + "kg";
+                    itemWeight.text = (totalWeight).ToString(CultureInfo.InvariantCulture) + "kg";
 
                     dropItemButton.onClick.AddListener(() => OpenDropWindow(itemName));
 
@@ -238,7 +239,7 @@ namespace Managers
                         case ItemType.Drink:
                             var needItemDrink = Instantiate(detailNeedItem, needs.transform);
                             needItemDrink.transform.Find("Image").GetComponent<Image>().sprite = water;
-                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = $"{(item.waterIntake * itemCountValue / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
+                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = $"{(totalWaterIntake / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
 
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
                             actionButtonObj.SetActive(true);

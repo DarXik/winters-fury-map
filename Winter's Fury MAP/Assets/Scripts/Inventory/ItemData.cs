@@ -19,7 +19,6 @@ public class ItemData : ScriptableObject
     public string itemDescription;
     public ItemType itemType;
     [Range(0, 100)] public float itemCondition;
-    public float conditionPerDay;
     public Sprite itemIcon;
     
     public float ItemWeight
@@ -50,6 +49,8 @@ public class ItemData : ScriptableObject
     [HideInInspector] public float waterIntake;
     [HideInInspector] public float caloriesIntake;
     [HideInInspector] public float fatigueReduce;
+    [HideInInspector] public float conditionPerDay;
+    [HideInInspector] public float conditionVariability;
 
     [Header("Fuel Properties")] 
     [HideInInspector] public float fuelItemWeight;
@@ -65,6 +66,8 @@ public class ItemDataEditor : Editor
     private SerializedProperty waterIntakeProp;
     private SerializedProperty caloriesIntakeProp;
     private SerializedProperty fatigueReduceProp;
+    private SerializedProperty conditionPerDayProp;
+    private SerializedProperty conditionVariabilityProp;
 
     private SerializedProperty fuelWeightProp;
     private SerializedProperty temperatureIncreaseProp;
@@ -77,6 +80,8 @@ public class ItemDataEditor : Editor
         waterIntakeProp = serializedObject.FindProperty("waterIntake");
         caloriesIntakeProp = serializedObject.FindProperty("caloriesIntake");
         fatigueReduceProp = serializedObject.FindProperty("fatigueReduce");
+        conditionPerDayProp = serializedObject.FindProperty("conditionPerDay");
+        conditionVariabilityProp = serializedObject.FindProperty("conditionVariability");
 
         fuelWeightProp = serializedObject.FindProperty("fuelItemWeight");
         temperatureIncreaseProp = serializedObject.FindProperty("temperatureIncrease");
@@ -100,6 +105,8 @@ public class ItemDataEditor : Editor
             EditorGUILayout.PropertyField(waterIntakeProp);
             EditorGUILayout.PropertyField(caloriesIntakeProp);
             EditorGUILayout.PropertyField(fatigueReduceProp);
+            EditorGUILayout.PropertyField(conditionPerDayProp);
+            EditorGUILayout.PropertyField(conditionVariabilityProp);
         }
         else if (itemData.itemType == ItemType.Fuelsource)
         {

@@ -16,6 +16,7 @@ public class PassTimeManager : MonoBehaviour
 
     [Header("Setup")] public int maxPassHours;
     public float passingTimeIncrement;
+    private float normalTimeIncrement;
     private int hoursToPass;
 
     public static bool passTimeWindowOpened;
@@ -30,6 +31,8 @@ public class PassTimeManager : MonoBehaviour
     private void Start()
     {
         passTimeWindow.SetActive(false);
+
+        normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
 
         hoursToPass = 1;
     }
@@ -59,6 +62,8 @@ public class PassTimeManager : MonoBehaviour
         }
         else
         {
+            StopAllCoroutines();
+            GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
             passTimeWindow.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
 
@@ -74,6 +79,24 @@ public class PassTimeManager : MonoBehaviour
 
     private IEnumerator PassTime()
     {
+        passButton.SetActive(false);
+        leftArrow.SetActive(false);
+        rightArrow.SetActive(false);
+
+        GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
+
+        yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
+
+        GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
+        UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
+        hoursToPass = 1;
+        passButton.SetActive(true);
+        leftArrow.SetActive(true);
+        rightArrow.SetActive(true);
+    }
+
+    /*private IEnumerator PassTime()
+    {
         var finalTime = GameManager.Instance.GetCurrentTime() + hoursToPass;
         finalTime %= 24f;
 
@@ -83,8 +106,7 @@ public class PassTimeManager : MonoBehaviour
         leftArrow.SetActive(false);
         rightArrow.SetActive(false);
 
-
-        while (GameManager.Instance.GetCurrentTime() < finalTime)
+        while (Math.Abs(GameManager.Instance.GetCurrentTime() - finalTime) > 0.01f)
         {
             float remainingHours = finalTime - GameManager.Instance.GetCurrentTime();
             hoursToPass = (int)Mathf.Max(1, remainingHours + 1);
@@ -99,7 +121,7 @@ public class PassTimeManager : MonoBehaviour
         passButton.SetActive(true);
         leftArrow.SetActive(true);
         rightArrow.SetActive(true);
-    }
+    }*/
 
     public void LowerHour()
     {

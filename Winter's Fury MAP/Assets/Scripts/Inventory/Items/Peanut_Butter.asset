@@ -17,12 +17,14 @@ MonoBehaviour:
   itemDescription: Jar of peanut butter. Very good source of energy.
   itemType: 0
   itemCondition: 100
-  conditionPerDay: 0
   itemIcon: {fileID: 21300000, guid: 615e3ecf2dd323d499fabeb5b728eeb2, type: 3}
   calorieDensity: 1800
   waterIntake: 0
   caloriesIntake: 900
   fatigueReduce: 0
+  conditionPerDay: 9
+  conditionVariability: 15
+  fuelItemWeight: 0
   temperatureIncrease: 0
   burnTime: 0
   chanceBonus: 0
