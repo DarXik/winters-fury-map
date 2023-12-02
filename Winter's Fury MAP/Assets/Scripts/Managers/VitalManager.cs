@@ -187,8 +187,7 @@ namespace Managers
 
             return Mathf.Round(excessCalories);
         }
-
-
+        
         private void ReduceHunger()
         {
             if (currentCalories <= 0)

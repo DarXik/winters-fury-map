@@ -8,18 +8,18 @@ using UnityEngine;
 
 public class PassTimeManager : MonoBehaviour
 {
-    [Header("UI References")] 
-    [SerializeField] private GameObject passTimeWindow;
+    [Header("UI References")] [SerializeField]
+    private GameObject passTimeWindow;
+
     [SerializeField] private GameObject passButton, leftArrow, rightArrow;
     [SerializeField] private TextMeshProUGUI hoursText;
 
-    [Header("Setup")] 
-    public int maxPassHours;
+    [Header("Setup")] public int maxPassHours;
     public float passingTimeIncrement;
     private int hoursToPass;
 
     public static bool passTimeWindowOpened;
-    
+
     public static PassTimeManager Instance { get; private set; }
 
     private void Awake()
@@ -52,9 +52,9 @@ public class PassTimeManager : MonoBehaviour
             leftArrow.SetActive(true);
             rightArrow.SetActive(true);
             PlayerLook.Instance.BlockRotation();
-            
+
             Clock.Instance.SetClock();
-            
+
             passTimeWindowOpened = true;
         }
         else
@@ -76,18 +76,19 @@ public class PassTimeManager : MonoBehaviour
     {
         var finalTime = GameManager.Instance.GetCurrentTime() + hoursToPass;
         finalTime %= 24f;
-        
+
         var normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
-        
+
         passButton.SetActive(false);
         leftArrow.SetActive(false);
         rightArrow.SetActive(false);
-        
-        while (GameManager.Instance.GetCurrentTime() < finalTime && passTimeWindowOpened)
+
+
+        while (GameManager.Instance.GetCurrentTime() < finalTime)
         {
             float remainingHours = finalTime - GameManager.Instance.GetCurrentTime();
             hoursToPass = (int)Mathf.Max(1, remainingHours + 1);
-            
+
             GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
 
             yield return null;
@@ -98,7 +99,7 @@ public class PassTimeManager : MonoBehaviour
         passButton.SetActive(true);
         leftArrow.SetActive(true);
         rightArrow.SetActive(true);
-    } 
+    }
 
     public void LowerHour()
     {
