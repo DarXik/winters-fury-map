@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
+  m_Name: Book
+  m_EditorClassIdentifier: 
+  itemObj: {fileID: 2114531495875037320, guid: 9ded4a2f612997a4ea4eff7e80932e39, type: 3}
+  itemName: Book
+  itemDescription: In times of icy apocalypse, consider this as a heat source, not
+    as a source of knowledge.
+  itemType: 2
+  itemCondition: 100
+  itemIcon: {fileID: 0}
+  calorieDensity: 0
+  waterIntake: 0
+  caloriesIntake: 0
+  fatigueReduce: 0
+  conditionPerDay: 0
+  conditionVariability: 0
+  fuelItemWeight: 0.5
+  temperatureIncrease: 2
+  burnTime: 18
+  chanceBonus: 35
