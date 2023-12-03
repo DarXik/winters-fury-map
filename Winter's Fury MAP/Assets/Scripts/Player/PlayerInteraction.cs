@@ -13,9 +13,13 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
+        [Header("UI References")]
         public TextMeshProUGUI itemText;
         public Image holdCircle;
+        public Transform foundContainer;
+        public GameObject foundText;
         
+        [Header("Default Values")]
         public float maxInteractDistance;
         public float holdInteractTime;
         private float timeElapsed;
@@ -25,6 +29,13 @@ namespace Player
 
         private RaycastHit clickHit;
         private RaycastHit hoverHit;
+        
+        public static PlayerInteraction Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
@@ -144,6 +155,22 @@ namespace Player
 
             interacting = false;
             timeElapsed = 0f;
+        }
+
+        public void AddFoundText(string itemName)
+        {
+            var text = Instantiate(foundText, foundContainer);
+
+            text.GetComponent<TextMeshProUGUI>().text = "You found: " + itemName;
+
+            StartCoroutine(DestroyFoundText(text));
+        }
+
+        private IEnumerator DestroyFoundText(GameObject textObj)
+        {
+            yield return new WaitForSeconds(3);
+            
+            Destroy(textObj);
         }
     }
 }

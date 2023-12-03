@@ -5559,6 +5559,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemText: {fileID: 78805752}
   holdCircle: {fileID: 1711055321}
+  foundContainer: {fileID: 1677787017}
+  foundText: {fileID: 3331399624461441577, guid: d726e84c7013ef4418f00e5a99f0b7c9,
+    type: 3}
   maxInteractDistance: 3
   holdInteractTime: 0.75
 --- !u!1001 &258512951
@@ -24479,6 +24482,7 @@ RectTransform:
   - {fileID: 522258762}
   - {fileID: 1072951660}
   - {fileID: 794460930}
+  - {fileID: 1677787017}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26937,6 +26941,10 @@ PrefabInstance:
     - target: {fileID: 1000013846435076, guid: 976334b832997084984a450972d36956, type: 3}
       propertyPath: m_Name
       value: SnowyHouse1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013846435076, guid: 976334b832997084984a450972d36956, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000011961413320, guid: 976334b832997084984a450972d36956, type: 3}
       propertyPath: m_RootOrder
@@ -35747,6 +35755,69 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1795210808}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1677787016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1677787017}
+  - component: {fileID: 1677787018}
+  m_Layer: 5
+  m_Name: Found Text Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1677787017
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677787016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1102708679}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 798.38, y: -338.51398}
+  m_SizeDelta: {x: 323.2345, y: 402.972}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1677787018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1677787016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 7
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1001 &1678887329
 PrefabInstance:
   m_ObjectHideFlags: 0

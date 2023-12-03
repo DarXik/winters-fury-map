@@ -17,6 +17,6 @@ MonoBehaviour:
   warmthBonus: 0
   items:
   - itemData: {fileID: 11400000, guid: b09d83ce934cf7e46b9109061dd617a3, type: 2}
-    chance: 25
+    chance: 82.4
   - itemData: {fileID: 11400000, guid: 8d672e6d8387f884ba9e4ac9b908bff8, type: 2}
-    chance: 13.5
+    chance: 89.8
