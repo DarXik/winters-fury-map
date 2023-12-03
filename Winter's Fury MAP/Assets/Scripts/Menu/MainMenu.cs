@@ -7,14 +7,26 @@ using UnityEngine.Audio;
 public class MainMenu : MonoBehaviour
 {
     public GameObject startObj;
-    public GameObject optionsObj;
+    public GameObject optionsObj, optionsGeneralObj, optionsVideoObj, optionsAudioObj, optionsControlsObj;
     public AudioMixer audioMixer; // zobrazí input v unity pro objekt z audiomixeru
     private Resolution[] resolutions; // prázdná array pro rozlišení z pc
     public TMP_Dropdown resolutionDropdown; // zobrazí to input v unity pro připojení objektu
 
     private bool optionsOpened;
-    
+    private bool generalOpened;
+    private bool videoOpened;
+    private bool audioOpened;
+    private bool controlsOpened;
+
     private void Start()
+    {
+        GetResolutions();
+
+        startObj.SetActive(true);
+        optionsObj.SetActive(false);
+    }
+
+    private void GetResolutions()
     {
         // vezme dostupná rozlišení, pro každý pc jiné
         resolutions = Screen.resolutions;
@@ -42,9 +54,6 @@ public class MainMenu : MonoBehaviour
         // nastaví rozlišení na dropdown na naše aktuální
         resolutionDropdown.value = crntResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-        
-        startObj.SetActive(true);
-        optionsObj.SetActive(false);
     }
 
     public void UpdateResolution(int resolutionIndex)
@@ -66,8 +75,7 @@ public class MainMenu : MonoBehaviour
 
     public void SetMainVolume(float volume)
     {
-        audioMixer.SetFloat("MainVolume" +
-                            "", volume);
+        audioMixer.SetFloat("MainVolume" + "", volume);
     }
 
     public void SetFullScreen(bool isFullscreen)
@@ -75,13 +83,14 @@ public class MainMenu : MonoBehaviour
         Screen.fullScreen = isFullscreen;
     }
 
-    public void ToggleOptions()
+    public void OptionsToggle()
     {
         if (!optionsOpened)
         {
             startObj.SetActive(false);
             optionsObj.SetActive(true);
             optionsOpened = true;
+            OptionsGeneral();
         }
         else
         {
@@ -89,5 +98,37 @@ public class MainMenu : MonoBehaviour
             optionsObj.SetActive(false);
             optionsOpened = false;
         }
+    }
+
+    public void OptionsGeneral()
+    {
+        optionsGeneralObj.SetActive(true);
+        optionsVideoObj.SetActive(false);
+        optionsAudioObj.SetActive(false);
+        optionsControlsObj.SetActive(false);
+    }
+
+    public void OptionsVideo()
+    {
+        optionsGeneralObj.SetActive(false);
+        optionsVideoObj.SetActive(true);
+        optionsAudioObj.SetActive(false);
+        optionsControlsObj.SetActive(false);
+    }
+
+    public void OptionsAudio()
+    {
+        optionsGeneralObj.SetActive(false);
+        optionsVideoObj.SetActive(false);
+        optionsAudioObj.SetActive(true);
+        optionsControlsObj.SetActive(false);
+    }
+
+    public void OptionsControls()
+    {
+        optionsGeneralObj.SetActive(false);
+        optionsVideoObj.SetActive(false);
+        optionsAudioObj.SetActive(false);
+        optionsControlsObj.SetActive(true);
     }
 }
