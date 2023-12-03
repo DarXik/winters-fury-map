@@ -494,5 +494,11 @@ namespace Managers
         {
             return itemCounts;
         }
+
+        public List<Tuple<string, int, float>> GetFuelItemCounts()
+        {
+            return items.Where(item => item.itemType == ItemType.Fuelsource)
+                .Select(item => itemCounts.Find(tuple => tuple.Item1 == item.itemName)).ToList();
+        }
     }
 }

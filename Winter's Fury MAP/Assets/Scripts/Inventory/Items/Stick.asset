@@ -17,13 +17,14 @@ MonoBehaviour:
   itemDescription: Small stick that will burn, but not for very long.
   itemType: 2
   itemCondition: 100
-  conditionPerDay: 0
   itemIcon: {fileID: 21300000, guid: fd239b07af81b2744a9d6b62b52f6a5a, type: 3}
   calorieDensity: 0
   waterIntake: 0
   caloriesIntake: 0
   fatigueReduce: 0
+  conditionPerDay: 0
+  conditionVariability: 0
   fuelItemWeight: 0.15
   temperatureIncrease: 1
   burnTime: 8
-  chanceBonus: 15
+  chanceBonus: 60
