@@ -10,17 +10,25 @@ using UnityEngine.Serialization;
 public class MainMenu : MonoBehaviour
 {
     // IN UNITY
-    public GameObject startObj, optionsObj, optionsGeneralObj, optionsVideoObj, optionsAudioObj, optionsControlsObj, startMenuRest;
+    public GameObject startObj,
+        optionsObj,
+        optionsGeneralObj,
+        optionsVideoObj,
+        optionsAudioObj,
+        optionsControlsObj,
+        startMenuRest;
+
     public AudioMixer audioMixer; // zobrazí input v unity pro objekt z audiomixeru
     private Resolution[] resolutions; // prázdná array pro rozlišení z pc
     public TMP_Dropdown resolutionDropdown; // zobrazí to input v unity pro připojení objektu
 
     // CAMERA
     public Camera mainCamera;
-    public Transform target;
+    public Transform target, start;
 
     // public GameObject targetPosition;
-    public int speed = 20;
+    [Tooltip("Time in seconds to move the camera to the desired position.")]
+    public float timeToMoveCamera = 3f;
     public float baseFOV;
     private bool cameraMoveEnabled;
 
@@ -35,21 +43,33 @@ public class MainMenu : MonoBehaviour
     {
         GetResolutions();
         startObj.SetActive(true);
-        // startMenuRest.SetActive(false);
         optionsObj.SetActive(false);
-        // StartCoroutine(Wait());
-        startMenuRest.SetActive(true);
         mainCamera.fieldOfView = baseFOV;
     }
 
-    private void Update() // Update is called once per frame
+    private IEnumerator MoveCamera(Transform target, float targetFOV)
     {
-        if (cameraMoveEnabled)
+        var elapsedTime = 0f;
+
+        var currentPos = mainCamera.transform.position;
+        var currentRotation = mainCamera.transform.rotation;
+        var currentFov = mainCamera.fieldOfView;
+
+        while (elapsedTime < timeToMoveCamera)
         {
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, target.position, speed * Time.deltaTime);
-            mainCamera.transform.rotation = Quaternion.RotateTowards(mainCamera.transform.rotation, target.rotation, speed * Time.deltaTime * 5);
-            mainCamera.fieldOfView = 40f;
+            mainCamera.transform.position =
+                Vector3.Lerp(currentPos, target.position, elapsedTime / timeToMoveCamera);
+            mainCamera.transform.rotation =
+                Quaternion.Lerp(currentRotation, target.rotation, elapsedTime / timeToMoveCamera);
+            mainCamera.fieldOfView = Mathf.Lerp(currentFov, targetFOV, elapsedTime / timeToMoveCamera);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
         }
+
+        mainCamera.transform.position = target.position;
+        mainCamera.transform.rotation = target.rotation;
+        mainCamera.fieldOfView = targetFOV;
     }
 
     public void OptionsToggle()
@@ -61,7 +81,7 @@ public class MainMenu : MonoBehaviour
             optionsOpened = true;
             OptionsGeneral();
 
-            cameraMoveEnabled = true;
+            StartCoroutine(MoveCamera(target, 40));
         }
 
         else
@@ -70,7 +90,7 @@ public class MainMenu : MonoBehaviour
             optionsObj.SetActive(false);
             optionsOpened = false;
 
-            cameraMoveEnabled = false;
+            StartCoroutine(MoveCamera(start, 55));
         }
     }
 
@@ -84,15 +104,14 @@ public class MainMenu : MonoBehaviour
     //     TypeWriter.CompleteTextRevealed -= ShowMenu;
     // }
     //
-    // private void ShowMenu()
-    // {
-    //
-    // }
 
-    // private IEnumerator Wait()
-    // {
-    //     yield return new WaitForSeconds(2f);
-    // }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        startMenuRest.SetActive(true);
+    }
+
     public void OptionsGeneral()
     {
         optionsGeneralObj.SetActive(true);

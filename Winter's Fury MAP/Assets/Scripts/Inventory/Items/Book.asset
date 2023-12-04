@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemObj: {fileID: 2114531495875037320, guid: 9ded4a2f612997a4ea4eff7e80932e39, type: 3}
   itemName: Book
-  itemDescription: In times of icy apocalypse, consider this as a heat source, not
-    as a source of knowledge.
+  itemDescription: Consider this book as good source of heat, not as a source of
+    knowledge.
   itemType: 2
   itemCondition: 100
   itemIcon: {fileID: 0}

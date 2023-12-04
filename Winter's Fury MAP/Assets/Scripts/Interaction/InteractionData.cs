@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Rendering;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Interaction
 {

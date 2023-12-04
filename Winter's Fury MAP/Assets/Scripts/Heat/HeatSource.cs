@@ -41,11 +41,7 @@ namespace Heat
 
         private void HeatPlayer()
         {
-            if (VitalManager.Instance.tempFromFire > 0) VitalManager.Instance.tempFromFire = 0;
-
-            if (Vector3.Distance(transform.position, playerPos) > heatRange) return;
-
-            VitalManager.Instance.tempFromFire = heatOutput;
+            VitalManager.Instance.tempFromFire = Vector3.Distance(transform.position, playerPos) < heatRange ? heatOutput : 0;
         }
 
         private void LowerValues()
@@ -56,6 +52,8 @@ namespace Heat
         private void DestroyCampfire()
         {
             Instantiate(campFireExtinguished, transform.position, Quaternion.identity);
+
+            VitalManager.Instance.tempFromFire = 0;
             
             Destroy(gameObject);
         }

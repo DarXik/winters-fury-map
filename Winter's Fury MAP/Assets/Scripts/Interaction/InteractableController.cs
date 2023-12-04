@@ -32,27 +32,21 @@ namespace Interaction
                 var interactItem = interactionData.items[i];
                 if (chance <= interactItem.chance)
                 {
-                    ItemData foundItem = interactItem.itemData;
+                    ItemData foundItem = Instantiate(interactItem.itemData);
 
                     InventoryManager.Instance.AddItem(foundItem);
                     
                     PlayerInteraction.Instance.ShowFoundItemInfo(foundItem);
 
-                    yield return StartCoroutine(WaitForNext());
+                    yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
                 }
                 
                 interactionData.items.RemoveAt(i);
+                yield return null;
             }
 
             interactionData.interactableName += " (Searched)";
-        }
-
-        private IEnumerator WaitForNext()
-        {
-            while (!Input.GetMouseButtonDown(0))
-            {
-                yield return null;
-            }
+            PlayerInteraction.Instance.HideFoundItemInfo();
         }
     }
 }

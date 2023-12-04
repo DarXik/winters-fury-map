@@ -16,13 +16,15 @@ MonoBehaviour:
   itemName: Water (Potable)
   itemDescription: Safe, drinking water.
   itemType: 1
-  itemWeight: 0.5
   itemCondition: 100
-  conditionPerDay: 0
   itemIcon: {fileID: 21300000, guid: df5cfd92c9ee05c469538b198ab7d04c, type: 3}
+  calorieDensity: 0
   waterIntake: 500
   caloriesIntake: 0
   fatigueReduce: 0
+  conditionPerDay: 0
+  conditionVariability: 0
+  fuelItemWeight: 0
   temperatureIncrease: 0
   burnTime: 0
   chanceBonus: 0

@@ -97,14 +97,4 @@ public class TypeWriter : MonoBehaviour
             _currentVisibleIndex++;
         }
     }
-
-    // private IEnumerator Wait()
-    // {
-    //     yield return new WaitForSeconds(2f);
-    // }
-
-    // void Skip()
-    // {
-    //     CompleteTextRevealed?.Invoke(); // invokování eventu, aby ostatní mohli subscribnout k textboxu a něco udělat třeba když je vidět celý
-    // }
 }

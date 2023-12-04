@@ -13,24 +13,23 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        [Header("UI References")]
-        public TextMeshProUGUI itemText;
+        [Header("UI References")] public TextMeshProUGUI itemText;
         public Image holdCircle;
-        
-        [Header("Default Values")]
-        public float maxInteractDistance;
+
+        [Header("Default Values")] public float maxInteractDistance;
         public float holdInteractTime;
         private float timeElapsed;
         private bool interacting;
 
-        [Header("Found Item Info")] 
-        public GameObject foundItemWindow;
-        
+        [Header("Found Item Info")] public GameObject foundItemWindow;
+        public Image itemIcon;
+        public TextMeshProUGUI itemName, itemDesc, itemCondition, itemWeight;
+
         public static HeatSource interactedCampfire;
 
         private RaycastHit clickHit;
         private RaycastHit hoverHit;
-        
+
         public static PlayerInteraction Instance { get; private set; }
 
         private void Awake()
@@ -41,7 +40,7 @@ namespace Player
         private void Start()
         {
             holdCircle.fillAmount = 0f;
-            
+
             foundItemWindow.SetActive(false);
         }
 
@@ -49,7 +48,7 @@ namespace Player
         {
             if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
                 AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened) return;
-            
+
             CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
             if (Input.GetMouseButton(0) && !interacting) CheckHold();
@@ -79,14 +78,14 @@ namespace Player
             }
             else
             {
-                itemText.text = ""; 
+                itemText.text = "";
             }
         }
 
         private void CheckHold()
         {
             if (Physics.Raycast(transform.position, transform.forward, out clickHit, maxInteractDistance,
-                         LayerMask.GetMask("Searchable")))
+                    LayerMask.GetMask("Searchable")))
             {
                 if (timeElapsed < holdInteractTime)
                 {
@@ -120,7 +119,7 @@ namespace Player
                 interactedCampfire = clickHit.transform.GetComponent<HeatSource>();
                 var fireDuration = interactedCampfire.burnTime;
                 var heatOutput = interactedCampfire.heatOutput;
-                
+
                 AddFuelManager.Instance.OpenAddFuelWindow(fireDuration, heatOutput, clickHit.transform);
             }
         }
@@ -139,7 +138,7 @@ namespace Player
                     break;
             }
         }
-        
+
         private void PickupItem()
         {
             // Create a copy of the itemData
@@ -149,16 +148,16 @@ namespace Player
                 InventoryManager.Instance.maxWeight) return;
 
             itemDataCopy.itemCondition -= (int)Random.Range(0, itemDataCopy.conditionVariability);
-            
+
             InventoryManager.Instance.AddItem(itemDataCopy);
-        
+
             Destroy(clickHit.transform.root.gameObject);
         }
 
         private IEnumerator TempHoldBlock()
         {
             interacting = true;
-            
+
             yield return new WaitForSeconds(2);
 
             interacting = false;
@@ -167,9 +166,25 @@ namespace Player
 
         public void ShowFoundItemInfo(ItemData foundItem)
         {
-           if(!foundItemWindow.activeInHierarchy) foundItemWindow.SetActive(true);
-           
-           
+            if (!foundItemWindow.activeInHierarchy)
+            {
+                foundItemWindow.SetActive(true);
+                PlayerLook.Instance.BlockRotation();
+            }
+
+            itemIcon.sprite = foundItem.itemIcon;
+            itemIcon.preserveAspect = true;
+
+            itemName.text = foundItem.itemName;
+            itemDesc.text = foundItem.itemDescription;
+            itemCondition.text = foundItem.itemCondition + "%";
+            itemWeight.text = foundItem.ItemWeight + "KG";
+        }
+
+        public void HideFoundItemInfo()
+        {
+            foundItemWindow.SetActive(false);
+            PlayerLook.Instance.UnblockRotation();
         }
     }
 }
