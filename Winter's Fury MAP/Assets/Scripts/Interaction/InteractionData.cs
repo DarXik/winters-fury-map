@@ -24,6 +24,7 @@ namespace Interaction
     {
         public string interactableName;
         public InteractableType interactableType;
+        public bool searched;
 
         [Header("Bed Properties")] [HideInInspector]
         public float warmthBonus;

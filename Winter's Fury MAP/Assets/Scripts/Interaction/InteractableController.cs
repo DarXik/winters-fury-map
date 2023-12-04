@@ -23,13 +23,12 @@ namespace Interaction
 
         public IEnumerator Search()
         {
-            if (interactionData.items.Count <= 0) yield break;
+            if (interactionData.searched) yield break;
             
-            for (var i = interactionData.items.Count - 1; i >= 0; i--)
+            foreach (var interactItem in interactionData.items)
             {
                 float chance = Mathf.Round(Random.value * 100);
                 
-                var interactItem = interactionData.items[i];
                 if (chance <= interactItem.chance)
                 {
                     ItemData foundItem = Instantiate(interactItem.itemData);
@@ -41,11 +40,11 @@ namespace Interaction
                     yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
                 }
                 
-                interactionData.items.RemoveAt(i);
                 yield return null;
             }
 
             interactionData.interactableName += " (Searched)";
+            interactionData.searched = true;
             PlayerInteraction.Instance.HideFoundItemInfo();
         }
     }

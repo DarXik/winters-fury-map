@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -111,6 +112,8 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
+        if (PlayerLook.rotationBlocked) return;
+        
         float verticalInput = Input.GetAxisRaw("Vertical");
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 

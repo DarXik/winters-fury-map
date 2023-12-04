@@ -49,13 +49,21 @@ public class FPS_Counter : MonoBehaviour
 
         // Assign to UI
         {
-            fpsText.text = _currentAveraged switch
+            switch (_currentAveraged)
             {
-                var x when x >= 0 && x < _cacheNumbersAmount => CachedNumberStrings[x],
-                var x when x >= _cacheNumbersAmount => $"> {_cacheNumbersAmount} FPS",
-                var x when x < 0 => "",
-                _ => "?"
-            };
+                case var x when x >= 0 && x < _cacheNumbersAmount:
+                    fpsText.text = CachedNumberStrings[x];
+                    break;
+                case var x when x >= _cacheNumbersAmount:
+                    fpsText.text = $"> {_cacheNumbersAmount} FPS";
+                    break;
+                case var x when x < 0:
+                    fpsText.text = "";
+                    break;
+                default:
+                    fpsText.text = "?";
+                    break;
+            }
         }
     }
 }

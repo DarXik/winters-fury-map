@@ -10,7 +10,7 @@ namespace Player
         public float sensitivity;
         public Transform playerBody;
 
-        private bool rotationBlocked = false;
+        public static bool rotationBlocked;
         private float _xAxisClamp;
         private Quaternion startingRotation;
 
@@ -28,17 +28,17 @@ namespace Player
             _xAxisClamp = 0;
         }
 
-        public void BlockRotation()
+        public void BlockRotation(bool cursorVisible = true)
         {
             Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Cursor.visible = cursorVisible;
             rotationBlocked = true;
         }
 
-        public void UnblockRotation()
+        public void UnblockRotation(bool cursorVisible = false)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Cursor.visible = cursorVisible;
             rotationBlocked = false;
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using Heat;
 using Interaction;
 using Managers;
@@ -51,7 +52,7 @@ namespace Player
 
             CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
-            if (Input.GetMouseButton(0) && !interacting) CheckHold();
+            if (Input.GetMouseButton(0) && !interacting && !foundItemWindow.activeInHierarchy) CheckHold();
             if (Input.GetMouseButtonUp(0))
             {
                 holdCircle.fillAmount = 0f;
@@ -169,7 +170,7 @@ namespace Player
             if (!foundItemWindow.activeInHierarchy)
             {
                 foundItemWindow.SetActive(true);
-                PlayerLook.Instance.BlockRotation();
+                PlayerLook.Instance.BlockRotation(false);
             }
 
             itemIcon.sprite = foundItem.itemIcon;
@@ -178,7 +179,7 @@ namespace Player
             itemName.text = foundItem.itemName;
             itemDesc.text = foundItem.itemDescription;
             itemCondition.text = foundItem.itemCondition + "%";
-            itemWeight.text = foundItem.ItemWeight + "KG";
+            itemWeight.text = foundItem.ItemWeight.ToString(CultureInfo.InvariantCulture) + " KG";
         }
 
         public void HideFoundItemInfo()
