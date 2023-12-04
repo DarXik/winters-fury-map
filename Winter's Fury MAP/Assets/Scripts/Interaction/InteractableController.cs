@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Managers;
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,9 +21,9 @@ namespace Interaction
             interactionData = dataCopy;
         }
 
-        public void Search()
+        public IEnumerator Search()
         {
-            if (interactionData.items.Count <= 0) return;
+            if (interactionData.items.Count <= 0) yield break;
             
             for (var i = interactionData.items.Count - 1; i >= 0; i--)
             {
@@ -35,13 +36,23 @@ namespace Interaction
 
                     InventoryManager.Instance.AddItem(foundItem);
                     
-                    PlayerInteraction.Instance.AddFoundText(foundItem.itemName);
+                    PlayerInteraction.Instance.ShowFoundItemInfo(foundItem);
+
+                    yield return StartCoroutine(WaitForNext());
                 }
                 
                 interactionData.items.RemoveAt(i);
             }
 
             interactionData.interactableName += " (Searched)";
+        }
+
+        private IEnumerator WaitForNext()
+        {
+            while (!Input.GetMouseButtonDown(0))
+            {
+                yield return null;
+            }
         }
     }
 }

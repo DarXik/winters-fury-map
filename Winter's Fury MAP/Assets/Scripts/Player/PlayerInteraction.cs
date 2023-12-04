@@ -16,14 +16,15 @@ namespace Player
         [Header("UI References")]
         public TextMeshProUGUI itemText;
         public Image holdCircle;
-        public Transform foundContainer;
-        public GameObject foundText;
         
         [Header("Default Values")]
         public float maxInteractDistance;
         public float holdInteractTime;
         private float timeElapsed;
         private bool interacting;
+
+        [Header("Found Item Info")] 
+        public GameObject foundItemWindow;
         
         public static HeatSource interactedCampfire;
 
@@ -40,6 +41,8 @@ namespace Player
         private void Start()
         {
             holdCircle.fillAmount = 0f;
+            
+            foundItemWindow.SetActive(false);
         }
 
         private void Update()
@@ -83,7 +86,7 @@ namespace Player
         private void CheckHold()
         {
             if (Physics.Raycast(transform.position, transform.forward, out clickHit, maxInteractDistance,
-                         LayerMask.GetMask("Interactable")))
+                         LayerMask.GetMask("Searchable")))
             {
                 if (timeElapsed < holdInteractTime)
                 {
@@ -107,6 +110,11 @@ namespace Player
                 PickupItem();
             }
             else if (Physics.Raycast(transform.position, transform.forward, out clickHit, maxInteractDistance,
+                         LayerMask.GetMask("Interactable")))
+            {
+                Interact();
+            }
+            else if (Physics.Raycast(transform.position, transform.forward, out clickHit, maxInteractDistance,
                          LayerMask.GetMask("Campfire")))
             {
                 interactedCampfire = clickHit.transform.GetComponent<HeatSource>();
@@ -119,15 +127,15 @@ namespace Player
 
         private void Interact()
         {
-            var interact = clickHit.transform.GetComponentInParent<InteractableController>();
+            var controller = clickHit.transform.GetComponentInParent<InteractableController>();
 
-            switch (interact.interactionData.interactableType)
+            switch (controller.interactionData.interactableType)
             {
                 case InteractableType.Bed:
-                    // sleep
+                    // go to sleep
                     break;
                 case InteractableType.Searchable:
-                    interact.Search();
+                    StartCoroutine(controller.Search());
                     break;
             }
         }
@@ -157,20 +165,11 @@ namespace Player
             timeElapsed = 0f;
         }
 
-        public void AddFoundText(string itemName)
+        public void ShowFoundItemInfo(ItemData foundItem)
         {
-            var text = Instantiate(foundText, foundContainer);
-
-            text.GetComponent<TextMeshProUGUI>().text = "You found: " + itemName;
-
-            StartCoroutine(DestroyFoundText(text));
-        }
-
-        private IEnumerator DestroyFoundText(GameObject textObj)
-        {
-            yield return new WaitForSeconds(3);
-            
-            Destroy(textObj);
+           if(!foundItemWindow.activeInHierarchy) foundItemWindow.SetActive(true);
+           
+           
         }
     }
 }
