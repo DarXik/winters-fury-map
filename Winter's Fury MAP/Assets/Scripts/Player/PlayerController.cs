@@ -1,5 +1,6 @@
 using System.Collections;
 using Player;
+using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,12 +40,9 @@ public class PlayerController : MonoBehaviour
     public float maxStamina;
     public float decreaseRate, increaseRate;
     public float timeToStartRegeneratingStamina;
-    public GameObject staminaObj;
-    public Image staminaFill;
-    private Animator staminaAnim;
     private float currentStamina;
     private bool isRegenerating, staminaDepleted;
-    private float StaminaPercent => currentStamina / maxStamina;
+    public float StaminaPercent => currentStamina / maxStamina;
 
     [Header("Crouching")] public float crouchHeight;
     public float crouchTransitionSpeed;
@@ -62,14 +60,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
-        staminaAnim = staminaObj.GetComponent<Animator>();
         Instance = this;
     }
 
     private void Start()
     {
-        staminaObj.SetActive(false);
-        
         standingHeight = currentHeight = charController.height;
         initialCameraPos = cameraTransform.localPosition;
         currentStamina = maxStamina;
@@ -82,7 +77,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if(StaminaPercent <= 0f) StartCoroutine(StaminaDepletionHandler());
-        if(currentStamina < maxStamina) HandleStaminaUI();
         if(isRegenerating) RegenerateStamina();
         
         MovingStateHandler();
@@ -161,9 +155,9 @@ public class PlayerController : MonoBehaviour
 
             currentActivity = PlayerActivity.Running;
             
-            if(!staminaObj.activeInHierarchy) staminaObj.SetActive(true);
-            
             DecreaseStamina();
+            
+            HUD.Instance.ShowStaminaIcon();
         }
         else
         {
@@ -205,30 +199,21 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(timeToStartRegeneratingStamina);
 
         isRegenerating = true;
+        HUD.Instance.FadeAwayStaminaIcon();
     }
 
     private void RegenerateStamina()
     {
-        currentStamina += increaseRate * Time.deltaTime;
-        
-        staminaAnim.SetTrigger("FadeOut");
-
-        if (currentStamina > maxStamina)
+        if (currentStamina >= maxStamina)
         {
             isRegenerating = false;
 
             currentStamina = maxStamina;
+
+            return;
         }
-    }
-
-    private void HandleStaminaUI()
-    {
-        staminaFill.fillAmount = StaminaPercent;
-    }
-
-    private void HideStaminaObject()
-    {
-        staminaObj.SetActive(false);
+        
+        currentStamina += increaseRate * Time.deltaTime;
     }
 
     public Vector3 GetPlayerPosition()

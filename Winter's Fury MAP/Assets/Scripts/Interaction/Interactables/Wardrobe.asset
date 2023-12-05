@@ -10,14 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8df08ae92fd94934f8eff2ceae61743e, type: 3}
-  m_Name: Nightstand
+  m_Name: Wardrobe
   m_EditorClassIdentifier: 
-  interactableName: Nightstand
+  interactableName: Wardrobe
   interactableType: 1
   searched: 0
   warmthBonus: 0
-  items:
-  - itemData: {fileID: 11400000, guid: b09d83ce934cf7e46b9109061dd617a3, type: 2}
-    chance: 100
-  - itemData: {fileID: 11400000, guid: 8d672e6d8387f884ba9e4ac9b908bff8, type: 2}
-    chance: 100
+  items: []

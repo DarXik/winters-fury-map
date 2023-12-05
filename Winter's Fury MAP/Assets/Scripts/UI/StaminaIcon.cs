@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StaminaIcon : MonoBehaviour
+namespace UI
 {
-    public void HideStaminaIcon()
+    public class StaminaIcon : MonoBehaviour
     {
-        gameObject.SetActive(false);
+        public void HideStaminaIcon()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
