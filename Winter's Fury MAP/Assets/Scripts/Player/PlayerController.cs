@@ -2,6 +2,7 @@ using System.Collections;
 using Player;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PlayerActivity
 {
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
     public float maxStamina;
     public float decreaseRate, increaseRate;
     public float timeToStartRegeneratingStamina;
+    public GameObject staminaObj;
+    public Image staminaFill;
+    private Animator staminaAnim;
     private float currentStamina;
     private bool isRegenerating, staminaDepleted;
     private float StaminaPercent => currentStamina / maxStamina;
@@ -58,11 +62,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         charController = GetComponent<CharacterController>();
+        staminaAnim = staminaObj.GetComponent<Animator>();
         Instance = this;
     }
 
     private void Start()
     {
+        staminaObj.SetActive(false);
+        
         standingHeight = currentHeight = charController.height;
         initialCameraPos = cameraTransform.localPosition;
         currentStamina = maxStamina;
@@ -75,6 +82,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if(StaminaPercent <= 0f) StartCoroutine(StaminaDepletionHandler());
+        if(currentStamina < maxStamina) HandleStaminaUI();
+        if(isRegenerating) RegenerateStamina();
         
         MovingStateHandler();
         MovePlayer();
@@ -82,8 +91,6 @@ public class PlayerController : MonoBehaviour
 
         CheckForHeadBob();
         if(!isCrouching) headBob.ResetHeadBob();
-        
-        if(isRegenerating) RegenerateStamina();
     }
 
     private void CheckForHeadBob()
@@ -153,7 +160,9 @@ public class PlayerController : MonoBehaviour
             isRunning = true;
 
             currentActivity = PlayerActivity.Running;
-
+            
+            if(!staminaObj.activeInHierarchy) staminaObj.SetActive(true);
+            
             DecreaseStamina();
         }
         else
@@ -201,11 +210,25 @@ public class PlayerController : MonoBehaviour
     private void RegenerateStamina()
     {
         currentStamina += increaseRate * Time.deltaTime;
+        
+        staminaAnim.SetTrigger("FadeOut");
 
-        if (currentStamina >= maxStamina)
+        if (currentStamina > maxStamina)
         {
             isRegenerating = false;
+
+            currentStamina = maxStamina;
         }
+    }
+
+    private void HandleStaminaUI()
+    {
+        staminaFill.fillAmount = StaminaPercent;
+    }
+
+    private void HideStaminaObject()
+    {
+        staminaObj.SetActive(false);
     }
 
     public Vector3 GetPlayerPosition()

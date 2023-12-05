@@ -18,7 +18,7 @@ MonoBehaviour:
     knowledge.
   itemType: 2
   itemCondition: 100
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 5b7b3cf89f655814db929095980ad367, type: 3}
   calorieDensity: 0
   waterIntake: 0
   caloriesIntake: 0
