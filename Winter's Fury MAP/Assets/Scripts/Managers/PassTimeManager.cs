@@ -1,66 +1,90 @@
-using System;
 using System.Collections;
 using Lighting;
-using Managers;
 using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
-public class PassTimeManager : MonoBehaviour
+namespace Managers
 {
-    [Header("UI References")] [SerializeField]
-    private GameObject passTimeWindow;
-
-    [SerializeField] private GameObject passButton, leftArrow, rightArrow;
-    [SerializeField] private TextMeshProUGUI hoursText;
-
-    [Header("Setup")] public int maxPassHours;
-    public float passingTimeIncrement;
-    private float normalTimeIncrement;
-    private int hoursToPass;
-
-    public static bool passTimeWindowOpened;
-
-    public static PassTimeManager Instance { get; private set; }
-
-    private void Awake()
+    public enum PassTypes
     {
-        Instance = this;
+        Sleep,
+        PassTime
     }
-
-    private void Start()
+    
+    public class PassTimeManager : MonoBehaviour
     {
-        passTimeWindow.SetActive(false);
+        [Header("UI References")] 
+        [SerializeField] private GameObject passTimeWindow;
+        [SerializeField] private Button sleepTypeButton, passTypeButton;
+        [SerializeField] private TextMeshProUGUI header, subheader, hoursToText, passButtonText;
+        [SerializeField] private TextMeshProUGUI feelsLike, bedWarmth;
+        [SerializeField] private Button passButton;
+        [SerializeField] private GameObject passButtonObj;
+        [SerializeField] private GameObject leftArrow, rightArrow;
+        [SerializeField] private TextMeshProUGUI hoursText;
 
-        normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
+        [Header("Setup")] public int maxPassHours;
+        public float passingTimeIncrement;
+        private float normalTimeIncrement;
+        private int hoursToPass;
 
-        hoursToPass = 1;
-    }
+        public static bool passTimeWindowOpened;
+        public static bool isSleeping;
 
-    private void Update()
-    {
-        if (passTimeWindowOpened)
+        public static PassTimeManager Instance { get; private set; }
+
+        private void Awake()
         {
-            UpdateWindowUI();
-            Clock.Instance.RotateClock();
+            Instance = this;
         }
-    }
 
-    public void TogglePassTimeWindow()
-    {
-        if (!passTimeWindowOpened)
+        private void Start()
         {
-            passTimeWindow.SetActive(true);
-            passButton.SetActive(true);
-            leftArrow.SetActive(true);
-            rightArrow.SetActive(true);
-            PlayerLook.Instance.BlockRotation();
+            sleepTypeButton.onClick.AddListener(() => AssignUI(PassTypes.Sleep));
+            passTypeButton.onClick.AddListener(() => AssignUI(PassTypes.PassTime));
+            
+            passTimeWindow.SetActive(false);
 
-            Clock.Instance.SetClock();
+            normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
 
-            passTimeWindowOpened = true;
+            hoursToPass = 1;
         }
-        else
+
+        private void Update()
+        {
+            if (passTimeWindowOpened)
+            {
+                UpdateWindowUI();
+                Clock.Instance.RotateClock();
+            }
+        }
+
+        public void TogglePassTimeWindow(PassTypes passType, float? bedWarmthBonus = null)
+        {
+            if (!passTimeWindowOpened)
+            {
+                passTimeWindow.SetActive(true);
+                passButtonObj.SetActive(true);
+                leftArrow.SetActive(true);
+                rightArrow.SetActive(true);
+                PlayerLook.Instance.BlockRotation();
+
+                Clock.Instance.SetClock();
+
+                passTimeWindowOpened = true;
+
+                AssignUI(passType, bedWarmthBonus);
+            }
+            else
+            {
+                ClosePassWindow();
+            }
+        }
+
+        public void ClosePassWindow()
         {
             StopAllCoroutines();
             GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
@@ -70,32 +94,87 @@ public class PassTimeManager : MonoBehaviour
             passTimeWindowOpened = false;
             hoursToPass = 1;
         }
-    }
 
-    public void TryPassTime()
-    {
-        StartCoroutine(PassTime());
-    }
+        private void AssignUI(PassTypes passType, float? bedWarmthBonus = null)
+        {
+            passButton.onClick.RemoveAllListeners();
+            
+            switch (passType)
+            {
+                case PassTypes.Sleep:
+                    header.text = "Sleep";
+                    subheader.text =
+                        "Advance time with the benefits of sleeping. Reduces fatigue and gains condition if healthy.";
+                    hoursToText.text = "Hours to sleep";
+                    passButtonText.text = "Sleep";
+                    passButton.onClick.AddListener(TrySleep);
+                    sleepTypeButton.interactable = false;
+                    passTypeButton.interactable = true;
+                    feelsLike.text = $"Feels like {Mathf.RoundToInt(VitalManager.Instance.feelsLikeTemp)}°C";
+                    bedWarmth.text = $"Bed warmth bonus +{bedWarmthBonus}°C";
+                    break;
+                case PassTypes.PassTime:
+                    header.text = "Pass Time";
+                    subheader.text =
+                        "Advance time without the need to sleep.";
+                    hoursToText.text = "Hours to pass";
+                    passButtonText.text = "Pass time";
+                    passButton.onClick.AddListener(TryPassTime);
+                    sleepTypeButton.interactable = true;
+                    passTypeButton.interactable = false;
+                    feelsLike.text = "";
+                    bedWarmth.text = "";
+                    break;
+            }
+        }
 
-    private IEnumerator PassTime()
-    {
-        passButton.SetActive(false);
-        leftArrow.SetActive(false);
-        rightArrow.SetActive(false);
+        public void TrySleep()
+        {
+            StartCoroutine(Sleep());
+        }
 
-        GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
+        public void TryPassTime()
+        {
+            StartCoroutine(PassTime());
+        }
 
-        yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
+        private IEnumerator Sleep()
+        {
+            passButtonObj.SetActive(false);
+            leftArrow.SetActive(false);
+            rightArrow.SetActive(false);
 
-        GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
-        UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
-        hoursToPass = 1;
-        passButton.SetActive(true);
-        leftArrow.SetActive(true);
-        rightArrow.SetActive(true);
-    }
+            GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
+            isSleeping = true;
 
-    /*private IEnumerator PassTime()
+            yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
+
+            isSleeping = false;
+            GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
+            UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
+            hoursToPass = 1;
+            ClosePassWindow();
+        }
+
+        private IEnumerator PassTime()
+        {
+            passButtonObj.SetActive(false);
+            leftArrow.SetActive(false);
+            rightArrow.SetActive(false);
+
+            GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
+
+            yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
+
+            GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
+            UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
+            hoursToPass = 1;
+            passButtonObj.SetActive(true);
+            leftArrow.SetActive(true);
+            rightArrow.SetActive(true);
+        }
+
+        /*private IEnumerator PassTime()
     {
         var finalTime = GameManager.Instance.GetCurrentTime() + hoursToPass;
         finalTime %= 24f;
@@ -123,24 +202,25 @@ public class PassTimeManager : MonoBehaviour
         rightArrow.SetActive(true);
     }*/
 
-    public void LowerHour()
-    {
-        if (hoursToPass > 1)
+        public void LowerHour()
         {
-            hoursToPass--;
+            if (hoursToPass > 1)
+            {
+                hoursToPass--;
+            }
         }
-    }
 
-    public void HeightenHour()
-    {
-        if (hoursToPass < maxPassHours)
+        public void HeightenHour()
         {
-            hoursToPass++;
+            if (hoursToPass < maxPassHours)
+            {
+                hoursToPass++;
+            }
         }
-    }
 
-    private void UpdateWindowUI()
-    {
-        hoursText.text = hoursToPass.ToString();
+        private void UpdateWindowUI()
+        {
+            hoursText.text = hoursToPass.ToString();
+        }
     }
 }

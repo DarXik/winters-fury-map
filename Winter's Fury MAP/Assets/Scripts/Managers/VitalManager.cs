@@ -31,12 +31,13 @@ namespace Managers
 
         public float[] increaseThresholds = new float[3];
         [HideInInspector] public float tempFromFire;
-        private float feelsLikeTemp;
+        [HideInInspector] public float feelsLikeTemp;
         private float currentTemp;
         private int reduceTempChevronsToReveal, increaseTempChevronsToReveal;
 
         [Header("Fatigue")] public float maxFatigueBar;
-        public float smallDecreaseRate, mediumDecreaseRate, highDecreaseRate;
+        public float smallDecreaseRate, mediumDecreaseRate;
+        public float sleepRecoveryRate;
         private float currentFatigue;
         private int fatigueChevronsToReveal;
 
@@ -92,7 +93,8 @@ namespace Managers
             ReduceThirst();
             IncreaseTemperature();
             ReduceTemperature();
-            ReduceFatigue();
+            if(PassTimeManager.isSleeping) RecoverFatigue();
+            if(!PassTimeManager.isSleeping) ReduceFatigue();
             ReduceHealth();
             
             // if all four needs are above 0, recover health
@@ -139,6 +141,11 @@ namespace Managers
             {
                 currentHealth -= hungerDrainRate * (Time.deltaTime * timeIncrement);
             }
+        }
+
+        private void RecoverFatigue()
+        {
+            currentFatigue += sleepRecoveryRate * (Time.deltaTime * timeIncrement);
         }
 
         private void ReduceFatigue()

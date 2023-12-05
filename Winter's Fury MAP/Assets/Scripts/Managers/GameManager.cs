@@ -55,7 +55,7 @@ namespace Managers
 
             if (Input.GetKeyDown(KeyCode.T) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened && !AddFuelManager.addFuelWindowOpened)
             {
-                PassTimeManager.Instance.TogglePassTimeWindow();
+                PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.PassTime);
             }
         }
 

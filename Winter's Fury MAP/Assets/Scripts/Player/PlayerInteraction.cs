@@ -14,7 +14,7 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        [Header("UI References")] public TextMeshProUGUI itemText;
+        [FormerlySerializedAs("itemText")] [Header("UI References")] public TextMeshProUGUI interactText;
         public Image holdCircle;
 
         [Header("Default Values")] public float maxInteractDistance;
@@ -50,7 +50,7 @@ namespace Player
             if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
                 AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened) return;
 
-            CheckHover();
+            if(!interacting) CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
             if (Input.GetMouseButton(0) && !interacting && !foundItemWindow.activeInHierarchy) CheckHold();
             if (Input.GetMouseButtonUp(0))
@@ -66,20 +66,20 @@ namespace Player
             {
                 if (hoverHit.transform.root.TryGetComponent(out ItemController item))
                 {
-                    itemText.text = item.itemData.itemName;
+                    interactText.text = item.itemData.itemName;
                 }
                 else if (hoverHit.transform.TryGetComponent(out InteractableController interactable))
                 {
-                    itemText.text = interactable.interactionData.interactableName;
+                    interactText.text = interactable.interactionData.interactableName;
                 }
                 else
                 {
-                    itemText.text = "";
+                    interactText.text = "";
                 }
             }
             else
             {
-                itemText.text = "";
+                interactText.text = "";
             }
         }
 
@@ -132,7 +132,8 @@ namespace Player
             switch (controller.interactionData.interactableType)
             {
                 case InteractableType.Bed:
-                    // go to sleep
+                    interactText.text = "";
+                    PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.Sleep, controller.interactionData.warmthBonus);
                     break;
                 case InteractableType.Searchable:
                     StartCoroutine(controller.Search());
