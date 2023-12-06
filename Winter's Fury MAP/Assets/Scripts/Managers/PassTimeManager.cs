@@ -167,6 +167,7 @@ namespace Managers
 
             yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
 
+            // update everything but do not close the window
             GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
             UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
             hoursToPass = 1;
