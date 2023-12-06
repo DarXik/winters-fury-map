@@ -93,11 +93,11 @@ namespace Managers
 
             switch (feelsLikeTemp)
             {
-                case > 0:
+                case >= 1:
                     RecoverTemperature();
                     HideReduceTempChevrons();
                     break;
-                case <= 0:
+                case <= 0.99f:
                     ReduceTemperature();
                     HideRecoverTempChevrons();
                     break;
@@ -163,6 +163,14 @@ namespace Managers
 
         private void RecoverFatigue()
         {
+            if (currentFatigue >= maxFatigueBar)
+            {
+                currentFatigue = maxFatigueBar;
+                PassTimeManager.Instance.ClosePassWindow();
+
+                return;
+            }
+            
             currentFatigue += sleepRecoveryRate * (Time.deltaTime * timeIncrement);
         }
 
@@ -386,6 +394,11 @@ namespace Managers
             {
                 increaseTempChevrons.transform.GetChild(i).gameObject.SetActive(false);
             }
+        }
+
+        public float GetCurrentCalories()
+        {
+            return currentCalories;
         }
     }
 }

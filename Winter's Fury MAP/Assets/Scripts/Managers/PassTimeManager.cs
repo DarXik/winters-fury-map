@@ -20,7 +20,8 @@ namespace Managers
         [SerializeField] private GameObject passTimeWindow;
         [SerializeField] private Button sleepTypeButton, passTypeButton;
         [SerializeField] private TextMeshProUGUI header, subheader, hoursToText, passButtonText;
-        [SerializeField] private TextMeshProUGUI feelsLike, bedWarmth;
+        [SerializeField] private GameObject bedInfo;
+        [SerializeField] private TextMeshProUGUI calorieStore, caloriesBurned, feelsLike, bedWarmth;
         [SerializeField] private Button passButton;
         [SerializeField] private GameObject passButtonObj;
         [SerializeField] private GameObject leftArrow, rightArrow;
@@ -89,6 +90,8 @@ namespace Managers
             GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
             passTimeWindow.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
+            PlayerController.Instance.currentActivity = PlayerActivity.Standing;
+            UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
 
             passTimeWindowOpened = false;
             hoursToPass = 1;
@@ -109,8 +112,12 @@ namespace Managers
                     passButton.onClick.AddListener(TrySleep);
                     sleepTypeButton.interactable = false;
                     passTypeButton.interactable = true;
-                    feelsLike.text = $"Feels like {Mathf.RoundToInt(VitalManager.Instance.feelsLikeTemp)}°C";
-                    bedWarmth.text = $"Bed warmth bonus +{bedWarmthBonus}°C";
+                    
+                    bedInfo.SetActive(true);
+                    calorieStore.text = Mathf.RoundToInt(VitalManager.Instance.GetCurrentCalories()).ToString();
+                    caloriesBurned.text = (VitalManager.Instance.sleepingBurnRate * hoursToPass).ToString();
+                    feelsLike.text = $"{Mathf.RoundToInt(VitalManager.Instance.feelsLikeTemp)}°C";
+                    bedWarmth.text = $"+{bedWarmthBonus}°C";
                     break;
                 case PassTypes.PassTime:
                     header.text = "Pass Time";
@@ -121,8 +128,7 @@ namespace Managers
                     passButton.onClick.AddListener(TryPassTime);
                     sleepTypeButton.interactable = true;
                     passTypeButton.interactable = false;
-                    feelsLike.text = "";
-                    bedWarmth.text = "";
+                    bedInfo.SetActive(false);
                     break;
             }
         }
@@ -147,11 +153,7 @@ namespace Managers
             PlayerController.Instance.currentActivity = PlayerActivity.Sleeping;
 
             yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
-
-            PlayerController.Instance.currentActivity = PlayerActivity.Standing;
-            GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
-            UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
-            hoursToPass = 1;
+            
             ClosePassWindow();
         }
 
@@ -220,6 +222,7 @@ namespace Managers
         private void UpdateWindowUI()
         {
             hoursText.text = hoursToPass.ToString();
+            caloriesBurned.text = (VitalManager.Instance.sleepingBurnRate * hoursToPass).ToString();
         }
     }
 }

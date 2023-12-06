@@ -52,7 +52,7 @@ public class FPS_Counter : MonoBehaviour
             switch (_currentAveraged)
             {
                 case var x when x >= 0 && x < _cacheNumbersAmount:
-                    fpsText.text = CachedNumberStrings[x];
+                    fpsText.text = $"FPS: {CachedNumberStrings[x]}";
                     break;
                 case var x when x >= _cacheNumbersAmount:
                     fpsText.text = $"> {_cacheNumbersAmount} FPS";

@@ -11,6 +11,7 @@ namespace Managers
         private float timeOfDay;
 
         public static float ambientTemperature;
+        public static float indoorTemperature;
 
         private void Update()
         {
@@ -26,6 +27,9 @@ namespace Managers
 
             float normalizedTime = timeOfDay - currentHour;
             ambientTemperature = Mathf.Lerp(currentTemp, nextTemp, normalizedTime);
+            
+            if (indoorTemperature <= 0) return;
+            ambientTemperature += indoorTemperature;
         }
     }
 }
