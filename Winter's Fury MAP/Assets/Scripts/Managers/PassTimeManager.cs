@@ -32,7 +32,6 @@ namespace Managers
         private int hoursToPass;
 
         public static bool passTimeWindowOpened;
-        public static bool isSleeping;
 
         public static PassTimeManager Instance { get; private set; }
 
@@ -145,11 +144,11 @@ namespace Managers
             rightArrow.SetActive(false);
 
             GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
-            isSleeping = true;
+            PlayerController.Instance.currentActivity = PlayerActivity.Sleeping;
 
             yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
 
-            isSleeping = false;
+            PlayerController.Instance.currentActivity = PlayerActivity.Standing;
             GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
             UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
             hoursToPass = 1;

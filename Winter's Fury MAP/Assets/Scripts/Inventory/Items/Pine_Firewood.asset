@@ -18,12 +18,13 @@ MonoBehaviour:
     very long.
   itemType: 2
   itemCondition: 100
-  conditionPerDay: 0
   itemIcon: {fileID: 21300000, guid: db6130751fda75241afcc67ae09fa684, type: 3}
   calorieDensity: 0
   waterIntake: 0
   caloriesIntake: 0
   fatigueReduce: 0
+  conditionPerDay: 0
+  conditionVariability: 0
   fuelItemWeight: 0.5
   temperatureIncrease: 9
   burnTime: 90

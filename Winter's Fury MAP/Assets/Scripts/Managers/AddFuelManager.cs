@@ -111,35 +111,29 @@ namespace Managers
             var fuelItems = InventoryManager.Instance.GetFuelItems();
             var itemCounts = InventoryManager.Instance.GetFuelItemCounts();
             usedFuelItems = new();
-
+            var index = 0;
+            
             foreach (var fuelItem in fuelItems)
             {
-                for (var i = 0; i < itemCounts.Count; i++)
+                var matchingItem = itemCounts.FirstOrDefault(itemCount => itemCount.Item1 == fuelItem.itemName && usedFuelItems.All(u => u.itemName != fuelItem.itemName));
+
+                if (matchingItem != null)
                 {
-                    var itemCount = itemCounts[i];
-                    var index = i;
+                    Debug.Log("Creating UI Item for: " + fuelItem.itemName);
+                    var i = index;
 
-                    if (itemCount.Item1 == fuelItem.itemName)
-                    {
-                        if (!usedFuelItems.Contains(fuelItem))
-                        {
-                            Debug.Log("Creating UI Item for: " + fuelItem.itemName);
-                            Debug.Log("Index is: " + index);
-                            
-                            var uiFuelItem = Instantiate(UIFuelItem, fuelChooser);
+                    var uiFuelItem = Instantiate(UIFuelItem, fuelChooser);
 
-                            uiFuelItem.transform.Find("Fuel Name").GetComponent<TextMeshProUGUI>().text =
-                                itemCount.Item1;
-                            uiFuelItem.transform.Find("Fuel Amount").GetComponent<TextMeshProUGUI>().text =
-                                $"1 OF {itemCount.Item2}";
-                            uiFuelItem.GetComponent<Button>().onClick.AddListener(delegate { ChooseFuelItem(index); });
+                    uiFuelItem.transform.Find("Fuel Name").GetComponent<TextMeshProUGUI>().text =
+                        matchingItem.Item1;
+                    uiFuelItem.transform.Find("Fuel Amount").GetComponent<TextMeshProUGUI>().text =
+                        $"1 OF {matchingItem.Item2}";
+                    uiFuelItem.GetComponent<Button>().onClick.AddListener(delegate { ChooseFuelItem(i); });
 
-                            usedFuelItems.Add(fuelItem);
-                        }
-                    }
+                    usedFuelItems.Add(fuelItem);
+                    index++;
                 }
             }
-
             ChooseFuelItem(chosenFuelIndex ?? 0);
         }
 
@@ -157,7 +151,7 @@ namespace Managers
             {
                 Destroy(item.gameObject);
             }
-            
+
             fuelChooser.DetachChildren();
         }
     }

@@ -24,23 +24,26 @@ namespace Interaction
         public IEnumerator Search()
         {
             if (interactionData.searched) yield break;
-            
-            foreach (var interactItem in interactionData.items)
+
+            if (interactionData.items.Count > 0)
             {
-                float chance = Mathf.Round(Random.value * 100);
-                
-                if (chance <= interactItem.chance)
+                foreach (var interactItem in interactionData.items)
                 {
-                    ItemData foundItem = Instantiate(interactItem.itemData);
-
-                    InventoryManager.Instance.AddItem(foundItem);
-                    
-                    PlayerInteraction.Instance.ShowFoundItemInfo(foundItem);
-
-                    yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-                }
+                    float chance = Mathf.Round(Random.value * 100);
                 
-                yield return null;
+                    if (chance <= interactItem.chance)
+                    {
+                        ItemData foundItem = Instantiate(interactItem.itemData);
+
+                        InventoryManager.Instance.AddItem(foundItem);
+                    
+                        PlayerInteraction.Instance.ShowFoundItemInfo(foundItem);
+
+                        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+                    }
+                
+                    yield return null;
+                }
             }
 
             interactionData.interactableName += " (Searched)";

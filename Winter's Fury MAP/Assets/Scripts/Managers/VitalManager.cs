@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -42,7 +43,7 @@ namespace Managers
         private int fatigueChevronsToReveal;
 
         [Header("Hunger (Calories)")] public float maxCalories;
-        public float standingBurnRate, walkingBurnRate, runningBurnRate;
+        public float sleepingBurnRate, standingBurnRate, walkingBurnRate, runningBurnRate;
         private float currentCalories;
         private PlayerActivity currentActivity;
         private int hungerChevronsToReveal;
@@ -50,7 +51,6 @@ namespace Managers
         [Header("Thirst (mL)")] public float maxThirst;
         public float awakeDepletionRate, asleepDepletionRate;
         private float currentThirst;
-        private PlayerAwakeness currentAwakeness;
         private int thirstChevronsToReveal;
 
         // Fill Amounts
@@ -79,31 +79,49 @@ namespace Managers
 
             timeIncrement = GameManager.Instance.GetTimeIncrement();
 
-            currentAwakeness = PlayerController.Instance.currentAwakeness;
-
-            HideIncreaseChevrons();
-            HideReduceChevrons();
+            HideRecoverTempChevrons();
+            HideReduceTempChevrons();
         }
 
         private void Update()
         {
             feelsLikeTemp = TemperatureManager.ambientTemperature + tempFromFire;
+            currentActivity = PlayerController.Instance.currentActivity;
 
             ReduceHunger();
             ReduceThirst();
-            IncreaseTemperature();
-            ReduceTemperature();
-            if(PassTimeManager.isSleeping) RecoverFatigue();
-            if(!PassTimeManager.isSleeping) ReduceFatigue();
-            ReduceHealth();
+
+            switch (feelsLikeTemp)
+            {
+                case > 0:
+                    RecoverTemperature();
+                    HideReduceTempChevrons();
+                    break;
+                case <= 0:
+                    ReduceTemperature();
+                    HideRecoverTempChevrons();
+                    break;
+            }
             
-            // if all four needs are above 0, recover health
+            switch (currentActivity)
+            {
+                case PlayerActivity.Sleeping:
+                    RecoverFatigue();
+                    break;
+                case PlayerActivity.Standing or PlayerActivity.Walking or PlayerActivity.Running:
+                    ReduceFatigue();
+                    break;
+            }
+
+            if(currentTemp <= 0 || currentFatigue <= 0 || currentThirst <= 0 || currentCalories <= 0)
+            {
+                ReduceHealth();
+            }
+
             if (currentCalories > 0 && currentFatigue > 0 && currentThirst > 0 && currentTemp > 0)
             {
                 RecoverHealth();   
             }
-            
-            currentActivity = PlayerController.Instance.currentActivity;
         }
 
         public void BurnPlayer()
@@ -208,6 +226,10 @@ namespace Managers
 
             switch (currentActivity)
             {
+                case PlayerActivity.Sleeping:
+                    currentCalories -= sleepingBurnRate * (Time.deltaTime * timeIncrement);
+                    hungerChevronsToReveal = 1;
+                    break;
                 case PlayerActivity.Standing:
                     currentCalories -= standingBurnRate * (Time.deltaTime * timeIncrement);
                     hungerChevronsToReveal = 1;
@@ -257,13 +279,13 @@ namespace Managers
 
             if (!thirstChevrons.activeInHierarchy) thirstChevrons.SetActive(true);
 
-            switch (currentAwakeness)
+            switch (currentActivity)
             {
-                case PlayerAwakeness.Awake:
+                case PlayerActivity.Walking or PlayerActivity.Running or PlayerActivity.Standing:
                     currentThirst -= awakeDepletionRate * (Time.deltaTime * timeIncrement);
                     thirstChevronsToReveal = 2;
                     break;
-                case PlayerAwakeness.Asleep:
+                case PlayerActivity.Sleeping:
                     currentThirst -= asleepDepletionRate * (Time.deltaTime * timeIncrement);
                     thirstChevronsToReveal = 1;
                     break;
@@ -275,18 +297,15 @@ namespace Managers
             }
         }
 
-        private void IncreaseTemperature()
+        private void RecoverTemperature()
         {
-            if (feelsLikeTemp <= 0) return;
-            
             if (currentTemp >= maxTempBar)
             {
                 if (increaseTempChevrons.activeInHierarchy) increaseTempChevrons.SetActive(false);
-
+                currentTemp = maxTempBar;
+                
                 return;
             }
-
-            HideReduceChevrons();
 
             if (feelsLikeTemp >= increaseThresholds[0] && feelsLikeTemp <= increaseThresholds[1])
             {
@@ -315,18 +334,14 @@ namespace Managers
 
         private void ReduceTemperature()
         {
-            if (feelsLikeTemp > 0) return;
-
             if (currentTemp <= 0)
             {
-                if (reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(false);
+                if(reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(false);
 
                 return;
             }
-
-            if (!reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(true);
-
-            HideIncreaseChevrons();
+            
+            if(!reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(true);
 
             if (feelsLikeTemp <= reduceThresholds[0] && feelsLikeTemp >= reduceThresholds[1])
             {
@@ -353,7 +368,7 @@ namespace Managers
             }
         }
 
-        private void HideReduceChevrons()
+        private void HideReduceTempChevrons()
         {
             reduceTempChevronsToReveal = 0;
 
@@ -363,7 +378,7 @@ namespace Managers
             }
         }
 
-        private void HideIncreaseChevrons()
+        private void HideRecoverTempChevrons()
         {
             increaseTempChevronsToReveal = 0;
 

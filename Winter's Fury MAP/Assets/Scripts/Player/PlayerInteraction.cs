@@ -50,7 +50,7 @@ namespace Player
             if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
                 AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened) return;
 
-            if(!interacting) CheckHover();
+            CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
             if (Input.GetMouseButton(0) && !interacting && !foundItemWindow.activeInHierarchy) CheckHold();
             if (Input.GetMouseButtonUp(0))
