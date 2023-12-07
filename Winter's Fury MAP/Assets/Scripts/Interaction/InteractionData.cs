@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Interaction
 {
@@ -22,7 +23,7 @@ namespace Interaction
     [CreateAssetMenu(fileName = "Interactable", menuName = "Scriptables/Interactable", order = 2)]
     public class InteractionData : ScriptableObject
     {
-        public string interactableName;
+        public string interactionText;
         public InteractableType interactableType;
         [HideInInspector] public bool searched;
 

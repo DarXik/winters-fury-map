@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df08ae92fd94934f8eff2ceae61743e, type: 3}
   m_Name: Single_Bed
   m_EditorClassIdentifier: 
-  interactableName: Bed
-  interactableType: 0
+  interactionText: Bed
+  interactableType: 1
+  searched: 0
   warmthBonus: 5
   items: []

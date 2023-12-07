@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df08ae92fd94934f8eff2ceae61743e, type: 3}
   m_Name: Wardrobe
   m_EditorClassIdentifier: 
-  interactableName: Wardrobe
-  interactableType: 1
+  interactionText: Wardrobe
+  interactableType: 2
   searched: 0
   warmthBonus: 0
   items: []

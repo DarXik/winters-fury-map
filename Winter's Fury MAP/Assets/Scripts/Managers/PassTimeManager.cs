@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Lighting;
 using Player;
@@ -31,6 +32,7 @@ namespace Managers
         public float passingTimeIncrement;
         private float normalTimeIncrement;
         private int hoursToPass;
+        private float bedWarmthBonus;
 
         public static bool passTimeWindowOpened;
 
@@ -76,7 +78,9 @@ namespace Managers
 
                 passTimeWindowOpened = true;
 
-                AssignUI(passType, bedWarmthBonus);
+                if (bedWarmthBonus != null) this.bedWarmthBonus = Convert.ToSingle(bedWarmthBonus);
+
+                AssignUI(passType);
             }
             else
             {
@@ -97,7 +101,7 @@ namespace Managers
             hoursToPass = 1;
         }
 
-        private void AssignUI(PassTypes passType, float? bedWarmthBonus = null)
+        private void AssignUI(PassTypes passType)
         {
             passButton.onClick.RemoveAllListeners();
             
@@ -112,7 +116,7 @@ namespace Managers
                     passButton.onClick.AddListener(TrySleep);
                     sleepTypeButton.interactable = false;
                     passTypeButton.interactable = true;
-                    
+
                     bedInfo.SetActive(true);
                     calorieStore.text = Mathf.RoundToInt(VitalManager.Instance.GetCurrentCalories()).ToString();
                     caloriesBurned.text = (VitalManager.Instance.sleepingBurnRate * hoursToPass).ToString();

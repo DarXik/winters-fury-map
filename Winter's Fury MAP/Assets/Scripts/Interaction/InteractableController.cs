@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Managers;
 using Player;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +10,8 @@ namespace Interaction
     {
         public InteractionData interactionData;
         [SerializeField] private Animator anim;
+
+        private bool opened;
 
         private void Start()
         {
@@ -47,14 +46,17 @@ namespace Interaction
                 }
             }
 
-            interactionData.interactableName += " (Searched)";
+            interactionData.interactionText += " (Searched)";
             interactionData.searched = true;
             PlayerInteraction.Instance.HideFoundItemInfo();
         }
 
         public void OpenDoor()
         {
-            anim.SetTrigger("OpenDoor");
+            opened = !opened;
+
+            anim.SetTrigger(opened ? "OpenDoor" : "CloseDoor");
+            interactionData.interactionText = opened ? "Close Door" : "Open Door";
         }
     }
 }

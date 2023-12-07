@@ -70,7 +70,7 @@ namespace Player
                 }
                 else if (hoverHit.transform.TryGetComponent(out InteractableController interactable))
                 {
-                    interactText.text = interactable.interactionData.interactableName;
+                    interactText.text = interactable.interactionData.interactionText;
                 }
                 else
                 {
