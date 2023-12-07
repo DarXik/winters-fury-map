@@ -131,6 +131,9 @@ namespace Player
 
             switch (controller.interactionData.interactableType)
             {
+                case InteractableType.Door:
+                    controller.OpenDoor();
+                    break;
                 case InteractableType.Bed:
                     interactText.text = "";
                     PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.Sleep, controller.interactionData.warmthBonus);

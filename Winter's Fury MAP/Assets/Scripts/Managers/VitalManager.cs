@@ -314,6 +314,8 @@ namespace Managers
                 
                 return;
             }
+            
+            if(!increaseTempChevrons.activeInHierarchy) increaseTempChevrons.SetActive(true);
 
             if (feelsLikeTemp >= increaseThresholds[0] && feelsLikeTemp <= increaseThresholds[1])
             {

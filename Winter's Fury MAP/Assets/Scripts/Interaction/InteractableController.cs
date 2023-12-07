@@ -12,6 +12,7 @@ namespace Interaction
     public class InteractableController : MonoBehaviour
     {
         public InteractionData interactionData;
+        [SerializeField] private Animator anim;
 
         private void Start()
         {
@@ -49,6 +50,11 @@ namespace Interaction
             interactionData.interactableName += " (Searched)";
             interactionData.searched = true;
             PlayerInteraction.Instance.HideFoundItemInfo();
+        }
+
+        public void OpenDoor()
+        {
+            anim.SetTrigger("OpenDoor");
         }
     }
 }

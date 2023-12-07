@@ -6,6 +6,7 @@ namespace Interaction
 {
     public enum InteractableType
     {
+        Door,
         Bed,
         Searchable
     }
