@@ -1,0 +1,10 @@
+﻿// private void OnEnable()
+    // {
+    //     TypeWriter.CompleteTextRevealed += ShowMenu;
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     TypeWriter.CompleteTextRevealed -= ShowMenu;
+    // }
+    //

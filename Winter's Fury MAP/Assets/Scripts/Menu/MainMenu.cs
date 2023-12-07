@@ -6,44 +6,71 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    // IN UNITY
-    public GameObject startObj,
-        optionsObj,
-        optionsGeneralObj,
-        optionsVideoObj,
-        optionsAudioObj,
-        optionsControlsObj,
-        startMenuRest;
+    [Header("Game Objecty")]
+    public GameObject startObj;
+    public GameObject optionsObj;
+    public GameObject optionsGeneralObj;
+    public GameObject optionsVideoObj;
+    public GameObject optionsAudioObj;
+    public GameObject optionsControlsObj;
+    // public GameObject startMenuRest;
 
-    public AudioMixer audioMixer; // zobrazí input v unity pro objekt z audiomixeru
+    [Header("Jiné typy")] public AudioMixer audioMixer; // zobrazí input v unity pro objekt z audiomixeru
     private Resolution[] resolutions; // prázdná array pro rozlišení z pc
     public TMP_Dropdown resolutionDropdown; // zobrazí to input v unity pro připojení objektu
 
-    // CAMERA
-    public Camera mainCamera;
+    [Header("Kamera")] public Camera mainCamera;
     public Transform target, start;
 
-    // public GameObject targetPosition;
-    [Tooltip("Time in seconds to move the camera to the desired position.")]
-    public float timeToMoveCamera = 3f;
-    public float baseFOV;
+    [Tooltip("Time in seconds to move the camera to the desired position.")] [Header("Nastavení meníčka")]
+    private readonly float timeToMoveCamera = 0.2f; // méně -> rychlejší
+
+    private readonly float baseFOV = 55f;
     private bool cameraMoveEnabled;
 
-    // OPTIONS
-    private bool optionsOpened;
+    [Header("Sekce Options")] private bool optionsOpened;
     private bool generalOpened;
     private bool videoOpened;
     private bool audioOpened;
     private bool controlsOpened;
+    public TextMeshProUGUI sliderText;
+
+    [Header("Efekty")] [SerializeField] private CanvasGroup myUIGroup;
+    private bool fadeIn = false;
+    // [SerializeField] private bool fadeOut = false;
+
+    public void ShowUI()
+    {
+        myUIGroup.alpha = 0;
+        startObj.SetActive(true);
+        optionsObj.SetActive(false);
+        StartCoroutine(Wait());
+        fadeIn = true;
+    }
+
+    private void Update()
+    {
+        if (fadeIn)
+        {
+            if (myUIGroup.alpha < 1)
+            {
+                myUIGroup.alpha += Time.deltaTime;
+                if (myUIGroup.alpha >= 1)
+                {
+                    fadeIn = false;
+                }
+            }
+        }
+    }
 
     private void Start() // Start is called before the first frame update
     {
+        ShowUI();
         GetResolutions();
-        startObj.SetActive(true);
-        optionsObj.SetActive(false);
         mainCamera.fieldOfView = baseFOV;
     }
 
@@ -94,22 +121,11 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    // private void OnEnable()
-    // {
-    //     TypeWriter.CompleteTextRevealed += ShowMenu;
-    // }
-    //
-    // private void OnDisable()
-    // {
-    //     TypeWriter.CompleteTextRevealed -= ShowMenu;
-    // }
-    //
-
-    private IEnumerator Wait()
+    private static IEnumerator Wait()
     {
         yield return new WaitForSeconds(2f);
-        
-        startMenuRest.SetActive(true);
+
+        // startMenuRest.SetActive(true);
     }
 
     public void OptionsGeneral()
@@ -148,6 +164,7 @@ public class MainMenu : MonoBehaviour
     {
         // vezme dostupná rozlišení, pro každý pc jiné
         resolutions = Screen.resolutions;
+        // rates = Screen.
         resolutionDropdown.ClearOptions();
 
         // list pro dostupná rozlišení
@@ -157,11 +174,12 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < resolutions.Length; i++)
         {
             // projede každým rozlišením a uloží zformátované ve stringu
-            string option = resolutions[i].width + "x" + resolutions[i].height;
+            string option = resolutions[i].width + "x" + resolutions[i].height + "@" + resolutions[i].refreshRateRatio;
             options.Add(option);
 
             if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
+                resolutions[i].height == Screen.currentResolution.height &&
+                resolutions[i].refreshRateRatio.Equals(Screen.currentResolution.refreshRateRatio))
             {
                 crntResolutionIndex = i;
             }
@@ -174,13 +192,29 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-    public void UpdateResolution(int resolutionIndex)
+    public void SetFPS(float fps)
+    {
+        sliderText.text = fps.ToString("0");
+        Application.targetFrameRate = Convert.ToInt32(fps);
+        if (fps == 241) // zeptat zbyňi
+        {
+            Application.targetFrameRate = -1;
+            sliderText.text = "Unlimited";
+        }
+    }
+
+    public void SetBrightness(float lumen)
+    {
+
+    }
+
+    public void UpdateResolution(int resolutionIndex) // v unity pro update, když uživatel změní, tak unity předá info a index
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    public void ExitButton()
+    public void ExitGame()
     {
         Application.Quit();
         Debug.Log("Hra ukončena");
