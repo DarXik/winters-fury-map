@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
     private bool videoOpened;
     private bool audioOpened;
     private bool controlsOpened;
-    public TextMeshProUGUI sliderText;
+
 
     [Header("Efekty")] [SerializeField] private CanvasGroup myUIGroup;
     private bool fadeIn = false;
@@ -192,21 +192,6 @@ public class MainMenu : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-    public void SetFPS(float fps)
-    {
-        sliderText.text = fps.ToString("0");
-        Application.targetFrameRate = Convert.ToInt32(fps);
-        if (fps == 241) // zeptat zbyňi
-        {
-            Application.targetFrameRate = -1;
-            sliderText.text = "Unlimited";
-        }
-    }
-
-    public void SetBrightness(float lumen)
-    {
-
-    }
 
     public void UpdateResolution(int resolutionIndex) // v unity pro update, když uživatel změní, tak unity předá info a index
     {
