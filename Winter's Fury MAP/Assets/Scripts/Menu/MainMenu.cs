@@ -1,55 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Audio;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("Game Objecty")]
-    public GameObject startObj;
-    public GameObject optionsObj;
-    public GameObject optionsGeneralObj;
-    public GameObject optionsVideoObj;
-    public GameObject optionsAudioObj;
-    public GameObject optionsControlsObj;
-    // public GameObject startMenuRest;
-
-    [Header("Jiné typy")] public AudioMixer audioMixer; // zobrazí input v unity pro objekt z audiomixeru
-    private Resolution[] resolutions; // prázdná array pro rozlišení z pc
-    public TMP_Dropdown resolutionDropdown; // zobrazí to input v unity pro připojení objektu
-
-    [Header("Kamera")] public Camera mainCamera;
-    public Transform target, start;
-
-    [Tooltip("Time in seconds to move the camera to the desired position.")] [Header("Nastavení meníčka")]
-    private readonly float timeToMoveCamera = 0.2f; // méně -> rychlejší
-
-    private readonly float baseFOV = 55f;
-    private bool cameraMoveEnabled;
-
-    [Header("Sekce Options")] private bool optionsOpened;
-    private bool generalOpened;
-    private bool videoOpened;
-    private bool audioOpened;
-    private bool controlsOpened;
-
-
-    [Header("Efekty")] [SerializeField] private CanvasGroup myUIGroup;
-    private bool fadeIn = false;
-    // [SerializeField] private bool fadeOut = false;
-
-    public void ShowUI()
+    private void Start()
     {
-        myUIGroup.alpha = 0;
-        startObj.SetActive(true);
-        optionsObj.SetActive(false);
-        StartCoroutine(Wait());
-        fadeIn = true;
+        ShowUI();
+        mainCamera.fieldOfView = baseFOV;
     }
 
     private void Update()
@@ -67,11 +27,13 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void Start() // Start is called before the first frame update
+    private void ShowUI()
     {
-        ShowUI();
-        GetResolutions();
-        mainCamera.fieldOfView = baseFOV;
+        myUIGroup.alpha = 0;
+        startObj.SetActive(true);
+        optionsObj.SetActive(false);
+        StartCoroutine(Wait());
+        fadeIn = true;
     }
 
     private IEnumerator MoveCamera(Transform target, float targetFOV)
@@ -117,6 +79,8 @@ public class MainMenu : MonoBehaviour
             optionsObj.SetActive(false);
             optionsOpened = false;
 
+            OptionsScript optionsScript = startObj.AddComponent<OptionsScript>();
+            optionsScript.SavePreferences();
             StartCoroutine(MoveCamera(start, 55));
         }
     }
@@ -160,45 +124,6 @@ public class MainMenu : MonoBehaviour
         optionsControlsObj.SetActive(true);
     }
 
-    private void GetResolutions()
-    {
-        // vezme dostupná rozlišení, pro každý pc jiné
-        resolutions = Screen.resolutions;
-        // rates = Screen.
-        resolutionDropdown.ClearOptions();
-
-        // list pro dostupná rozlišení
-        var options = new List<string>();
-
-        int crntResolutionIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            // projede každým rozlišením a uloží zformátované ve stringu
-            string option = resolutions[i].width + "x" + resolutions[i].height + "@" + resolutions[i].refreshRateRatio;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height &&
-                resolutions[i].refreshRateRatio.Equals(Screen.currentResolution.refreshRateRatio))
-            {
-                crntResolutionIndex = i;
-            }
-        }
-
-        // vezme zformátovaná rozlišení a dá je do dropdownu
-        resolutionDropdown.AddOptions(options);
-        // nastaví rozlišení na dropdown na naše aktuální
-        resolutionDropdown.value = crntResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-    }
-
-
-    public void UpdateResolution(int resolutionIndex) // v unity pro update, když uživatel změní, tak unity předá info a index
-    {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
-
     public void ExitGame()
     {
         Application.Quit();
@@ -210,13 +135,34 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void SetMainVolume(float volume)
-    {
-        audioMixer.SetFloat("MainVolume" + "", volume);
-    }
 
-    public void SetFullScreen(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
-    }
+
+    [Header("Game Objecty")]
+    public GameObject startObj;
+    public GameObject optionsObj;
+    public GameObject optionsGeneralObj;
+    public GameObject optionsVideoObj;
+    public GameObject optionsAudioObj;
+    public GameObject optionsControlsObj;
+    // public GameObject startMenuRest;
+
+    [Header("Kamera")]
+    public Camera mainCamera;
+    public Transform target, start;
+
+    // [Tooltip("Time in seconds to move the camera to the desired position.")]
+    [Header("Nastavení meníčka")]
+    private readonly float timeToMoveCamera = 0.2f; // méně -> rychlejší
+    private readonly float baseFOV = 55f;
+    private bool cameraMoveEnabled;
+
+    [Header("Sekce Options")]
+    private bool optionsOpened;
+    private bool generalOpened;
+    private bool videoOpened;
+    private bool audioOpened;
+    private bool controlsOpened;
+
+    [Header("Efekty")] [SerializeField] private CanvasGroup myUIGroup;
+    private bool fadeIn;
 }
