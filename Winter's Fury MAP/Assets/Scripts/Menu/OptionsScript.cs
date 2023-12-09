@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class OptionsScript : MonoBehaviour
 {
@@ -12,11 +11,11 @@ public class OptionsScript : MonoBehaviour
     {
         GetResolutions();
         QualitySwitcher();
-
-        // if (postProcessVolume.profile.TryGetSettings(out ColorGrading colorGrading))
-        // {
-        //     colorGrading.postExposure.value = 1.5f;
-        // }
+        SetFPS(fpsPreference);
+        SetBrightness(brigtnessPreference);
+        SetMainVolume(mainVolumePreference);
+        sliderFPS.value = fpsPreference;
+        sliderBrightness.value = brigtnessPreference;
     }
 
     public void SavePreferences()
@@ -24,6 +23,7 @@ public class OptionsScript : MonoBehaviour
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
         PlayerPrefs.SetFloat("mainVolumePreference", mainVolumePreference);
+        PlayerPrefs.SetFloat("brightnessPreference", brigtnessPreference);
         Debug.Log("Uloženo");
     }
 
@@ -32,6 +32,7 @@ public class OptionsScript : MonoBehaviour
         currentQualityIndex = PlayerPrefs.GetInt("qualityPreference");
         fpsPreference = PlayerPrefs.GetInt("fpsPreference");
         mainVolumePreference = PlayerPrefs.GetFloat("mainVolumePreference");
+        brigtnessPreference = PlayerPrefs.GetFloat("brightnessPreference");
     }
 
     public void SetMainVolume(float volume)
@@ -49,7 +50,7 @@ public class OptionsScript : MonoBehaviour
     {
         sliderTextFPS.text = fps.ToString("0");
         fpsPreference = Convert.ToInt32(fps);
-        if (Convert.ToInt32(fps) == 241) // zeptat zbyňi
+        if (Convert.ToInt32(fps) == 241)
         {
             fpsPreference = -1;
             sliderTextFPS.text = "Unlimited";
@@ -60,7 +61,8 @@ public class OptionsScript : MonoBehaviour
 
     public void SetBrightness(float lumen)
     {
-        sliderTextBrigtness.text = lumen.ToString("00");
+        sliderTextBrigtness.text = lumen.ToString("0.00");
+        brigtnessPreference = lumen;
     }
 
     private void QualitySwitcher()
@@ -135,24 +137,23 @@ public class OptionsScript : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    // public PostProcessVolume postProcessVolume;
-
     [Header("Video")]
     public TextMeshProUGUI sliderTextBrigtness;
+    public Slider sliderBrightness;
     public TextMeshProUGUI sliderTextFPS;
+    public Slider sliderFPS;
     public TextMeshProUGUI qualityOptionsText;
     private bool clickedRight;
     private bool clickedLeft;
-    // public Exposure exposure;
     private Resolution[] resolutions;
     public TMP_Dropdown resolutionDropdown;
 
     [Header("Pro ukládání")]
-    private int fpsPreference;
-    private int currentQualityIndex = 1;
-    private float mainVolumePreference;
+    public int fpsPreference = 60;
+    public int currentQualityIndex = 1;
+    public float mainVolumePreference;
+    public float brigtnessPreference = -0.46f;
 
     [Header("Audio")]
     public AudioMixer audioMixer;
-
 }

@@ -1,6 +1,9 @@
-﻿using Heat;
+﻿using System;
+using Heat;
 using Pinwheel.Jupiter;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Managers
 {
@@ -14,6 +17,9 @@ namespace Managers
         public static GameManager Instance;
 
         private float previousTimeIncrement, timeIncrement;
+        public Volume volume;
+        private ColorAdjustments ca;
+        // OptionsScript optionsScript = new OptionsScript();
 
         private void Awake()
         {
@@ -24,8 +30,16 @@ namespace Managers
         {
             cycle.AutoTimeIncrement = autoCycle;
             RenderSettings.fog = fog;
-
             previousTimeIncrement = cycle.TimeIncrement;
+
+            SetBrightness();
+        }
+
+        private void SetBrightness()
+        {
+            volume.profile.TryGet(out ca);
+            ca.postExposure.value = PlayerPrefs.GetFloat("brightnessPreference");
+            Debug.Log("BrightnessPref načtena");
         }
 
         private void Update()

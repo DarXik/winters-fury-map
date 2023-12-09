@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
     {
         ShowUI();
         mainCamera.fieldOfView = baseFOV;
+        OptionsScript optionsScript = new OptionsScript();
+        optionsScript.LoadPreferences();
     }
 
     private void Update()

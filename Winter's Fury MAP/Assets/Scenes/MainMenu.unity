@@ -6158,7 +6158,6 @@ GameObject:
   - component: {fileID: 866576504}
   - component: {fileID: 866576503}
   - component: {fileID: 866576502}
-  - component: {fileID: 866576506}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: Untagged
@@ -6284,23 +6283,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 80.55, z: 0}
---- !u!114 &866576506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 866576501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IsGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: f87b34c5e32a0ec4185e5176b4633b8b, type: 2}
 --- !u!1 &872816394
 GameObject:
   m_ObjectHideFlags: 0
@@ -7733,9 +7715,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliderTextBrigtness: {fileID: 769011390}
+  sliderBrightness: {fileID: 0}
   sliderTextFPS: {fileID: 572538018}
+  sliderFPS: {fileID: 0}
   qualityOptionsText: {fileID: 137996204}
   resolutionDropdown: {fileID: 1943588182}
+  fpsPreference: 0
+  currentQualityIndex: 1
+  mainVolumePreference: 0
+  brigtnessPreference: 0
   audioMixer: {fileID: 24100000, guid: 4d20900215d652446af91597f55f4d46, type: 2}
 --- !u!1 &1215602789
 GameObject:
@@ -8187,10 +8175,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 2115779176}
   m_HandleRect: {fileID: 811916571}
   m_Direction: 0
-  m_MinValue: 10
-  m_MaxValue: 100
-  m_WholeNumbers: 1
-  m_Value: 50
+  m_MinValue: -1.5
+  m_MaxValue: 3
+  m_WholeNumbers: 0
+  m_Value: -0.46
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

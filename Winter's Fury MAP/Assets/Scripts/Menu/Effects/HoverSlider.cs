@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HoverSlider : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public TextMeshProUGUI textValue;
+
+    public void OnHandle()
     {
-        
+        textValue.gameObject.SetActive(true);
+        textValue.text = GetComponent<Slider>().value.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExitHandle()
     {
-        
+        textValue.gameObject.SetActive(false);
     }
 }
