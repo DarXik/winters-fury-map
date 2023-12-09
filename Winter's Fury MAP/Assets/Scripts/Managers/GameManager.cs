@@ -1,5 +1,4 @@
-﻿using System;
-using Heat;
+﻿using Heat;
 using Pinwheel.Jupiter;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -9,17 +8,21 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        [Header("Main Settings")]
         public JDayNightCycle cycle;
-
         public bool autoCycle;
-        public bool fog;
-        
-        public static GameManager Instance;
+
+        [Header("Spawn Settings")] 
+        [SerializeField] private Transform player;
+        [SerializeField] private float[] times;
+        [SerializeField] private Transform[] spawnPoints;
 
         private float previousTimeIncrement, timeIncrement;
         public Volume volume;
         private ColorAdjustments ca;
         // OptionsScript optionsScript = new OptionsScript();
+        
+        public static GameManager Instance;
 
         private void Awake()
         {
@@ -29,10 +32,22 @@ namespace Managers
         private void Start()
         {
             cycle.AutoTimeIncrement = autoCycle;
-            RenderSettings.fog = fog;
             previousTimeIncrement = cycle.TimeIncrement;
 
             SetBrightness();
+            SpawnPlayer();
+        }
+
+        private void SpawnPlayer()
+        {
+            int randomTime = Random.Range(0, times.Length);
+            int randomLoc = Random.Range(0, spawnPoints.Length);
+
+            cycle.Time = times[randomTime];
+
+            Vector3 spawnPos = spawnPoints[randomLoc].position;
+
+            player.position = spawnPos;
         }
 
         private void SetBrightness()

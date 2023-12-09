@@ -12,7 +12,6 @@ namespace Player
 
         public static bool rotationBlocked;
         private float _xAxisClamp;
-        private Quaternion startingRotation;
 
         public static PlayerLook Instance { get; private set; }
         
@@ -26,6 +25,7 @@ namespace Player
             UnblockRotation();
 
             _xAxisClamp = 0;
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
         public void BlockRotation(bool cursorVisible = true)
@@ -45,11 +45,6 @@ namespace Player
         private void LateUpdate()
         {
             RotateCamera();
-
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                transform.rotation = startingRotation;
-            }
         }
 
         private void RotateCamera()
