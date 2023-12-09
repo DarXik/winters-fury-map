@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 public class OptionsScript : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class OptionsScript : MonoBehaviour
     {
         GetResolutions();
         QualitySwitcher();
+
+        // if (postProcessVolume.profile.TryGetSettings(out ColorGrading colorGrading))
+        // {
+        //     colorGrading.postExposure.value = 1.5f;
+        // }
     }
 
     public void SavePreferences()
@@ -128,7 +135,7 @@ public class OptionsScript : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-
+    // public PostProcessVolume postProcessVolume;
 
     [Header("Video")]
     public TextMeshProUGUI sliderTextBrigtness;
