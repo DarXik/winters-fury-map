@@ -1,6 +1,7 @@
 using System.Collections;
 using UI;
 using UnityEngine;
+using Wind;
 
 namespace Player
 {
@@ -25,6 +26,7 @@ namespace Player
         public float runningSpeed;
         public float crouchSpeed;
         public float slopeSpeed;
+        public float againstWindPenalty; 
         private float movementSpeed;
         private bool isRunning;
 
@@ -67,10 +69,11 @@ namespace Player
         {
             if (StaminaPercent <= 0f) StartCoroutine(StaminaDepletionHandler());
             if (isRegenerating) RegenerateStamina();
-
+            
             if (!PlayerLook.rotationBlocked)
             {
                 MovingStateHandler();
+                CheckWind();
                 MovePlayer();
             }
         
@@ -78,6 +81,18 @@ namespace Player
 
             CheckForHeadBob();
             if (!isCrouching) headBob.ResetHeadBob();
+        }
+
+        private void CheckWind()
+        {
+            var windDir = WindArea.Instance.GetWindDirection().normalized;
+
+            float dotProduct = Vector3.Dot(-transform.forward, windDir);
+
+            if (dotProduct >= 0.775f && dotProduct <= 1f)
+            {
+                movementSpeed *= 1 - againstWindPenalty / 100f;
+            }
         }
 
         private void CheckForHeadBob()

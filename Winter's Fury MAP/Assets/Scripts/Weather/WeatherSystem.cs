@@ -2,6 +2,7 @@ using System.Collections;
 using Managers;
 using Pinwheel.Jupiter;
 using UnityEngine;
+using Wind;
 using Random = UnityEngine.Random;
 
 namespace Weather
@@ -27,7 +28,7 @@ namespace Weather
             RenderSettings.fogMode = FogMode.ExponentialSquared;
             RenderSettings.fogDensity = 0;
         
-            StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length)));
+            StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
             //StartCoroutine(SelectWeather(7));
         }
 
@@ -69,8 +70,15 @@ namespace Weather
 
             if (selectedWeather.particleSystem != null)
             {
-                var particleSystemEmission = selectedWeather.particleSystem.emission;
-                particleSystemEmission.enabled = true;
+                var emission = selectedWeather.particleSystem.emission;
+                var forceOverLifetime = selectedWeather.particleSystem.forceOverLifetime;
+                var windDir = WindArea.Instance.GetWindDirection();
+                
+                emission.enabled = true;
+                forceOverLifetime.enabled = true;
+                forceOverLifetime.x = windDir.x;
+                forceOverLifetime.y = windDir.y;
+                forceOverLifetime.z = windDir.z;
             }
 
             skyProfile.EnableOverheadCloud = selectedWeather.cloudsEnabled;
@@ -97,8 +105,11 @@ namespace Weather
             {
                 if (weatherData[i].particleSystem != null)
                 {
-                    var particleSystemEmission = weatherData[i].particleSystem.emission;
-                    particleSystemEmission.enabled = false;
+                    var emission = weatherData[i].particleSystem.emission;
+                    var forceOverLifetime = weatherData[i].particleSystem.forceOverLifetime;
+                    
+                    emission.enabled = false;
+                    forceOverLifetime.enabled = false;
                 }
             }
         }

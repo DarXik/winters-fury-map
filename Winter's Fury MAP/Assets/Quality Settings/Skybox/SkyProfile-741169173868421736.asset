@@ -16,6 +16,7 @@ Material:
   - DETAIL_OVERLAY_ROTATION
   - MOON
   - MOON_USE_TEXTURE
+  - OVERHEAD_CLOUD
   - STARS
   - STARS_LAYER_0
   - STARS_LAYER_1
@@ -109,7 +110,7 @@ MonoBehaviour:
   moonCubemap: {fileID: 0}
   moonLightColor: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
   moonLightIntensity: 0.046027362
-  customCloudTexture: {fileID: 2800000, guid: 433abcf8c760aa746a5580cd0a190b51, type: 3}
+  customCloudTexture: {fileID: 2800000, guid: b57908fda434a2b45af2620ba43d37fa, type: 3}
   enableHorizonCloud: 0
   horizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
   horizonCloudStartPosition: -1
@@ -117,7 +118,7 @@ MonoBehaviour:
   horizonCloudSize: 5
   horizonCloudStep: 25
   horizonCloudAnimationSpeed: 50
-  enableOverheadCloud: 0
+  enableOverheadCloud: 1
   overheadCloudColor: {r: 1, g: 1, b: 1, a: 0.22709298}
   overheadCloudAltitude: 404.3
   overheadCloudSize: 21.2
@@ -152,6 +153,7 @@ Material:
   - DETAIL_OVERLAY_ROTATION
   - MOON
   - MOON_USE_TEXTURE
+  - OVERHEAD_CLOUD
   - STARS
   - STARS_LAYER_0
   - STARS_LAYER_1

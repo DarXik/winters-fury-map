@@ -21852,8 +21852,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startColor:
       serializedVersion: 2
-      minMaxState: 0
-      minColor: {r: 1, g: 1, b: 1, a: 1}
+      minMaxState: 2
+      minColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
@@ -22940,7 +22940,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0}
+        key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -22956,8 +22956,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 55705
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -22966,7 +22966,7 @@ ParticleSystem:
         m_Mode: 0
         m_ColorSpace: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -26972,7 +26972,7 @@ ParticleSystem:
   m_GameObject: {fileID: 901112246}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 1.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -29123,7 +29123,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -29229,7 +29229,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -29279,7 +29279,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
     randomizePerFrame: 0
   ExternalForcesModule:
     serializedVersion: 2
@@ -31766,7 +31766,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901112246}
   m_LocalRotation: {x: -0, y: 0.6563884, z: -0, w: -0.7544232}
-  m_LocalPosition: {x: 8.162738, y: 66.8, z: -2.298283}
+  m_LocalPosition: {x: 8.162738, y: 33.7, z: -2.298283}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32093,6 +32093,7 @@ MonoBehaviour:
   runningSpeed: 10
   crouchSpeed: 1.35
   slopeSpeed: 2
+  againstWindPenalty: 25
   maxStamina: 100
   decreaseRate: 5
   increaseRate: 3.33
@@ -44495,6 +44496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1417248436}
   - component: {fileID: 1417248437}
+  - component: {fileID: 1417248438}
   m_Layer: 0
   m_Name: Weather Manager
   m_TagString: Untagged
@@ -44596,6 +44598,20 @@ MonoBehaviour:
     lastsForMin: 0.5
     lastsForMax: 2
   weatherFadeInTime: 10
+--- !u!114 &1417248438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417248435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d60ad7c19ed7447af20b783ed6b437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: 0
+  direction: {x: 5, y: 0, z: 5}
 --- !u!1001 &1429531000
 PrefabInstance:
   m_ObjectHideFlags: 0
