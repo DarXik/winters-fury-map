@@ -1,17 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    // var optionsScript = startObj.AddComponent<OptionsScript>();
     private void Start()
     {
+        // var optionsScript = new OptionsScript();
+        // optionsScript.LoadPreferences();
+
         ShowUI();
         mainCamera.fieldOfView = baseFOV;
-        OptionsScript optionsScript = new OptionsScript();
-        optionsScript.LoadPreferences();
     }
 
     private void Update()
@@ -65,7 +65,7 @@ public class MainMenu : MonoBehaviour
 
     public void OptionsToggle()
     {
-        if (!optionsOpened)
+        if (!optionsOpened) // do nstavení
         {
             startObj.SetActive(false);
             optionsObj.SetActive(true);
@@ -74,15 +74,15 @@ public class MainMenu : MonoBehaviour
 
             StartCoroutine(MoveCamera(target, 40));
         }
-
-        else
+        else // do main menu
         {
             startObj.SetActive(true);
             optionsObj.SetActive(false);
             optionsOpened = false;
 
-            OptionsScript optionsScript = startObj.AddComponent<OptionsScript>();
-            optionsScript.SavePreferences();
+            // var optionsScript = startObj.AddComponent<OptionsScript>();
+            // optionsScript.SavePreferences();
+
             StartCoroutine(MoveCamera(start, 55));
         }
     }
@@ -138,9 +138,7 @@ public class MainMenu : MonoBehaviour
     }
 
 
-
-    [Header("Game Objecty")]
-    public GameObject startObj;
+    [Header("Game Objecty")] public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;
@@ -148,18 +146,15 @@ public class MainMenu : MonoBehaviour
     public GameObject optionsControlsObj;
     // public GameObject startMenuRest;
 
-    [Header("Kamera")]
-    public Camera mainCamera;
+    [Header("Kamera")] public Camera mainCamera;
     public Transform target, start;
 
     // [Tooltip("Time in seconds to move the camera to the desired position.")]
-    [Header("Nastavení meníčka")]
-    private readonly float timeToMoveCamera = 0.2f; // méně -> rychlejší
+    [Header("Nastavení meníčka")] private readonly float timeToMoveCamera = 0.2f; // méně -> rychlejší
     private readonly float baseFOV = 55f;
     private bool cameraMoveEnabled;
 
-    [Header("Sekce Options")]
-    private bool optionsOpened;
+    [Header("Sekce Options")] private bool optionsOpened;
     private bool generalOpened;
     private bool videoOpened;
     private bool audioOpened;

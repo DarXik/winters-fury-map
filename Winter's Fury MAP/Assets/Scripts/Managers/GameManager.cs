@@ -35,7 +35,7 @@ namespace Managers
             SetBrightness();
         }
 
-        private void SetBrightness()
+        private void SetBrightness() // NEFUNGUJE - object ca bez instance
         {
             volume.profile.TryGet(out ca);
             ca.postExposure.value = PlayerPrefs.GetFloat("brightnessPreference");
