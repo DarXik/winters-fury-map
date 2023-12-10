@@ -39,8 +39,8 @@ Material:
     - _OverheadCloudAnimationSpeed: 5
     - _OverheadCloudFlowDirectionX: 1
     - _OverheadCloudFlowDirectionZ: 1
-    - _OverheadCloudRemapMax: 4
-    - _OverheadCloudRemapMin: 0.54
+    - _OverheadCloudRemapMax: -0.22
+    - _OverheadCloudRemapMin: -4.45
     - _OverheadCloudShadowClipMask: 1
     - _OverheadCloudSize: 21.2
     - _OverheadCloudStep: 2
@@ -110,7 +110,7 @@ MonoBehaviour:
   moonCubemap: {fileID: 0}
   moonLightColor: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
   moonLightIntensity: 0.046027362
-  customCloudTexture: {fileID: 2800000, guid: b57908fda434a2b45af2620ba43d37fa, type: 3}
+  customCloudTexture: {fileID: 2800000, guid: 433abcf8c760aa746a5580cd0a190b51, type: 3}
   enableHorizonCloud: 0
   horizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
   horizonCloudStartPosition: -1
@@ -126,9 +126,9 @@ MonoBehaviour:
   overheadCloudAnimationSpeed: 5
   overheadCloudFlowDirectionX: 1
   overheadCloudFlowDirectionZ: 1
-  overheadCloudRemapMin: 0.54
-  overheadCloudRemapMax: 4
-  overheadCloudCastShadow: 0
+  overheadCloudRemapMin: -4.45
+  overheadCloudRemapMax: -0.22
+  overheadCloudCastShadow: 1
   overheadCloudShadowClipMask: 1
   enableDetailOverlay: 0
   detailOverlayTintColor: {r: 1, g: 1, b: 1, a: 1}
@@ -223,8 +223,8 @@ Material:
     - _OverheadCloudFlowDirectionZ: 1
     - _OverheadCloudFlowX: 1
     - _OverheadCloudFlowZ: 1
-    - _OverheadCloudRemapMax: 2.5
-    - _OverheadCloudRemapMin: 0.35418248
+    - _OverheadCloudRemapMax: 2.4564204
+    - _OverheadCloudRemapMin: 0.39607966
     - _OverheadCloudSize: 21.2
     - _OverheadCloudStep: 2
     - _StarsDensity0: 0.4

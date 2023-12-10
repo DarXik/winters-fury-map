@@ -871,6 +871,7 @@ GameObject:
   - component: {fileID: 40760342}
   - component: {fileID: 40760339}
   - component: {fileID: 40760341}
+  - component: {fileID: 40760343}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -964,6 +965,19 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+--- !u!114 &40760343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40760338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040290f31efd449595986ba22a6aa7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windIcon: {fileID: 307866304}
 --- !u!1001 &41228646
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8074,6 +8088,82 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a95cb6b4e170fc8449a186e245d254e6, type: 3}
+--- !u!1 &307866304
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307866305}
+  - component: {fileID: 307866307}
+  - component: {fileID: 307866306}
+  m_Layer: 5
+  m_Name: Wind Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &307866305
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307866304}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1102708679}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 490}
+  m_SizeDelta: {x: 35, y: 35}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &307866306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307866304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8f0cc2dea545cb74ea3f35f7599f5230, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &307866307
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307866304}
+  m_CullTransparentMesh: 1
 --- !u!1001 &308471460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29123,7 +29213,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: -10.14
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -32093,7 +32183,7 @@ MonoBehaviour:
   runningSpeed: 10
   crouchSpeed: 1.35
   slopeSpeed: 2
-  againstWindPenalty: 25
+  againstWindPenalty: 35
   maxStamina: 100
   decreaseRate: 5
   increaseRate: 3.33
@@ -36743,6 +36833,7 @@ RectTransform:
   - {fileID: 1072951660}
   - {fileID: 794460930}
   - {fileID: 657274924}
+  - {fileID: 307866305}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -44538,31 +44629,27 @@ MonoBehaviour:
     fogDensity: 0
     temperatureImpact: 0
     cloudsEnabled: 0
-    cloudTexture: {fileID: 0}
     lastsForMin: 2
     lastsForMax: 5
   - name: Partly Cloudy
     particleSystem: {fileID: 0}
-    fogDensity: 0.005
+    fogDensity: 0.001
     temperatureImpact: 1
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: 433abcf8c760aa746a5580cd0a190b51, type: 3}
     lastsForMin: 2
     lastsForMax: 4
   - name: Overcast
     particleSystem: {fileID: 0}
-    fogDensity: 0.008
+    fogDensity: 0.003
     temperatureImpact: 1
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: b57908fda434a2b45af2620ba43d37fa, type: 3}
     lastsForMin: 1
     lastsForMax: 5
   - name: Light Fog
     particleSystem: {fileID: 0}
-    fogDensity: 0.005
+    fogDensity: 0.008
     temperatureImpact: 2
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: 433abcf8c760aa746a5580cd0a190b51, type: 3}
     lastsForMin: 2
     lastsForMax: 6
   - name: Moderate Fog
@@ -44570,7 +44657,6 @@ MonoBehaviour:
     fogDensity: 0.01
     temperatureImpact: 2
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: 433abcf8c760aa746a5580cd0a190b51, type: 3}
     lastsForMin: 2
     lastsForMax: 5
   - name: Heavy Fog
@@ -44578,7 +44664,6 @@ MonoBehaviour:
     fogDensity: 0.05
     temperatureImpact: 2
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: 433abcf8c760aa746a5580cd0a190b51, type: 3}
     lastsForMin: 1
     lastsForMax: 5
   - name: Snowfall
@@ -44586,7 +44671,6 @@ MonoBehaviour:
     fogDensity: 0.025
     temperatureImpact: 5
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: b57908fda434a2b45af2620ba43d37fa, type: 3}
     lastsForMin: 2
     lastsForMax: 4
   - name: Blizzard
@@ -44594,7 +44678,6 @@ MonoBehaviour:
     fogDensity: 0.03
     temperatureImpact: 10
     cloudsEnabled: 1
-    cloudTexture: {fileID: 2800000, guid: b57908fda434a2b45af2620ba43d37fa, type: 3}
     lastsForMin: 0.5
     lastsForMax: 2
   weatherFadeInTime: 10
@@ -44610,8 +44693,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d60ad7c19ed7447af20b783ed6b437, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 0
-  direction: {x: 5, y: 0, z: 5}
+  windTypes:
+  - name: Calm
+    windChill: 0
+    windDirection: {x: 0, y: 0, z: 0}
+  - name: Light
+    windChill: 1.25
+    windDirection: {x: 2.5, y: 0, z: 2.5}
+  - name: Moderate
+    windChill: 2.25
+    windDirection: {x: 4, y: 0, z: 4}
+  - name: High
+    windChill: 4
+    windDirection: {x: 6.5, y: 0, z: 6.5}
+  - name: Blizzard
+    windChill: 5
+    windDirection: {x: 10, y: 0, z: 10}
+  windChangeMin: 1
+  windChangeMax: 3
 --- !u!1001 &1429531000
 PrefabInstance:
   m_ObjectHideFlags: 0

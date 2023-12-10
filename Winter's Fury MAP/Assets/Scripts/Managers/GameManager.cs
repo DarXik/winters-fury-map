@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Weather;
+using Wind;
 
 namespace Managers
 {
@@ -72,6 +73,7 @@ namespace Managers
                 VitalManager.timeIncrement = currentIncrement;
                 HeatSource.timeIncrement = currentIncrement;
                 WeatherSystem.timeIncrement = currentIncrement;
+                WindArea.timeIncrement = currentIncrement;
 
                 previousTimeIncrement = currentIncrement;
             }

@@ -89,9 +89,18 @@ namespace Player
 
             float dotProduct = Vector3.Dot(-transform.forward, windDir);
 
-            if (dotProduct >= 0.775f && dotProduct <= 1f)
+            if (Physics.Raycast(transform.position, -windDir, 3f))
             {
-                movementSpeed *= 1 - againstWindPenalty / 100f;
+                WindUI.Instance.DisplayWindIcon();
+            }
+            else
+            {
+                WindUI.Instance.HideWindIcon();
+                
+                if (dotProduct >= 0.775f && dotProduct <= 1f && WindArea.Instance.IsWindHigh())
+                {
+                    movementSpeed *= 1 - againstWindPenalty / 100f;
+                }
             }
         }
 

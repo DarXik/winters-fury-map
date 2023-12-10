@@ -21,20 +21,20 @@ namespace Weather
         private float weatherTimer;
 
         public static float timeIncrement;
+        public static bool isBlizzard;
 
         private void Awake()
         {
             RenderSettings.fog = true;
             RenderSettings.fogMode = FogMode.ExponentialSquared;
             RenderSettings.fogDensity = 0;
-        
-            StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
-            //StartCoroutine(SelectWeather(7));
         }
 
         private void Start()
         {
             timeIncrement = GameManager.Instance.GetTimeIncrement();
+            StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
+            //StartCoroutine(SelectWeather(7));
         }
 
         private void Update()
@@ -60,8 +60,21 @@ namespace Weather
         private IEnumerator SelectWeather(int weatherIndex)
         {
             selectedWeather = weatherData[weatherIndex];
-            Debug.Log("Selected weather: " + selectedWeather.name);
-        
+
+            if (selectedWeather.name.Equals("Blizzard"))
+            {
+                WindArea.Instance.ChangeWindType(true);
+                isBlizzard = true;
+            }
+            else
+            {
+                if (isBlizzard)
+                {
+                    WindArea.Instance.ChangeWindType();
+                    isBlizzard = false;
+                }
+            }
+            
             var timeElapsed = 0f;
             var previousFogDensity = RenderSettings.fogDensity;
 
@@ -82,7 +95,6 @@ namespace Weather
             }
 
             skyProfile.EnableOverheadCloud = selectedWeather.cloudsEnabled;
-            if (selectedWeather.cloudsEnabled) skyProfile.CustomCloudTexture = selectedWeather.cloudTexture;
             skyProfile.UpdateMaterialProperties();
             
             // animate weather changes
