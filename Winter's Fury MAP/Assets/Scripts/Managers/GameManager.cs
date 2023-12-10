@@ -3,6 +3,7 @@ using Pinwheel.Jupiter;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Weather;
 
 namespace Managers
 {
@@ -70,6 +71,7 @@ namespace Managers
             {
                 VitalManager.timeIncrement = currentIncrement;
                 HeatSource.timeIncrement = currentIncrement;
+                WeatherSystem.timeIncrement = currentIncrement;
 
                 previousTimeIncrement = currentIncrement;
             }

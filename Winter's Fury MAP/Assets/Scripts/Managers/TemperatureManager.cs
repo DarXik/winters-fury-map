@@ -1,6 +1,7 @@
 ﻿using System;
 using Pinwheel.Jupiter;
 using UnityEngine;
+using Weather;
 
 namespace Managers
 {
@@ -27,8 +28,8 @@ namespace Managers
 
             float normalizedTime = timeOfDay - currentHour;
             ambientTemperature = Mathf.Lerp(currentTemp, nextTemp, normalizedTime);
-            
-            if (indoorTemperature <= 0) return;
+
+            ambientTemperature -= WeatherSystem.selectedWeather.temperatureImpact;
             ambientTemperature += indoorTemperature;
         }
     }
