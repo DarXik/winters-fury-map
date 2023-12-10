@@ -1450,7 +1450,7 @@ CanvasRenderer:
   m_CullTransparentMesh: 1
 --- !u!4 &815828591 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4513132613171230, guid: 8951f907d878f44288d2ea37b5a0f9e3,
+  m_CorrespondingSourceObject: {fileID: 9223372036854775806, guid: 8951f907d878f44288d2ea37b5a0f9e3,
     type: 3}
   m_PrefabInstance: {fileID: 176923325}
   m_PrefabAsset: {fileID: 0}

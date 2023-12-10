@@ -23,7 +23,7 @@ public class DepthOfFieldController : MonoBehaviour
     {
         raycast = new Ray(transform.position, transform.forward * maxFocusDistance);
 
-        if (Physics.Raycast(raycast, out hit, 100f))
+        if (Physics.Raycast(raycast, out hit, 100f, ~LayerMask.GetMask("Interior")))
         {
             hitDistance = Vector3.Distance(transform.position, hit.point);
         }
