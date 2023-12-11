@@ -18,11 +18,13 @@ namespace Managers
         [SerializeField] private Gradient weightGradient;
         [HideInInspector] public float currentWeight;
 
-        [Header("UI References")] 
-        [SerializeField] private GameObject inventory;
+        [Header("UI References")] [SerializeField]
+        private GameObject inventory;
+
         [SerializeField] private GameObject inventoryUIItem;
         [SerializeField] private Transform itemContent;
         [SerializeField] private GameObject itemDetail;
+        [SerializeField] private TextMeshProUGUI inventoryFilterName;
         [SerializeField] private Slider weightBar;
         [SerializeField] private Image weightBarFill;
         [SerializeField] private TextMeshProUGUI weightValues;
@@ -31,6 +33,7 @@ namespace Managers
 
         [Header("Item Detail References")] [SerializeField]
         private TextMeshProUGUI itemName;
+
         [SerializeField] private TextMeshProUGUI itemDescription;
         [SerializeField] private Image itemIcon;
         [SerializeField] private GameObject needs;
@@ -43,8 +46,9 @@ namespace Managers
         [SerializeField] private GameObject actionButtonObj;
         [SerializeField] private Button actionBtn;
 
-        [Header("Drop Window References")] 
-        [SerializeField] private GameObject dropItemWindow;
+        [Header("Drop Window References")] [SerializeField]
+        private GameObject dropItemWindow;
+
         [SerializeField] private TextMeshProUGUI alertHeader;
         [SerializeField] private Slider dropItemSlider;
         [SerializeField] private TextMeshProUGUI dropCounterText;
@@ -83,7 +87,7 @@ namespace Managers
         private void Update()
         {
             if (items.Count > 0) ReduceItemsCondition();
-            
+
             var currentIncrement = GameManager.Instance.cycle.TimeIncrement;
             if (previousTimeIncrement != currentIncrement)
             {
@@ -108,6 +112,7 @@ namespace Managers
             {
                 // Open inventory
                 inventoryOpened = true;
+                inventoryFilterName.text = "All";
 
                 PlayerLook.Instance.BlockRotation();
                 inventory.SetActive(true);
@@ -121,7 +126,12 @@ namespace Managers
             items.Add(itemData);
         }
 
-        private void ListItems()
+        public void SelectFilterType(string filter)
+        {
+            inventoryFilterName.text = filter;
+        }
+
+        public void ListItems(string filter = "")
         {
             DeleteInventoryContents();
             DeleteNeedContents();
@@ -133,10 +143,16 @@ namespace Managers
 
             foreach (var item in items)
             {
+                if (filter != "" && item.itemType.ToString() != filter)
+                {
+                    continue;
+                }
+
                 if (itemCounts.Any(tuple => tuple.Item1 == item.itemName))
                 {
                     var existingTuple =
-                        itemCounts.FirstOrDefault(tuple => tuple.Item1 == item.itemName && tuple.Item3 == Mathf.Round(item.itemCondition));
+                        itemCounts.FirstOrDefault(tuple =>
+                            tuple.Item1 == item.itemName && tuple.Item3 == Mathf.Round(item.itemCondition));
 
                     if (existingTuple != null)
                     {
@@ -158,11 +174,14 @@ namespace Managers
                     itemIcons.Add(item.itemIcon);
                 }
 
-                currentWeight += item.ItemWeight;
+                if (filter == "") currentWeight += item.ItemWeight;
             }
 
-            weightBar.value = currentWeight;
-            weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
+            if (filter == "")
+            {
+                weightBar.value = currentWeight;
+                weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
+            }
 
             int num = 0;
 
@@ -170,7 +189,8 @@ namespace Managers
             {
                 GameObject obj = Instantiate(inventoryUIItem, itemContent);
                 var itemCount = obj.transform.Find("ItemInfo").Find("ItemCount").GetComponent<TextMeshProUGUI>();
-                var itemConditionText = obj.transform.Find("ItemInfo").Find("ItemCondition").GetComponent<TextMeshProUGUI>();
+                var itemConditionText =
+                    obj.transform.Find("ItemInfo").Find("ItemCondition").GetComponent<TextMeshProUGUI>();
                 var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
                 obj.GetComponent<Button>().onClick.AddListener(delegate { ShowItemDetail(count.Item1, count.Item3); });
 
@@ -208,12 +228,13 @@ namespace Managers
                     itemConditionText.text = Mathf.Round(item.itemCondition) + "%";
                     itemConditionText.color = conditionGradient.Evaluate(item.itemCondition / 100f);
 
-                    var totalWeight = items.Where(thisItem => thisItem.itemName == item.itemName).Sum(thisItem => thisItem.ItemWeight);
+                    var totalWeight = items.Where(thisItem => thisItem.itemName == item.itemName)
+                        .Sum(thisItem => thisItem.ItemWeight);
                     var totalWaterIntake = items.Where(thisItem => thisItem.itemName == item.itemName)
                         .Sum(thisItem => thisItem.waterIntake);
 
                     var itemCountValue = 0;
-                    
+
                     // Loop through every item count to find how many items we have
                     foreach (var count in itemCounts.Where(count => count.Item1 == itemName))
                     {
@@ -235,11 +256,13 @@ namespace Managers
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Eat";
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() => { TryEat(item.caloriesIntake, item); });
+                            // add also water
                             break;
                         case ItemType.Drink:
                             var needItemDrink = Instantiate(detailNeedItem, needs.transform);
                             needItemDrink.transform.Find("Image").GetComponent<Image>().sprite = water;
-                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text = $"{(totalWaterIntake / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
+                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
+                                $"{(totalWaterIntake / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
 
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
                             actionButtonObj.SetActive(true);
@@ -271,7 +294,7 @@ namespace Managers
             if (returnedWater == 0)
             {
                 DeleteItem(itemData);
-                
+
                 ListItems();
             }
             else
@@ -279,7 +302,7 @@ namespace Managers
                 var itemIndex = items.IndexOf(itemData);
 
                 items[itemIndex].waterIntake = returnedWater;
-                
+
                 ListItems();
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
@@ -300,7 +323,7 @@ namespace Managers
                 var itemIndex = items.IndexOf(itemData);
 
                 items[itemIndex].caloriesIntake = returnedCalories;
-                
+
                 ListItems();
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
@@ -465,7 +488,7 @@ namespace Managers
         {
             backpack.SetActive(false);
             crafting.SetActive(true);
-            
+
             backpackBtn.color = new Color32(255, 255, 255, 51);
             craftingBtn.color = new Color32(255, 255, 255, 255);
         }
@@ -480,7 +503,7 @@ namespace Managers
         {
             return items.FindAll(item => item.itemType == ItemType.Fuelsource);
         }
-        
+
         public void DeleteItem(ItemData itemToDelete)
         {
             var itemIndex = items.IndexOf(itemToDelete);

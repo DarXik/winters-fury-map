@@ -20,7 +20,7 @@ namespace Wind
     public class WindArea : MonoBehaviour
     {
         public WindTypes[] windTypes;
-        private WindTypes currentWind;
+        public static WindTypes currentWind;
         private Vector3 windDirection;
 
         public float windChangeMin, windChangeMax;

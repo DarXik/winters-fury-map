@@ -30,7 +30,7 @@ namespace Interaction
                 foreach (var interactItem in interactionData.items)
                 {
                     float chance = Mathf.Round(Random.value * 100);
-                
+
                     if (chance <= interactItem.chance)
                     {
                         ItemData foundItem = Instantiate(interactItem.itemData);
