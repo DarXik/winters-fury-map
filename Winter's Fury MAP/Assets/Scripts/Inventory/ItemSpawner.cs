@@ -24,7 +24,12 @@ namespace Inventory
         {
             Item randomItem = items[ GetRandomItemIndex() ];
 
-            Instantiate(randomItem.prefab, transform.position, randomItem.prefab.transform.rotation);
+            var spawnedItem = Instantiate(randomItem.prefab, transform.position, randomItem.prefab.transform.rotation);
+
+            if (Physics.Raycast(spawnedItem.transform.position, Vector3.down, out var hit, 10f))
+            {
+                spawnedItem.transform.position = hit.point;
+            }
         }
 
         private int GetRandomItemIndex()

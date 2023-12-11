@@ -46,7 +46,7 @@ namespace Interaction
                 }
             }
 
-            interactionData.interactionText += " (Searched)";
+            interactionData.interactionText = "[Searched] " + interactionData.interactionText;
             interactionData.searched = true;
             PlayerInteraction.Instance.HideFoundItemInfo();
         }

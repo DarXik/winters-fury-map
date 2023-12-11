@@ -20,16 +20,18 @@ namespace Managers
 
         [Header("UI References")] [SerializeField]
         private GameObject inventory;
-
         [SerializeField] private GameObject inventoryUIItem;
         [SerializeField] private Transform itemContent;
         [SerializeField] private GameObject itemDetail;
-        [SerializeField] private TextMeshProUGUI inventoryFilterName;
         [SerializeField] private Slider weightBar;
         [SerializeField] private Image weightBarFill;
         [SerializeField] private TextMeshProUGUI weightValues;
         [SerializeField] private GameObject backpack, crafting;
         [SerializeField] private Image backpackBtn, craftingBtn;
+        
+        [Header("Inventory Filter")]
+        [SerializeField] private TextMeshProUGUI inventoryFilterName;
+        [SerializeField] private Button filterAll, filterFuelSource, filterFood;
 
         [Header("Item Detail References")] [SerializeField]
         private TextMeshProUGUI itemName;
@@ -112,7 +114,7 @@ namespace Managers
             {
                 // Open inventory
                 inventoryOpened = true;
-                inventoryFilterName.text = "All";
+                SelectFilterType("All");
 
                 PlayerLook.Instance.BlockRotation();
                 inventory.SetActive(true);
@@ -129,6 +131,25 @@ namespace Managers
         public void SelectFilterType(string filter)
         {
             inventoryFilterName.text = filter;
+
+            switch (filter)
+            {
+                case "All":
+                    filterAll.interactable = false;
+                    filterFuelSource.interactable = true;
+                    filterFood.interactable = true;
+                    break;
+                case "Fuel":
+                    filterAll.interactable = true;
+                    filterFuelSource.interactable = false;
+                    filterFood.interactable = true;
+                    break;
+                case "Food and Drink":
+                    filterAll.interactable = true;
+                    filterFuelSource.interactable = true;
+                    filterFood.interactable = false;
+                    break;
+            }
         }
 
         public void ListItems(string filter = "")

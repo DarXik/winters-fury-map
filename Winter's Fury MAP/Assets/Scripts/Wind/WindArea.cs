@@ -71,8 +71,10 @@ namespace Wind
             {
                 currentWind = windTypes.First(wind => wind.name == "Blizzard");
             }
-
-            windDirection = new Vector3((currentWind.windDirection.x + Random.Range(0f, 2f)) * GetRandomOne(), 0, currentWind.windDirection.z + Random.Range(0f, 2f)) * GetRandomOne();
+            
+            if(currentWind.name == "Calm") windDirection = currentWind.windDirection;
+            else windDirection = new Vector3((currentWind.windDirection.x + Random.Range(0f, 2f)) * GetRandomOne(), 0, currentWind.windDirection.z + Random.Range(0f, 2f)) * GetRandomOne();
+            
             windTimer = 0;
 
             Debug.Log("Current wind: " + currentWind.name);
