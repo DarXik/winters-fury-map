@@ -24,7 +24,7 @@ namespace Inventory
         {
             Item randomItem = items[ GetRandomItemIndex() ];
 
-            Instantiate(randomItem.prefab, transform.position, Quaternion.Euler(-90f, 0f, 0f));
+            Instantiate(randomItem.prefab, transform.position, randomItem.prefab.transform.rotation);
         }
 
         private int GetRandomItemIndex()

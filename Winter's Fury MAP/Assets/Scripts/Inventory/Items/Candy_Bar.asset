@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
+  m_Name: Candy_Bar
+  m_EditorClassIdentifier: 
+  itemObj: {fileID: 100000, guid: 34f3fd97146737c468ed4b7eee73f9b8, type: 3}
+  itemName: Candy Bar
+  itemDescription: Sweet indulgence.
+  itemType: 0
+  itemCondition: 100
+  itemIcon: {fileID: 0}
+  calorieDensity: 2500
+  waterIntake: 0
+  caloriesIntake: 250
+  fatigueReduce: 0
+  conditionPerDay: 10
+  conditionVariability: 35
+  fuelItemWeight: 0
+  temperatureIncrease: 0
+  burnTime: 0
+  chanceBonus: 0

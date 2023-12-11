@@ -18,7 +18,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.87618494, g: 0.8157277, b: 0.7746367, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0
+  m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 250
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -29,7 +29,7 @@ RenderSettings:
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 8543305277494947058, guid: e5bc0ed35fefb0c40a37544c3451413a,
     type: 2}
-  m_HaloStrength: 0.5
+  m_HaloStrength: 0.419
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -6488,7 +6488,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 3
+  m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -20821,9 +20821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f927fdc1784d4dbf915316bcbd8d0880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 11400000, guid: 41469d4fbb0dd1b459df50672355e9e2, type: 2}
-  - {fileID: 11400000, guid: 41469d4fbb0dd1b459df50672355e9e2, type: 2}
+  items: []
   maxWeight: 30
   weightGradient:
     serializedVersion: 2
@@ -25340,7 +25338,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -25458,7 +25456,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -25513,7 +25511,7 @@ ParticleSystem:
     radiusScale: 0.5
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 4096
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -27136,7 +27134,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -30639,7 +30637,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -30757,7 +30755,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -30812,11 +30810,11 @@ ParticleSystem:
     radiusScale: 0.5
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 4096
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -39853,6 +39851,10 @@ PrefabInstance:
       value: SnowyHouse1
       objectReference: {fileID: 0}
     - target: {fileID: 1000013846435076, guid: 976334b832997084984a450972d36956, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013846435076, guid: 976334b832997084984a450972d36956, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
@@ -39898,6 +39900,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011961413320, guid: 976334b832997084984a450972d36956, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64000011353056596, guid: 976334b832997084984a450972d36956,
+        type: 3}
+      propertyPath: m_Convex
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -43679,7 +43686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2659570064281029269, guid: e8fdddcfe6bbce444aff1122997577f4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1897841108}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8fdddcfe6bbce444aff1122997577f4, type: 3}
 --- !u!4 &1376177111 stripped
@@ -44647,21 +44658,21 @@ MonoBehaviour:
     lastsForMax: 5
   - name: Light Fog
     particleSystem: {fileID: 0}
-    fogDensity: 0.008
+    fogDensity: 0.01
     temperatureImpact: 2
     cloudsEnabled: 1
     lastsForMin: 2
     lastsForMax: 6
   - name: Moderate Fog
     particleSystem: {fileID: 0}
-    fogDensity: 0.01
+    fogDensity: 0.02
     temperatureImpact: 2
     cloudsEnabled: 1
     lastsForMin: 2
     lastsForMax: 5
   - name: Heavy Fog
     particleSystem: {fileID: 0}
-    fogDensity: 0.05
+    fogDensity: 0.04
     temperatureImpact: 2
     cloudsEnabled: 1
     lastsForMin: 1
@@ -55022,6 +55033,68 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1895636064}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1897841107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1897841108}
+  - component: {fileID: 1897841109}
+  m_Layer: 0
+  m_Name: Random Item Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1897841108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897841107}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.657, y: 0.448, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1376177111}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1897841109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897841107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8701683918493095eba5865b92b1dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - prefab: {fileID: 6816101791449471384, guid: f9e6f2db40b906341b39f98168a602fd,
+      type: 3}
+    chance: 27.5
+    weight: 0
+  - prefab: {fileID: 100000, guid: 306ffbacb971a0b43bfda3ee1865b469, type: 3}
+    chance: 22.5
+    weight: 0
+  - prefab: {fileID: 100000, guid: a646dfc1b2f911f4e8713a0eac76fde6, type: 3}
+    chance: 34
+    weight: 0
+  - prefab: {fileID: 100000, guid: 34f3fd97146737c468ed4b7eee73f9b8, type: 3}
+    chance: 34
+    weight: 0
+  - prefab: {fileID: 8248983133078230432, guid: 67ff39e0a4032fd4cae6290c1e524bfb,
+      type: 3}
+    chance: 10
+    weight: 0
 --- !u!1001 &1909231513
 PrefabInstance:
   m_ObjectHideFlags: 0

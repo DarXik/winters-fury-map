@@ -37,7 +37,7 @@ namespace Managers
             previousTimeIncrement = cycle.TimeIncrement;
 
             SetBrightness();
-            SpawnPlayer();
+            //SpawnPlayer();
         }
 
         private void SpawnPlayer()

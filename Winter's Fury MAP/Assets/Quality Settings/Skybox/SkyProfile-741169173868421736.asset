@@ -42,7 +42,7 @@ Material:
     - _OverheadCloudRemapMax: -0.22
     - _OverheadCloudRemapMin: -4.45
     - _OverheadCloudShadowClipMask: 1
-    - _OverheadCloudSize: 21.2
+    - _OverheadCloudSize: 22.4
     - _OverheadCloudStep: 2
     m_Colors:
     - _OverheadCloudColor: {r: 1, g: 1, b: 1, a: 0.22709298}
@@ -121,17 +121,17 @@ MonoBehaviour:
   enableOverheadCloud: 1
   overheadCloudColor: {r: 1, g: 1, b: 1, a: 0.22709298}
   overheadCloudAltitude: 404.3
-  overheadCloudSize: 21.2
+  overheadCloudSize: 22.4
   overheadCloudStep: 2
   overheadCloudAnimationSpeed: 5
   overheadCloudFlowDirectionX: 1
   overheadCloudFlowDirectionZ: 1
   overheadCloudRemapMin: -4.45
   overheadCloudRemapMax: -0.22
-  overheadCloudCastShadow: 1
+  overheadCloudCastShadow: 0
   overheadCloudShadowClipMask: 1
   enableDetailOverlay: 0
-  detailOverlayTintColor: {r: 1, g: 1, b: 1, a: 1}
+  detailOverlayTintColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
   detailOverlayCubeMap: {fileID: 0}
   detailOverlayLayer: 5
   detailOverlayRotationSpeed: 1
@@ -225,7 +225,7 @@ Material:
     - _OverheadCloudFlowZ: 1
     - _OverheadCloudRemapMax: 2.4564204
     - _OverheadCloudRemapMin: 0.39607966
-    - _OverheadCloudSize: 21.2
+    - _OverheadCloudSize: 22.4
     - _OverheadCloudStep: 2
     - _StarsDensity0: 0.4
     - _StarsDensity1: 0.34
@@ -250,7 +250,7 @@ Material:
     - _SunSoftEdge: 1
     m_Colors:
     - _DetailOverlayColor: {r: 1, g: 1, b: 1, a: 1}
-    - _DetailOverlayTintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DetailOverlayTintColor: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
     - _FogColor: {r: 0.9339208, g: 0.8406191, b: 0.82414067, a: 1}
     - _GroundColor: {r: 0.87618494, g: 0.8157277, b: 0.77463675, a: 1}
     - _HorizonCloudColor: {r: 1, g: 1, b: 1, a: 1}
@@ -304,6 +304,8 @@ Material:
     - _OverheadCloudAnimationSpeed: 50
     - _OverheadCloudFlowDirectionX: 1
     - _OverheadCloudFlowDirectionZ: 1
+    - _OverheadCloudRemapMax: 1
+    - _OverheadCloudRemapMin: 0
     - _OverheadCloudShadowClipMask: 0
     - _OverheadCloudSize: 10
     - _OverheadCloudStep: 2

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
+  m_Name: Grape_Soda
+  m_EditorClassIdentifier: 
+  itemObj: {fileID: 100000, guid: 3eec138ef50802a47945c86a777ce581, type: 3}
+  itemName: Grape Soda
+  itemDescription: Refreshing fizzy drink.
+  itemType: 1
+  itemCondition: 100
+  itemIcon: {fileID: 0}
+  calorieDensity: 0
+  waterIntake: 250
+  caloriesIntake: 250
+  fatigueReduce: 0
+  conditionPerDay: 0
+  conditionVariability: 10
+  fuelItemWeight: 0
+  temperatureIncrease: 0
+  burnTime: 0
+  chanceBonus: 0

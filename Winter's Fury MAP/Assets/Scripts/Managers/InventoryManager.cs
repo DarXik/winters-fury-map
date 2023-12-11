@@ -244,6 +244,7 @@ namespace Managers
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
+                            // add also calories
                             break;
                         case ItemType.Fuelsource:
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";

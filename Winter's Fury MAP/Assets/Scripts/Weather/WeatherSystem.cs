@@ -61,6 +61,8 @@ namespace Weather
         {
             selectedWeather = weatherData[weatherIndex];
 
+            Debug.Log("Current weather: " + selectedWeather.name);
+
             if (selectedWeather.name.Equals("Blizzard"))
             {
                 WindArea.Instance.ChangeWindType(true);

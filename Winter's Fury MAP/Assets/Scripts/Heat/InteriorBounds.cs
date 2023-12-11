@@ -6,12 +6,15 @@ namespace Heat
     public class InteriorBounds : MonoBehaviour
     {
         public float indoorTemperature;
+
+        public static bool indoors;
         
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
                 TemperatureManager.indoorTemperature = indoorTemperature;
+                indoors = true;
             }
         }
 
@@ -20,6 +23,7 @@ namespace Heat
             if (other.gameObject.CompareTag("Player"))
             {
                 TemperatureManager.indoorTemperature = indoorTemperature;
+                indoors = true;
             }
         }
 
@@ -28,6 +32,7 @@ namespace Heat
             if (other.gameObject.CompareTag("Player"))
             {
                 TemperatureManager.indoorTemperature = 0;
+                indoors = false;
             }
         }
     }

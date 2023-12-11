@@ -1,4 +1,5 @@
 using System.Collections;
+using Heat;
 using UI;
 using UnityEngine;
 using Wind;
@@ -85,6 +86,13 @@ namespace Player
 
         private void CheckWind()
         {
+            if (InteriorBounds.indoors)
+            {
+                WindUI.Instance.HideWindIcon();
+
+                return;
+            }
+            
             var windDir = WindArea.Instance.GetWindDirection().normalized;
 
             float dotProduct = Vector3.Dot(-transform.forward, windDir);

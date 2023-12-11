@@ -6,6 +6,7 @@ using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Wind;
 using Random = UnityEngine.Random;
 
 public class FirestartManager : MonoBehaviour
@@ -139,6 +140,21 @@ public class FirestartManager : MonoBehaviour
                 var campfire = Instantiate(this.campfire, hit.point, Quaternion.identity);
                 campfire.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
+                var fireParticles = campfire.transform.Find("Fire").transform.Find("FireParticles").GetComponent<ParticleSystem>();
+                var fireForce = fireParticles.forceOverLifetime;
+                
+                var smokeParticles = campfire.transform.Find("Fire").transform.Find("SmokeParticles").GetComponent<ParticleSystem>();
+                var smokeForce = smokeParticles.forceOverLifetime;
+
+                var windDir = WindArea.Instance.GetWindDirection();
+
+                fireForce.x = windDir.x;
+                fireForce.y = windDir.y;
+                fireForce.z = windDir.z;
+                smokeForce.x = windDir.x;
+                smokeForce.y = windDir.y;
+                smokeForce.z = windDir.z;
+                
                 var heatSource = campfire.GetComponent<HeatSource>();
 
                 // add burnTime to fire minus the 5 minutes of the inGameStartingTime
