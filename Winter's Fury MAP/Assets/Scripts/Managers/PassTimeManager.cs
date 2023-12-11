@@ -78,8 +78,16 @@ namespace Managers
 
                 passTimeWindowOpened = true;
 
-                if (bedWarmthBonus != null) this.bedWarmthBonus = Convert.ToSingle(bedWarmthBonus);
-
+                if (bedWarmthBonus == null)
+                {
+                    sleepTypeButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    this.bedWarmthBonus = Convert.ToSingle(bedWarmthBonus);
+                    sleepTypeButton.gameObject.SetActive(true);
+                }
+                
                 AssignUI(passType);
             }
             else
@@ -179,34 +187,6 @@ namespace Managers
             leftArrow.SetActive(true);
             rightArrow.SetActive(true);
         }
-
-        /*private IEnumerator PassTime()
-    {
-        var finalTime = GameManager.Instance.GetCurrentTime() + hoursToPass;
-        finalTime %= 24f;
-
-        var normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
-
-        passButton.SetActive(false);
-        leftArrow.SetActive(false);
-        rightArrow.SetActive(false);
-
-        while (Math.Abs(GameManager.Instance.GetCurrentTime() - finalTime) > 0.01f)
-        {
-            float remainingHours = finalTime - GameManager.Instance.GetCurrentTime();
-            hoursToPass = (int)Mathf.Max(1, remainingHours + 1);
-
-            GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
-
-            yield return null;
-        }
-
-        GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
-        UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
-        passButton.SetActive(true);
-        leftArrow.SetActive(true);
-        rightArrow.SetActive(true);
-    }*/
 
         public void LowerHour()
         {

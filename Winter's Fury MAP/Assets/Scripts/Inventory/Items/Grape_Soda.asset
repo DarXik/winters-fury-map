@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Refreshing fizzy drink.
   itemType: 1
   itemCondition: 100
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 20d99606a35daa544b458b27c321a463, type: 3}
   calorieDensity: 0
   waterIntake: 250
   caloriesIntake: 250

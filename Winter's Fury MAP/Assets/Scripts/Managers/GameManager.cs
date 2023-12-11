@@ -38,6 +38,7 @@ namespace Managers
 
             SetBrightness();
             //SpawnPlayer();
+            //cycle.Time = 0;
         }
 
         private void SpawnPlayer()

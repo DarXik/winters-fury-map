@@ -6,7 +6,8 @@ public enum ItemType
 {
     Food,
     Drink,
-    Fuelsource
+    Fuelsource,
+    Lightsource
 }
 
 [System.Serializable]

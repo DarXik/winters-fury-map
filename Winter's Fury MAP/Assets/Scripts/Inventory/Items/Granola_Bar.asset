@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Crunchy delight.
   itemType: 0
   itemCondition: 100
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: d3285dbaf3f52bc46889e1158be6d54a, type: 3}
   calorieDensity: 3000
   waterIntake: 0
   caloriesIntake: 300

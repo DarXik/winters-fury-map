@@ -1,11 +1,12 @@
 using Managers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Heat
 {
     public class InteriorBounds : MonoBehaviour
     {
-        public float indoorTemperature;
+        public float indoorTemperatureBonus;
 
         public static bool indoors;
         
@@ -13,7 +14,7 @@ namespace Heat
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                TemperatureManager.indoorTemperature = indoorTemperature;
+                TemperatureManager.indoorTemperature = indoorTemperatureBonus;
                 indoors = true;
             }
         }
@@ -22,7 +23,7 @@ namespace Heat
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                TemperatureManager.indoorTemperature = indoorTemperature;
+                TemperatureManager.indoorTemperature = indoorTemperatureBonus;
                 indoors = true;
             }
         }

@@ -42,7 +42,7 @@ namespace Inventory
                 item.weight = accumulatedWeights;
             }
 
-            var r = Random.Range(0f, 1f) * accumulatedWeights;
+            var r = Random.value * accumulatedWeights;
 
             for (int i = 0; i < items.Length; i++)
             {
