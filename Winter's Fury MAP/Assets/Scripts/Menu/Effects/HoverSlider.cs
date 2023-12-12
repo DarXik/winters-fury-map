@@ -1,19 +1,47 @@
+using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HoverSlider : MonoBehaviour
+public class HoverSlider : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-    public TextMeshProUGUI textValue;
+    public TextMeshProUGUI sliderTextFPS;
+    public Slider sliderFPS;
+    // private bool sliderHandleEvent = false;
 
-    public void OnHandle()
+    public void OnPointerDown(PointerEventData eventData)
     {
-        textValue.gameObject.SetActive(true);
-        textValue.text = GetComponent<Slider>().value.ToString();
+        // if (eventData.pointerPress == sliderFPS.gameObject)
+        // {
+        sliderTextFPS.gameObject.SetActive(true);
+        // }
+
+        Debug.Log("down");
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // if (eventData.pointerPress == sliderFPS.gameObject)
+        // {
+        sliderTextFPS.gameObject.SetActive(true);
+        // }
+
+        Debug.Log("down");
     }
 
-    public void ExitHandle()
+    public void OnPointerUp(PointerEventData eventData)
     {
-        textValue.gameObject.SetActive(false);
+        // if (eventData.pointerPress == sliderFPS.gameObject)
+        // {
+        sliderTextFPS.gameObject.SetActive(false);
+        // }
+
+        Debug.Log("up");
+    }
+
+    public void Start()
+    {
+        sliderTextFPS.gameObject.SetActive(false);
     }
 }

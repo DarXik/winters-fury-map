@@ -138,7 +138,8 @@ public class MainMenu : MonoBehaviour
     }
 
 
-    [Header("Game Objecty")] public GameObject startObj;
+    [Header("Game Objecty")]
+    public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;

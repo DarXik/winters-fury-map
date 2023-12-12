@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionsScript : MonoBehaviour
 {
+
     public void Start()
     {
+        // sliderTextFPS.gameObject.SetActive(false);
+
         LoadPreferences();
         GetResolutions();
         QualitySwitcher();
@@ -17,6 +21,11 @@ public class OptionsScript : MonoBehaviour
         SetMainVolume(mainVolumePreference);
         SetFullScreen(fullscreenPreference);
     }
+
+    // public void Update()
+    // {
+    //     sliderTextFPS.gameObject.SetActive(sliderHandleEvent);
+    // }
 
     public void SavePreferences()
     {
@@ -71,6 +80,14 @@ public class OptionsScript : MonoBehaviour
         Application.targetFrameRate = fpsPreference;
     }
 
+    // public void SetVisibility(float change)
+    // {
+    //
+    //     Debug.Log("1");
+    // }
+
+
+
     public void SetBrightness(float lumen)
     {
         brigtnessPreference = lumen;
@@ -80,11 +97,11 @@ public class OptionsScript : MonoBehaviour
 
     private void QualitySwitcher()
     {
-        if (clickedRight)
+        if (clickedRight && currentQualityIndex != 2)
         {
             currentQualityIndex += 1;
         }
-        else if (clickedLeft)
+        else if (clickedLeft && currentQualityIndex != 0)
         {
             currentQualityIndex -= 1;
         }
