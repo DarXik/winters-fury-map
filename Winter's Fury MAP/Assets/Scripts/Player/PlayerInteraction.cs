@@ -6,7 +6,6 @@ using Interaction;
 using Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -14,7 +13,8 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        [FormerlySerializedAs("itemText")] [Header("UI References")] public TextMeshProUGUI interactText;
+        [Header("UI References")] 
+        public TextMeshProUGUI interactText;
         public Image holdCircle;
 
         [Header("Default Values")] public float maxInteractDistance;
@@ -25,6 +25,11 @@ namespace Player
         [Header("Found Item Info")] public GameObject foundItemWindow;
         public Image itemIcon;
         public TextMeshProUGUI itemName, itemDesc, itemCondition, itemWeight;
+
+        [Header("Equip Item References")] 
+        public Transform itemHolder;
+        private ItemData equippedItem;
+        private float interactItemTimeElapsed;
 
         public static HeatSource interactedCampfire;
 
@@ -57,7 +62,10 @@ namespace Player
             {
                 holdCircle.fillAmount = 0f;
                 timeElapsed = 0f;
+                interactItemTimeElapsed = 0f;
             }
+
+            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && !equippedItem.isBurning && Input.GetMouseButton(0)) Light();
         }
 
         private void CheckHover()
@@ -163,7 +171,7 @@ namespace Player
         {
             interacting = true;
 
-            yield return new WaitForSeconds(2);
+            ;            yield return new WaitForSeconds(2);
 
             interacting = false;
             timeElapsed = 0f;
@@ -190,6 +198,35 @@ namespace Player
         {
             foundItemWindow.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
+        }
+
+        public void EquipTool(ItemData itemData)
+        {
+            InventoryManager.Instance.ToggleInventory();
+            
+            equippedItem = itemData;
+            Instantiate(equippedItem.itemObj, itemHolder, false);
+        }
+
+        private void Light()
+        {
+            if (interactItemTimeElapsed < equippedItem.interactTime)
+            {
+                holdCircle.fillAmount = Mathf.Lerp(0f, 1f, interactItemTimeElapsed / equippedItem.interactTime);
+                interactItemTimeElapsed += Time.deltaTime;
+                interactText.text = equippedItem.interactText;
+            }
+            else
+            {
+                holdCircle.fillAmount = 0f;
+
+                interactText.text = "";
+                
+                // light torch
+                Destroy(itemHolder.GetChild(0).gameObject);
+                Instantiate(equippedItem.burningItemObj, itemHolder, false);
+                equippedItem.isBurning = true;
+            }
         }
     }
 }

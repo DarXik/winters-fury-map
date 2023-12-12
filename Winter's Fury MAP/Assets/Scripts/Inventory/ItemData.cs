@@ -1,12 +1,15 @@
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public enum ItemType
 {
     Food,
     Drink,
     Fuelsource,
+    Tool
+}
+
+public enum ToolType
+{
     Lightsource
 }
 
@@ -19,7 +22,7 @@ public class ItemData : ScriptableObject
     [TextArea]
     public string itemDescription;
     public ItemType itemType;
-    [Range(0, 100)] public float itemCondition;
+    [Range(0, 100)] public float itemCondition = 100f;
     public Sprite itemIcon;
     
     public float ItemWeight
@@ -41,6 +44,11 @@ public class ItemData : ScriptableObject
                 return fuelItemWeight;
             }
 
+            if (itemType == ItemType.Tool)
+            {
+                return toolWeight;
+            }
+            
             return 0;
         }
     }
@@ -58,4 +66,18 @@ public class ItemData : ScriptableObject
     [HideInInspector] public float temperatureIncrease;
     [HideInInspector] public int burnTime;
     [HideInInspector] public float chanceBonus;
+
+    [Header("Tool Properties")] 
+    [HideInInspector] public ToolType toolType;
+    [HideInInspector] public float toolWeight;
+    
+    [Header("Tool - Lightsource")]
+    [HideInInspector] public GameObject burningItemObj;
+    [HideInInspector] public float burnDensity;
+    [HideInInspector] public float heatBonus;
+    [HideInInspector] public float interactTime;
+    [HideInInspector] public string interactText;
+    [HideInInspector] public bool isBurning;
+
+    public float LightSourceBurnTime => Mathf.Round(burnDensity / toolWeight);
 }

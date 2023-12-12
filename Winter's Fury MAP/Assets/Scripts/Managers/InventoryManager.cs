@@ -31,7 +31,7 @@ namespace Managers
         
         [Header("Inventory Filter")]
         [SerializeField] private TextMeshProUGUI inventoryFilterName;
-        [SerializeField] private Button filterAll, filterFuelSource, filterFood;
+        [SerializeField] private Button filterAll, filterFuelSource, filterFood, filterTools;
 
         [Header("Item Detail References")] [SerializeField]
         private TextMeshProUGUI itemName;
@@ -48,9 +48,8 @@ namespace Managers
         [SerializeField] private GameObject actionButtonObj;
         [SerializeField] private Button actionBtn;
 
-        [Header("Drop Window References")] [SerializeField]
-        private GameObject dropItemWindow;
-
+        [Header("Drop Window References")] 
+        [SerializeField] private GameObject dropItemWindow;
         [SerializeField] private TextMeshProUGUI alertHeader;
         [SerializeField] private Slider dropItemSlider;
         [SerializeField] private TextMeshProUGUI dropCounterText;
@@ -138,16 +137,25 @@ namespace Managers
                     filterAll.interactable = false;
                     filterFuelSource.interactable = true;
                     filterFood.interactable = true;
+                    filterTools.interactable = true;
                     break;
                 case "Fuel":
                     filterAll.interactable = true;
                     filterFuelSource.interactable = false;
                     filterFood.interactable = true;
+                    filterTools.interactable = true;
                     break;
                 case "Food and Drink":
                     filterAll.interactable = true;
                     filterFuelSource.interactable = true;
                     filterFood.interactable = false;
+                    filterTools.interactable = true;
+                    break;
+                case "Tools":
+                    filterAll.interactable = true;
+                    filterFuelSource.interactable = true;
+                    filterFood.interactable = true;
+                    filterTools.interactable = false;
                     break;
             }
         }
@@ -294,6 +302,11 @@ namespace Managers
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() => { TryStartFire(item, itemCountValue); });
+                            break;
+                        case ItemType.Tool:
+                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
+                            actionButtonObj.SetActive(true);
+                            actionBtn.onClick.AddListener(() => { PlayerInteraction.Instance.EquipTool(item);});
                             break;
                     }
 

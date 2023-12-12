@@ -17,6 +17,14 @@ public class ItemDataEditor : UnityEditor.Editor
     private SerializedProperty burnTimeProp;
     private SerializedProperty chanceProp;
 
+    private SerializedProperty toolTypeProp;
+    private SerializedProperty toolWeightProp;
+    private SerializedProperty burningItemObjProp;
+    private SerializedProperty burnDensityProp;
+    private SerializedProperty heatBonusProp;
+    private SerializedProperty interactTime;
+    private SerializedProperty interactText;
+
     void OnEnable()
     {
         calorieDensityProp = serializedObject.FindProperty("calorieDensity");
@@ -30,6 +38,15 @@ public class ItemDataEditor : UnityEditor.Editor
         temperatureIncreaseProp = serializedObject.FindProperty("temperatureIncrease");
         burnTimeProp = serializedObject.FindProperty("burnTime");
         chanceProp = serializedObject.FindProperty("chanceBonus");
+
+        toolTypeProp = serializedObject.FindProperty("toolType");
+        toolWeightProp = serializedObject.FindProperty("toolWeight");
+        
+        burningItemObjProp = serializedObject.FindProperty("burningItemObj");
+        burnDensityProp = serializedObject.FindProperty("burnDensity");
+        heatBonusProp = serializedObject.FindProperty("heatBonus");
+        interactTime = serializedObject.FindProperty("interactTime");
+        interactText = serializedObject.FindProperty("interactText");
     }
 
     public override void OnInspectorGUI()
@@ -57,6 +74,20 @@ public class ItemDataEditor : UnityEditor.Editor
             EditorGUILayout.PropertyField(temperatureIncreaseProp);
             EditorGUILayout.PropertyField(burnTimeProp);
             EditorGUILayout.PropertyField(chanceProp);
+        }
+        else if (itemData.itemType == ItemType.Tool)
+        {
+            EditorGUILayout.PropertyField(toolTypeProp);
+            EditorGUILayout.PropertyField(toolWeightProp);
+            
+            if (itemData.toolType == ToolType.Lightsource)
+            {
+                EditorGUILayout.PropertyField(burningItemObjProp);
+                EditorGUILayout.PropertyField(burnDensityProp);
+                EditorGUILayout.PropertyField(heatBonusProp);
+                EditorGUILayout.PropertyField(interactTime);
+                EditorGUILayout.PropertyField(interactText);
+            }
         }
 
         serializedObject.ApplyModifiedProperties();
