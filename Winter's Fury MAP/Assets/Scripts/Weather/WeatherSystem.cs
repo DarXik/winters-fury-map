@@ -10,6 +10,9 @@ namespace Weather
     public class WeatherSystem : MonoBehaviour
     {
         public JSkyProfile skyProfile;
+        public JDayNightCycle DNC;
+        public JDayNightCycleProfile normalProfile, foggyProfile;
+        public Gradient fogGradient;
         
         public WeatherData[] weatherData;
         public static WeatherData selectedWeather;
@@ -83,6 +86,7 @@ namespace Weather
             weatherChangeMin = selectedWeather.lastsForMin;
             weatherChangeMax = selectedWeather.lastsForMax;
 
+            // Snow, Blizzard
             if (selectedWeather.particleSystem != null)
             {
                 var emission = selectedWeather.particleSystem.emission;
@@ -96,6 +100,9 @@ namespace Weather
                 forceOverLifetime.z = windDir.z;
             }
 
+            DNC.Profile = selectedWeather.foggySkyEnabled ? foggyProfile : normalProfile;
+            
+            // Sunny
             skyProfile.EnableOverheadCloud = selectedWeather.cloudsEnabled;
             skyProfile.UpdateMaterialProperties();
             
