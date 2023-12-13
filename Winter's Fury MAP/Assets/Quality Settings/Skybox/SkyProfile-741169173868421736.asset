@@ -16,7 +16,6 @@ Material:
   - DETAIL_OVERLAY_ROTATION
   - MOON
   - MOON_USE_TEXTURE
-  - OVERHEAD_CLOUD
   - STARS
   - STARS_LAYER_0
   - STARS_LAYER_1
@@ -119,7 +118,7 @@ MonoBehaviour:
   horizonCloudSize: 5
   horizonCloudStep: 25
   horizonCloudAnimationSpeed: 50
-  enableOverheadCloud: 1
+  enableOverheadCloud: 0
   overheadCloudColor: {r: 1, g: 1, b: 1, a: 0.22709298}
   overheadCloudAltitude: 404.3
   overheadCloudSize: 22.4
@@ -154,7 +153,6 @@ Material:
   - DETAIL_OVERLAY_ROTATION
   - MOON
   - MOON_USE_TEXTURE
-  - OVERHEAD_CLOUD
   - STARS
   - STARS_LAYER_0
   - STARS_LAYER_1

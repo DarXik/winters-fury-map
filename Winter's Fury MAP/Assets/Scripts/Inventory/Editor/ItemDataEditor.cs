@@ -23,7 +23,6 @@ public class ItemDataEditor : UnityEditor.Editor
     private SerializedProperty burnDensityProp;
     private SerializedProperty heatBonusProp;
     private SerializedProperty interactTime;
-    private SerializedProperty interactText;
 
     void OnEnable()
     {
@@ -46,7 +45,6 @@ public class ItemDataEditor : UnityEditor.Editor
         burnDensityProp = serializedObject.FindProperty("burnDensity");
         heatBonusProp = serializedObject.FindProperty("heatBonus");
         interactTime = serializedObject.FindProperty("interactTime");
-        interactText = serializedObject.FindProperty("interactText");
     }
 
     public override void OnInspectorGUI()
@@ -86,7 +84,6 @@ public class ItemDataEditor : UnityEditor.Editor
                 EditorGUILayout.PropertyField(burnDensityProp);
                 EditorGUILayout.PropertyField(heatBonusProp);
                 EditorGUILayout.PropertyField(interactTime);
-                EditorGUILayout.PropertyField(interactText);
             }
         }
 

@@ -64,15 +64,20 @@ namespace Player
             CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
             if (Input.GetMouseButton(0) && !interacting && !foundItemWindow.activeInHierarchy) CheckHold();
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
             {
                 holdCircle.fillAmount = 0f;
                 timeElapsed = 0f;
                 interactItemTimeElapsed = 0f;
             }
 
+            // Light the torch
             if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && !equippedItem.isLit &&
                 Input.GetMouseButton(0)) Light();
+
+            // Extinguish the torch
+            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && equippedItem.isLit &&
+                Input.GetMouseButton(1)) Extinguish();
         }
 
         private void CheckHover()
@@ -236,18 +241,39 @@ namespace Player
             {
                 holdCircle.fillAmount = Mathf.Lerp(0f, 1f, interactItemTimeElapsed / equippedItem.interactTime);
                 interactItemTimeElapsed += Time.deltaTime;
-                interactText.text = equippedItem.interactText;
+                interactText.text = "Lighting...";
             }
             else
             {
                 holdCircle.fillAmount = 0f;
 
                 interactText.text = "";
-
-                // light torch
+                
                 Destroy(itemHolder.GetChild(0).gameObject);
                 Instantiate(equippedItem.burningItemObj, itemHolder, false);
                 equippedItem.isLit = true;
+            }
+        }
+
+        private void Extinguish()
+        {
+            if (interactItemTimeElapsed < equippedItem.interactTime)
+            {
+                holdCircle.fillAmount = Mathf.Lerp(0f, 1f, interactItemTimeElapsed / equippedItem.interactTime);
+                interactItemTimeElapsed += Time.deltaTime;
+                interactText.text = "Extinguishing...";
+            }
+            else
+            {
+                holdCircle.fillAmount = 0f;
+
+                interactText.text = "";
+                
+                Destroy(itemHolder.GetChild(0).gameObject);
+                Instantiate(equippedItem.itemObj, itemHolder, false);
+                equippedItem.isLit = false;
+                
+                InventoryManager.Instance.UpdateItemData(equippedItem);
             }
         }
 
