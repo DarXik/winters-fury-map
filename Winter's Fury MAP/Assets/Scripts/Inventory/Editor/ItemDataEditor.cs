@@ -59,7 +59,7 @@ public class ItemDataEditor : UnityEditor.Editor
         DrawDefaultInspector();
 
         // Display additional fields only if itemType is ItemType.Food
-        if (itemData.itemType == ItemType.Food || itemData.itemType == ItemType.Drink)
+        if (itemData.itemType == ItemType.FoodAndDrink)
         {
             EditorGUILayout.PropertyField(calorieDensityProp);
             EditorGUILayout.PropertyField(waterIntakeProp);

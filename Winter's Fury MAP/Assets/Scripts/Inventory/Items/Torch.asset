@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Torch
   itemDescription: Source of light, guiding your path in the darkness. Might even
     give you some warmth.
-  itemType: 3
+  itemType: 2
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: 679128516b9e2ef4b903af73f48f233f, type: 3}
   calorieDensity: 0
@@ -32,8 +32,8 @@ MonoBehaviour:
   toolType: 0
   toolWeight: 0.3
   burningItemObj: {fileID: 167626, guid: a4c7c79bd6612f74ca17d1764696274e, type: 3}
-  burnDensity: 0.55
+  burnDensity: 0.45
   heatBonus: 2
-  interactTime: 2
+  interactTime: 1.25
   interactText: Lighting...
-  isBurning: 0
+  isLit: 0

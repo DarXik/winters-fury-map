@@ -15,7 +15,7 @@ MonoBehaviour:
   itemObj: {fileID: 100000, guid: 306ffbacb971a0b43bfda3ee1865b469, type: 3}
   itemName: Raspberry Soda
   itemDescription: Refreshing fizzy drink.
-  itemType: 1
+  itemType: 0
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: 702a45845f733c049a5862575f8bca7a, type: 3}
   calorieDensity: 0
@@ -28,3 +28,11 @@ MonoBehaviour:
   temperatureIncrease: 0
   burnTime: 0
   chanceBonus: 0
+  toolType: 0
+  toolWeight: 0
+  burningItemObj: {fileID: 0}
+  burnDensity: 0
+  heatBonus: 0
+  interactTime: 0
+  interactText: 
+  isBurning: 0

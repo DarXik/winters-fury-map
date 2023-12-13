@@ -15,7 +15,7 @@ MonoBehaviour:
   itemObj: {fileID: 7585413835570720021, guid: 70a048e9cf7879241b642c397b3dc0be, type: 3}
   itemName: Stick
   itemDescription: Small stick that will burn, but not for very long.
-  itemType: 2
+  itemType: 1
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: fd239b07af81b2744a9d6b62b52f6a5a, type: 3}
   calorieDensity: 0
@@ -28,3 +28,11 @@ MonoBehaviour:
   temperatureIncrease: 1
   burnTime: 8
   chanceBonus: 60
+  toolType: 0
+  toolWeight: 0
+  burningItemObj: {fileID: 0}
+  burnDensity: 0
+  heatBonus: 0
+  interactTime: 0
+  interactText: 
+  isBurning: 0

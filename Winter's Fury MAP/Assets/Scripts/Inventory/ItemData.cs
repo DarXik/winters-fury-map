@@ -2,8 +2,7 @@ using UnityEngine;
 
 public enum ItemType
 {
-    Food,
-    Drink,
+    FoodAndDrink,
     Fuelsource,
     Tool
 }
@@ -29,12 +28,15 @@ public class ItemData : ScriptableObject
     {
         get
         {
-            if (itemType == ItemType.Food)
+
+            // Is food
+            if (itemType == ItemType.FoodAndDrink && calorieDensity > 0)
             {
                 return Mathf.Round(caloriesIntake / calorieDensity * 100) / 100f;
             }
 
-            if (itemType == ItemType.Drink)
+            // Is water
+            if(itemType == ItemType.FoodAndDrink && calorieDensity == 0)
             {
                 return Mathf.Round(waterIntake / 1000f * 100) / 100f;
             }
@@ -77,7 +79,7 @@ public class ItemData : ScriptableObject
     [HideInInspector] public float heatBonus;
     [HideInInspector] public float interactTime;
     [HideInInspector] public string interactText;
-    [HideInInspector] public bool isBurning;
-
-    public float LightSourceBurnTime => Mathf.Round(burnDensity / toolWeight);
+    [HideInInspector] public bool isLit;
+    
+    public float MaxLightSourceBurnTime => (burnDensity / toolWeight * 100) / 100f;
 }

@@ -1,5 +1,6 @@
 ﻿using Heat;
 using Pinwheel.Jupiter;
+using Player;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -13,6 +14,7 @@ namespace Managers
         [Header("Main Settings")]
         public JDayNightCycle cycle;
         public bool autoCycle;
+        public bool randomizeSpawn;
 
         [Header("Spawn Settings")] 
         [SerializeField] private Transform player;
@@ -37,8 +39,7 @@ namespace Managers
             previousTimeIncrement = cycle.TimeIncrement;
 
             SetBrightness();
-            //SpawnPlayer();
-            //cycle.Time = 0;
+            if(randomizeSpawn) SpawnPlayer();
         }
 
         private void SpawnPlayer()
@@ -75,6 +76,7 @@ namespace Managers
                 HeatSource.timeIncrement = currentIncrement;
                 WeatherSystem.timeIncrement = currentIncrement;
                 WindArea.timeIncrement = currentIncrement;
+                PlayerInteraction.timeIncrement = currentIncrement;
 
                 previousTimeIncrement = currentIncrement;
             }

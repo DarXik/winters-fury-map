@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Pine Firewood
   itemDescription: Represents resilience in the frozen night, but doesn't burn for
     very long.
-  itemType: 2
+  itemType: 1
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: db6130751fda75241afcc67ae09fa684, type: 3}
   calorieDensity: 0
@@ -29,3 +29,11 @@ MonoBehaviour:
   temperatureIncrease: 9
   burnTime: 90
   chanceBonus: 5
+  toolType: 0
+  toolWeight: 0
+  burningItemObj: {fileID: 0}
+  burnDensity: 0
+  heatBonus: 0
+  interactTime: 0
+  interactText: 
+  isBurning: 0

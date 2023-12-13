@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Globalization;
 using Heat;
 using Interaction;
@@ -13,8 +12,7 @@ namespace Player
 {
     public class PlayerInteraction : MonoBehaviour
     {
-        [Header("UI References")] 
-        public TextMeshProUGUI interactText;
+        [Header("UI References")] public TextMeshProUGUI interactText;
         public Image holdCircle;
 
         [Header("Default Values")] public float maxInteractDistance;
@@ -26,15 +24,19 @@ namespace Player
         public Image itemIcon;
         public TextMeshProUGUI itemName, itemDesc, itemCondition, itemWeight;
 
-        [Header("Equip Item References")] 
-        public Transform itemHolder;
-        private ItemData equippedItem;
+        [Header("Equip Item References")] public Transform itemHolder;
+        public static ItemData equippedItem;
         private float interactItemTimeElapsed;
+
+        [Header("HUD Interaction")] public GameObject hud;
+        public TextMeshProUGUI leftActionText, rightActionText;
 
         public static HeatSource interactedCampfire;
 
         private RaycastHit clickHit;
         private RaycastHit hoverHit;
+
+        public static float timeIncrement;
 
         public static PlayerInteraction Instance { get; private set; }
 
@@ -45,6 +47,7 @@ namespace Player
 
         private void Start()
         {
+            timeIncrement = GameManager.Instance.GetTimeIncrement();
             holdCircle.fillAmount = 0f;
 
             foundItemWindow.SetActive(false);
@@ -52,6 +55,9 @@ namespace Player
 
         private void Update()
         {
+            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && equippedItem.isLit)
+                ReduceLightSourceBurnTime();
+
             if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
                 AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened) return;
 
@@ -65,7 +71,8 @@ namespace Player
                 interactItemTimeElapsed = 0f;
             }
 
-            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && !equippedItem.isBurning && Input.GetMouseButton(0)) Light();
+            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && !equippedItem.isLit &&
+                Input.GetMouseButton(0)) Light();
         }
 
         private void CheckHover()
@@ -144,7 +151,8 @@ namespace Player
                     break;
                 case InteractableType.Bed:
                     interactText.text = "";
-                    PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.Sleep, controller.interactionData.warmthBonus);
+                    PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.Sleep,
+                        controller.interactionData.warmthBonus);
                     break;
                 case InteractableType.Searchable:
                     StartCoroutine(controller.Search());
@@ -171,7 +179,8 @@ namespace Player
         {
             interacting = true;
 
-            ;            yield return new WaitForSeconds(2);
+            ;
+            yield return new WaitForSeconds(2);
 
             interacting = false;
             timeElapsed = 0f;
@@ -200,12 +209,25 @@ namespace Player
             PlayerLook.Instance.UnblockRotation();
         }
 
-        public void EquipTool(ItemData itemData)
+        public void EquipTool(ItemData item)
         {
             InventoryManager.Instance.ToggleInventory();
-            
-            equippedItem = itemData;
+
+            equippedItem = item;
+
             Instantiate(equippedItem.itemObj, itemHolder, false);
+        }
+
+        public void UnEquipTool()
+        {
+            InventoryManager.Instance.HideItemDetail();
+            InventoryManager.Instance.UpdateItemData(equippedItem);
+            
+            equippedItem.isLit = false;
+            
+            equippedItem = null;
+
+            Destroy(itemHolder.GetChild(0).gameObject);
         }
 
         private void Light()
@@ -221,12 +243,17 @@ namespace Player
                 holdCircle.fillAmount = 0f;
 
                 interactText.text = "";
-                
+
                 // light torch
                 Destroy(itemHolder.GetChild(0).gameObject);
                 Instantiate(equippedItem.burningItemObj, itemHolder, false);
-                equippedItem.isBurning = true;
+                equippedItem.isLit = true;
             }
+        }
+
+        private void ReduceLightSourceBurnTime()
+        {
+            equippedItem.itemCondition -= 100f / equippedItem.MaxLightSourceBurnTime * (Time.deltaTime * timeIncrement);
         }
     }
 }

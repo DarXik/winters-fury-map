@@ -133,7 +133,7 @@ namespace Player
             var newCameraPos = initialCameraPos - halfHeightDifference;
 
             cameraTransform.localPosition = newCameraPos;
-            charController.height = currentHeight;
+            charController.height = currentHeight; 
         }
 
         private void MovePlayer()

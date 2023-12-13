@@ -15,7 +15,7 @@ MonoBehaviour:
   itemObj: {fileID: 6816101791449471384, guid: f9e6f2db40b906341b39f98168a602fd, type: 3}
   itemName: Water (Potable)
   itemDescription: Safe, drinking water.
-  itemType: 1
+  itemType: 0
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: df5cfd92c9ee05c469538b198ab7d04c, type: 3}
   calorieDensity: 0
@@ -28,3 +28,11 @@ MonoBehaviour:
   temperatureIncrease: 0
   burnTime: 0
   chanceBonus: 0
+  toolType: 0
+  toolWeight: 0
+  burningItemObj: {fileID: 0}
+  burnDensity: 0
+  heatBonus: 0
+  interactTime: 0
+  interactText: 
+  isBurning: 0

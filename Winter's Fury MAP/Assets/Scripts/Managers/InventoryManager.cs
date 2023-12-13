@@ -12,7 +12,7 @@ namespace Managers
 {
     public class InventoryManager : MonoBehaviour
     {
-        [SerializeField] private List<ItemData> items = new();
+        public List<ItemData> items = new();
 
         [Header("Core Values")] public float maxWeight;
         [SerializeField] private Gradient weightGradient;
@@ -20,6 +20,7 @@ namespace Managers
 
         [Header("UI References")] [SerializeField]
         private GameObject inventory;
+
         [SerializeField] private GameObject inventoryUIItem;
         [SerializeField] private Transform itemContent;
         [SerializeField] private GameObject itemDetail;
@@ -28,9 +29,10 @@ namespace Managers
         [SerializeField] private TextMeshProUGUI weightValues;
         [SerializeField] private GameObject backpack, crafting;
         [SerializeField] private Image backpackBtn, craftingBtn;
-        
-        [Header("Inventory Filter")]
-        [SerializeField] private TextMeshProUGUI inventoryFilterName;
+
+        [Header("Inventory Filter")] [SerializeField]
+        private TextMeshProUGUI inventoryFilterName;
+
         [SerializeField] private Button filterAll, filterFuelSource, filterFood, filterTools;
 
         [Header("Item Detail References")] [SerializeField]
@@ -48,8 +50,9 @@ namespace Managers
         [SerializeField] private GameObject actionButtonObj;
         [SerializeField] private Button actionBtn;
 
-        [Header("Drop Window References")] 
-        [SerializeField] private GameObject dropItemWindow;
+        [Header("Drop Window References")] [SerializeField]
+        private GameObject dropItemWindow;
+
         [SerializeField] private TextMeshProUGUI alertHeader;
         [SerializeField] private Slider dropItemSlider;
         [SerializeField] private TextMeshProUGUI dropCounterText;
@@ -114,6 +117,8 @@ namespace Managers
                 // Open inventory
                 inventoryOpened = true;
                 SelectFilterType("All");
+                
+                if(PlayerInteraction.equippedItem != null) UpdateItemData(PlayerInteraction.equippedItem);
 
                 PlayerLook.Instance.BlockRotation();
                 inventory.SetActive(true);
@@ -276,27 +281,29 @@ namespace Managers
 
                     switch (item.itemType)
                     {
-                        case ItemType.Food:
-                            var needItemFood = Instantiate(detailNeedItem, needs.transform);
-                            needItemFood.transform.Find("Image").GetComponent<Image>().sprite = stomach;
-                            needItemFood.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
-                                item.caloriesIntake.ToString(CultureInfo.InvariantCulture);
+                        case ItemType.FoodAndDrink:
+                            var needItem = Instantiate(detailNeedItem, needs.transform);
+                            if (item.calorieDensity == 0)
+                            {
+                                needItem.transform.Find("Image").GetComponent<Image>().sprite = water;
+                                needItem.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
+                                    $"{(totalWaterIntake / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
 
-                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Eat";
-                            actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() => { TryEat(item.caloriesIntake, item); });
-                            // add also water
-                            break;
-                        case ItemType.Drink:
-                            var needItemDrink = Instantiate(detailNeedItem, needs.transform);
-                            needItemDrink.transform.Find("Image").GetComponent<Image>().sprite = water;
-                            needItemDrink.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
-                                $"{(totalWaterIntake / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
+                                actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
+                                actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
+                            }
+                            else
+                            {
+                                needItem.transform.Find("Image").GetComponent<Image>().sprite = stomach;
+                                needItem.transform.Find("Value").GetComponent<TextMeshProUGUI>().text =
+                                    item.caloriesIntake.ToString(CultureInfo.InvariantCulture);
 
-                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
+                                actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Eat";
+                                actionBtn.onClick.AddListener(() => { TryEat(item.caloriesIntake, item); });
+                            }
+
                             actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
-                            // add also calories
+
                             break;
                         case ItemType.Fuelsource:
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";
@@ -304,9 +311,20 @@ namespace Managers
                             actionBtn.onClick.AddListener(() => { TryStartFire(item, itemCountValue); });
                             break;
                         case ItemType.Tool:
-                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
-                            actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() => { PlayerInteraction.Instance.EquipTool(item);});
+                            if (PlayerInteraction.equippedItem != null &&
+                                PlayerInteraction.equippedItem.itemName == item.itemName)
+                            {
+                                actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Unequip";
+                                actionButtonObj.SetActive(true);
+                                actionBtn.onClick.AddListener(() => { PlayerInteraction.Instance.UnEquipTool(); });
+                            }
+                            else
+                            {
+                                actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Equip";
+                                actionButtonObj.SetActive(true);
+                                actionBtn.onClick.AddListener(() => { PlayerInteraction.Instance.EquipTool(item); });
+                            }
+
                             break;
                     }
 
@@ -404,7 +422,7 @@ namespace Managers
             ShowItemDetail(currentDetailedItem, currentDetailedCondition);
         }
 
-        private void HideItemDetail()
+        public void HideItemDetail()
         {
             itemDetail.SetActive(false);
         }
@@ -427,7 +445,7 @@ namespace Managers
                 {
                     if (Physics.Raycast(playerPos + new Vector3(0, 0, offset), Vector3.down, out var hit, 10f))
                     {
-                        var droppedItem = Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+                        var droppedItem = Instantiate(item.itemObj, hit.point, item.itemObj.transform.rotation);
 
                         droppedItem.GetComponent<ItemController>().itemData = item;
 
@@ -460,7 +478,7 @@ namespace Managers
                 {
                     if (Physics.Raycast(playerPos + new Vector3(0, 0, offset), Vector3.down, out var hit, 10f))
                     {
-                        var droppedItem = Instantiate(item.itemObj, hit.point, Quaternion.Euler(-90f, 0f, 0f));
+                        var droppedItem = Instantiate(item.itemObj, hit.point, item.itemObj.transform.rotation);
 
                         // assign itemData from inventory to replace the new one
                         droppedItem.GetComponent<ItemController>().itemData = item;
@@ -533,11 +551,6 @@ namespace Managers
                                 maxWeight.ToString("0.0", CultureInfo.InvariantCulture) + " kg";
         }
 
-        public List<ItemData> GetFuelItems()
-        {
-            return items.FindAll(item => item.itemType == ItemType.Fuelsource);
-        }
-
         public void DeleteItem(ItemData itemToDelete)
         {
             var itemIndex = items.IndexOf(itemToDelete);
@@ -548,6 +561,12 @@ namespace Managers
             HideItemDetail();
         }
 
+        public List<ItemData> GetFuelItems()
+        {
+            return items.FindAll(item => item.itemType == ItemType.Fuelsource);
+        }
+
+
         public List<Tuple<string, int, float>> GetItemCounts()
         {
             return itemCounts;
@@ -557,6 +576,13 @@ namespace Managers
         {
             return items.Where(item => item.itemType == ItemType.Fuelsource)
                 .Select(item => itemCounts.Find(tuple => tuple.Item1 == item.itemName)).ToList();
+        }
+
+        public void UpdateItemData(ItemData itemToEdit)
+        {
+            int index = items.IndexOf(itemToEdit);
+
+            items[index] = itemToEdit;
         }
     }
 }

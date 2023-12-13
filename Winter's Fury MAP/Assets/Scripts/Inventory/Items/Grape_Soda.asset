@@ -15,7 +15,7 @@ MonoBehaviour:
   itemObj: {fileID: 100000, guid: 3eec138ef50802a47945c86a777ce581, type: 3}
   itemName: Grape Soda
   itemDescription: Refreshing fizzy drink.
-  itemType: 1
+  itemType: 0
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: 20d99606a35daa544b458b27c321a463, type: 3}
   calorieDensity: 0
@@ -28,3 +28,11 @@ MonoBehaviour:
   temperatureIncrease: 0
   burnTime: 0
   chanceBonus: 0
+  toolType: 0
+  toolWeight: 0
+  burningItemObj: {fileID: 0}
+  burnDensity: 0
+  heatBonus: 0
+  interactTime: 0
+  interactText: 
+  isLit: 0
