@@ -81,7 +81,7 @@ namespace Player
             }
 
             // Light the torch
-            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && !equippedItem.isLit &&
+            if (equippedItem != null && equippedItem.toolType == ToolType.Lightsource && !equippedItem.isLit && equippedItem.itemCondition > 0 &&
                 Input.GetMouseButton(0)) Light();
 
             // Extinguish the torch
@@ -227,11 +227,15 @@ namespace Player
         {
             InventoryManager.Instance.ToggleInventory();
 
-            equippedItem = item;
+            ItemData itemCopy = Instantiate(item);
+
+            equippedItem = itemCopy;
 
             Instantiate(equippedItem.itemObj, itemHolder, false);
             
             // HUD
+            if (equippedItem.itemCondition == 0) return;
+            
             hud.SetActive(true);
             leftAction.SetActive(true);
             leftActionText.text = equippedItem.leftActionText;
@@ -241,7 +245,6 @@ namespace Player
         public void UnEquipTool()
         {
             InventoryManager.Instance.HideItemDetail();
-            InventoryManager.Instance.UpdateItemData(equippedItem);
             
             equippedItem.isLit = false;
             
@@ -293,8 +296,6 @@ namespace Player
                 Instantiate(equippedItem.itemObj, itemHolder, false);
                 equippedItem.isLit = false;
                 
-                InventoryManager.Instance.UpdateItemData(equippedItem);
-                
                 rightAction.SetActive(false);
                 leftAction.SetActive(true);
             }
@@ -302,6 +303,16 @@ namespace Player
 
         private void ReduceLightSourceBurnTime()
         {
+            if (equippedItem.itemCondition <= 0)
+            {
+                Destroy(itemHolder.GetChild(0).gameObject);
+                equippedItem.isLit = false;
+                equippedItem.itemCondition = 0;
+                Instantiate(equippedItem.itemObj, itemHolder, false);
+                
+                return;
+            }
+            
             equippedItem.itemCondition -= 100f / equippedItem.MaxLightSourceBurnTime * (Time.deltaTime * timeIncrement);
         }
     }
