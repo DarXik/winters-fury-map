@@ -1,77 +1,127 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ControlsScript : MonoBehaviour
 {
-    private Dictionary<string, KeyCode> keyCodes = new Dictionary<string, KeyCode>();
-    private KeyCode inventoryKeyPreference;
+    // private Dictionary<string, KeyCode> keyCodes = new();
+    private string inventoryKeyPreference;
+    private string passTimeKeyPreference;
+
+    private bool inventoryKeyPressed;
+    private bool passTimeKeyPressed;
 
     public Button inventoryKeyButton;
     public TMP_Text inventoryKeyText;
-    public Button craftingKeyButton;
-    public TMP_Text craftingKeyText;
+    public Button passTimeKeyButton;
+    public TMP_Text passTimeKeyText;
+
+    public void Start()
+    {
+        LoadPreferences();
+    }
 
     public void SavePreferences()
     {
-        // PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
-        PlayerPrefs.SetString("inventoryKey", keyCodes["inventoryKey"].ToString());
+        // keyCodes["inventoryKey"].ToString()
+        PlayerPrefs.SetString("inventoryKey", inventoryKeyPreference);
+        PlayerPrefs.SetString("passTimeKey", passTimeKeyPreference);
         Debug.Log("Keys uloženo");
     }
 
     public void LoadPreferences()
     {
-        // currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         // keyCodes["inventoryKey"] = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString(Enum.TryParse("inventoryKey", out KeyCode )) : KeyCode.Tab;
 
         // if (PlayerPrefs.HasKey("inventoryKey"))
         // {
         //     inventoryKeyPreference = PlayerPrefs.GetString("inventoryKey");
-        //     if (Enum.TryParse(inventoryKeyPreference, out KeyCode keycode))
-        //     {
-        //         keyCodes["inventoryKey"] = keycode;
-        //     }
+        //     // if (Enum.TryParse(inventoryKeyPreference, out KeyCode keycode))
+        //     // {
+        //     //     keyCodes["inventoryKey"] = keycode;
+        //     // }
         // }
         // else
         // {
         //     inventoryKeyPreference = "Tab";
         // }
+
+        inventoryKeyPreference = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString("inventoryKey") : "Tab";
+        inventoryKeyText.text = inventoryKeyPreference;
+
+        passTimeKeyPreference = PlayerPrefs.HasKey("passTimeKey") ? PlayerPrefs.GetString("passTimeKey") : "T";
+        passTimeKeyText.text = passTimeKeyPreference;
+
+        Debug.Log("Keys načteno");
     }
 
-    private bool keyPressed;
     public void InventoryKeyHandler()
     {
-        keyPressed = true;
+        // inventoryKeyPressed = true;
         // inventoryKeyPreference = preferredKey;
         // inventoryKeyText.text = inventoryKeyPreference;
         // Debug.Log("Inv. key: " + inventoryKeyText.text);
+        // StartCoroutine(KeyHandlerCoroutine(inventoryKeyText, key => inventoryKeyPreference = key, true));
+
+        StartCoroutine(InventoryKeyCoroutine(true));
+        SavePreferences();
     }
 
-    public void Update()
+    public void PassTimeKey()
     {
-        if (keyPressed)
+        StartCoroutine(PassTimeCoroutine(true));
+    }
+
+    private IEnumerator InventoryKeyCoroutine(bool keyPressed)
+    {
+        while (true)
         {
-            if (Input.anyKeyDown)
+            if (keyPressed)
             {
-                foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
+                if (Input.anyKeyDown)
                 {
-                    if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
+                    foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
                     {
-                        Debug.Log("Key pressed: " + kc.ToString());
-                        inventoryKeyPreference = kc;
-                        keyPressed = false;
+                        if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
+                        {
+                            Debug.Log("Key pressed: " + kc.ToString());
+                            inventoryKeyPreference = kc.ToString();
+                            keyPressed = false;
+                            inventoryKeyText.text = inventoryKeyPreference;
+                        }
                     }
                 }
             }
+
+            yield return null;
         }
     }
 
-    public void Start()
+
+    private IEnumerator PassTimeCoroutine(bool keyPressed)
     {
-        LoadPreferences();
-        InventoryKeyHandler();
+        while (true)
+        {
+            if (keyPressed)
+            {
+                if (Input.anyKeyDown)
+                {
+                    foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
+                    {
+                        if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
+                        {
+                            Debug.Log("Key pressed: " + kc.ToString());
+                            passTimeKeyPreference = kc.ToString();
+                            keyPressed = false;
+                            passTimeKeyText.text = passTimeKeyPreference;
+                        }
+                    }
+                }
+            }
+
+            yield return null;
+        }
     }
 }

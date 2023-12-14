@@ -1,4 +1,5 @@
-﻿using Heat;
+﻿using System;
+using Heat;
 using Pinwheel.Jupiter;
 using Player;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Weather;
 using Wind;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -40,6 +42,8 @@ namespace Managers
             volume.profile.TryGet(out ca);
 
             SetBrightness();
+            SetKeyPreference("inventoryKey", out toggleInventoryKey);
+            SetKeyPreference("passTimeKey", out togglePassTimeKey);
             if(randomizeSpawn) SpawnPlayer();
         }
 
@@ -55,7 +59,7 @@ namespace Managers
             player.position = spawnPos;
         }
 
-        private void SetBrightness() // NEFUNGUJE - object ca bez instance
+        private void SetBrightness()
         {
             ca.postExposure.value = PlayerPrefs.GetFloat("brightnessPreference");
             Debug.Log("BrightnessPref načtena");
@@ -82,14 +86,31 @@ namespace Managers
             }
         }
 
+        public KeyCode toggleInventoryKey;
+        public KeyCode togglePassTimeKey;
+
+        public void SetKeyPreference(string key, out KeyCode desiredKey)
+        {
+            var inventoryKey = PlayerPrefs.GetString(key);
+            if (Enum.TryParse(inventoryKey, out KeyCode kc))
+            {
+                desiredKey = kc;
+                Debug.Log("Converted correctly");
+            }
+            else
+            {
+                desiredKey = KeyCode.None;
+                Debug.Log("Failed to convert");
+            }
+        }
         private void CheckUserInput()
         {
-            if (Input.GetKeyDown(KeyCode.Tab) && !FirestartManager.fireWindowOpened && !PassTimeManager.passTimeWindowOpened && !AddFuelManager.addFuelWindowOpened)
+            if (Input.GetKeyDown(toggleInventoryKey) && !FirestartManager.fireWindowOpened && !PassTimeManager.passTimeWindowOpened && !AddFuelManager.addFuelWindowOpened)
             {
                 InventoryManager.Instance.ToggleInventory();
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened && !AddFuelManager.addFuelWindowOpened)
+            if (Input.GetKeyDown(togglePassTimeKey) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened && !AddFuelManager.addFuelWindowOpened)
             {
                 PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.PassTime);
             }

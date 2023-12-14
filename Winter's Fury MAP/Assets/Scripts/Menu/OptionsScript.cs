@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class OptionsScript : MonoBehaviour
 {
+    // public ControlsScript controlsScript;
 
     public void Start()
     {
-        // sliderTextFPS.gameObject.SetActive(false);
-
         LoadPreferences();
         GetResolutions();
         QualitySwitcher();
@@ -22,13 +20,9 @@ public class OptionsScript : MonoBehaviour
         SetFullScreen(fullscreenPreference);
     }
 
-    // public void Update()
-    // {
-    //     sliderTextFPS.gameObject.SetActive(sliderHandleEvent);
-    // }
-
     public void SavePreferences()
     {
+        // controlsScript.SavePreferences();
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
         PlayerPrefs.SetFloat("mainVolumePreference", mainVolumePreference);
@@ -39,6 +33,7 @@ public class OptionsScript : MonoBehaviour
 
     public void LoadPreferences()
     {
+        // controlsScript.LoadPreferences();
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
         mainVolumePreference = PlayerPrefs.HasKey("mainVolumePreference") ? PlayerPrefs.GetFloat("mainVolumePreference") : -10f;
@@ -160,29 +155,22 @@ public class OptionsScript : MonoBehaviour
         Debug.Log("Res. updated");
     }
 
-    [Header("Brightness")]
-    public TextMeshProUGUI sliderTextBrigtness;
+    [Header("Brightness")] public TextMeshProUGUI sliderTextBrigtness;
     public Slider sliderBrightness;
-    [Header("FPS")]
-    public TextMeshProUGUI sliderTextFPS;
+    [Header("FPS")] public TextMeshProUGUI sliderTextFPS;
     public Slider sliderFPS;
-    [Header("Kvalita")]
-    public TextMeshProUGUI qualityOptionsText;
+    [Header("Kvalita")] public TextMeshProUGUI qualityOptionsText;
     private bool clickedRight;
     private bool clickedLeft;
-    [Header("Rozlišení")]
-    private Resolution[] resolutions;
+    [Header("Rozlišení")] private Resolution[] resolutions;
     public TMP_Dropdown resolutionDropdown;
-    [Header("Fullscreen")]
-    public Toggle toggleFullscreen;
+    [Header("Fullscreen")] public Toggle toggleFullscreen;
 
-    [Header("Pro ukládání")]
-    private int fpsPreference;
+    [Header("Pro ukládání")] private int fpsPreference;
     private int currentQualityIndex;
     private float mainVolumePreference;
     private float brigtnessPreference;
     private bool fullscreenPreference;
 
-    [Header("Zvuk")]
-    public AudioMixer audioMixer;
+    [Header("Zvuk")] public AudioMixer audioMixer;
 }
