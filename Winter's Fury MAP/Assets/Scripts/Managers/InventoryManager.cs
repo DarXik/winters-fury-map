@@ -65,6 +65,7 @@ namespace Managers
         public static bool inventoryOpened;
         private string currentDetailedItem;
         private float currentDetailedCondition;
+        private string currentFilter = "";
 
         public static InventoryManager Instance { get; private set; }
 
@@ -167,6 +168,8 @@ namespace Managers
 
         public void ListItems(string filter = "")
         {
+            currentFilter = filter;
+            
             DeleteInventoryContents();
             DeleteNeedContents();
             HideItemDetail();
@@ -253,7 +256,7 @@ namespace Managers
             // Loop through every item and find a match according to the parameter
             foreach (var item in items)
             {
-                if (item.itemName == itemName && Mathf.Round(item.itemCondition) == itemCondition)
+                if (item.itemName == itemName && Mathf.RoundToInt(item.itemCondition) == itemCondition)
                 {
                     this.itemName.text = item.itemName;
                     itemDescription.text = item.itemDescription;
@@ -290,8 +293,10 @@ namespace Managers
                                     $"{(totalWaterIntake / 1000).ToString("F2", CultureInfo.InvariantCulture)} L";
 
                                 actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
-                                actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
-                                if (item.caloriesIntake > 0) actionBtn.onClick.AddListener(() => {TryEat(item.caloriesIntake, item);});
+                                actionBtn.onClick.AddListener(() =>
+                                {
+                                    TryDrink(item.waterIntake, item.caloriesIntake, item);
+                                });
                             }
                             else
                             {
@@ -340,9 +345,18 @@ namespace Managers
             FirestartManager.Instance.OpenFireStartWindow(itemData, itemCount);
         }
 
-        private void TryDrink(float waterIntake, ItemData itemData)
+        private void TryDrink(float waterIntake, float calorieIntake, ItemData itemData)
         {
             var returnedWater = VitalManager.Instance.AddThirst(waterIntake);
+            var calories = 0f;
+
+            if (calorieIntake > 0)
+            {
+                var intakeRatio = (waterIntake - returnedWater) / calorieIntake;
+
+                calories = calorieIntake - (calorieIntake * intakeRatio);
+                VitalManager.Instance.AddHunger(calorieIntake * intakeRatio);
+            }
 
             if (returnedWater == 0)
             {
@@ -355,6 +369,7 @@ namespace Managers
                 var itemIndex = items.IndexOf(itemData);
 
                 items[itemIndex].waterIntake = returnedWater;
+                items[itemIndex].caloriesIntake = calories;
 
                 ListItems();
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
@@ -473,7 +488,7 @@ namespace Managers
         private void DropAll(string itemName)
         {
             Debug.Log("Dropping all items of: " + itemName);
-            
+
             PlayerInteraction.Instance.UnEquipTool();
 
             var playerPos = PlayerController.Instance.GetPlayerPosition();
@@ -587,12 +602,10 @@ namespace Managers
             return items.Where(item => item.itemType == ItemType.Fuelsource)
                 .Select(item => itemCounts.Find(tuple => tuple.Item1 == item.itemName)).ToList();
         }
-
+        
         public void UpdateItemData(ItemData itemToEdit)
         {
-            int index = items.IndexOf(itemToEdit);
-
-            items[index] = itemToEdit;
+            items.FirstOrDefault(item => item.itemName == itemToEdit.itemName)!.itemCondition = itemToEdit.itemCondition;
         }
     }
 }

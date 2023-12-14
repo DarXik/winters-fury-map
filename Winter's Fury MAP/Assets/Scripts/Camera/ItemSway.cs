@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 public class ItemSway : MonoBehaviour
@@ -41,6 +42,9 @@ public class ItemSway : MonoBehaviour
 
     private void Update()
     {
+        if (FirestartManager.fireWindowOpened || PassTimeManager.passTimeWindowOpened ||
+            AddFuelManager.addFuelWindowOpened || InventoryManager.inventoryOpened) return;
+        
         float mouseX = Input.GetAxis("Mouse X") * swayAmount;
         float mouseY = Input.GetAxis("Mouse Y") * swayAmount;
 
