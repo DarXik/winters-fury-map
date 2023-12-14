@@ -4282,7 +4282,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 840594930}
         m_TargetAssemblyTypeName: Managers.InventoryManager, Assembly-CSharp
-        m_MethodName: SelectFilterType
+        m_MethodName: DisplayFilterUI
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5602,6 +5602,8 @@ MonoBehaviour:
   - {fileID: 1334278188}
   - {fileID: 419867903}
   volume: {fileID: 996497550}
+  toggleInventoryKey: 9
+  togglePassTimeKey: 0
 --- !u!114 &216145165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58989,7 +58991,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 840594930}
         m_TargetAssemblyTypeName: Managers.InventoryManager, Assembly-CSharp
-        m_MethodName: SelectFilterType
+        m_MethodName: DisplayFilterUI
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -59742,7 +59744,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 840594930}
         m_TargetAssemblyTypeName: Managers.InventoryManager, Assembly-CSharp
-        m_MethodName: SelectFilterType
+        m_MethodName: DisplayFilterUI
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60016,7 +60018,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 840594930}
         m_TargetAssemblyTypeName: Managers.InventoryManager, Assembly-CSharp
-        m_MethodName: SelectFilterType
+        m_MethodName: DisplayFilterUI
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

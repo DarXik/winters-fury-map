@@ -3,7 +3,7 @@ using Pinwheel.Jupiter;
 using Player;
 using UnityEngine;
 using Weather;
-using Wind;
+using Weather.Wind;
 
 namespace Managers
 {

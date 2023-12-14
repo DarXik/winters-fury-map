@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using Heat;
+using Inventory;
 using Managers;
 using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Wind;
+using Weather.Wind;
 using Random = UnityEngine.Random;
 
 public class FirestartManager : MonoBehaviour

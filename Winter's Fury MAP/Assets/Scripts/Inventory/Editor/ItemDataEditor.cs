@@ -5,6 +5,9 @@ namespace Inventory.Editor
     [CustomEditor(typeof(ItemData))]
 public class ItemDataEditor : UnityEditor.Editor
 {
+    private SerializedProperty afflictionProp;
+    private SerializedProperty afflictionChanceProp;
+    
     private SerializedProperty calorieDensityProp;
     private SerializedProperty waterIntakeProp;
     private SerializedProperty caloriesIntakeProp;
@@ -27,6 +30,9 @@ public class ItemDataEditor : UnityEditor.Editor
 
     void OnEnable()
     {
+        afflictionProp = serializedObject.FindProperty("affliction");
+        afflictionChanceProp = serializedObject.FindProperty("afflictionChance");
+        
         calorieDensityProp = serializedObject.FindProperty("calorieDensity");
         waterIntakeProp = serializedObject.FindProperty("waterIntake");
         caloriesIntakeProp = serializedObject.FindProperty("caloriesIntake");
@@ -58,6 +64,12 @@ public class ItemDataEditor : UnityEditor.Editor
 
         // Display default properties
         DrawDefaultInspector();
+
+        if (itemData.inflictsAffliction)
+        {
+            EditorGUILayout.PropertyField(afflictionProp);
+            EditorGUILayout.PropertyField(afflictionChanceProp);
+        }
 
         // Display additional fields only if itemType is ItemType.Food
         if (itemData.itemType == ItemType.FoodAndDrink)

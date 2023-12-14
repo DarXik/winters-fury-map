@@ -2,6 +2,7 @@
 using System.Globalization;
 using Heat;
 using Interaction;
+using Inventory;
 using Managers;
 using TMPro;
 using UnityEngine;

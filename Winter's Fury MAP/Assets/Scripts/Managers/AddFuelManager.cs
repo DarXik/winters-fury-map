@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inventory;
 using Player;
 using TMPro;
 using UnityEngine;

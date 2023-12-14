@@ -2,7 +2,7 @@ using System.Collections;
 using Heat;
 using UI;
 using UnityEngine;
-using Wind;
+using Weather.Wind;
 
 namespace Player
 {

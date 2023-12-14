@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Weather;
-using Wind;
+using Weather.Wind;
 using Random = UnityEngine.Random;
 
 namespace Managers
@@ -42,7 +42,7 @@ namespace Managers
             volume.profile.TryGet(out ca);
 
             SetBrightness();
-            SetKeyPreference("inventoryKey", out toggleInventoryKey);
+            //SetKeyPreference("inventoryKey", out toggleInventoryKey);
             SetKeyPreference("passTimeKey", out togglePassTimeKey);
             if(randomizeSpawn) SpawnPlayer();
         }
@@ -86,21 +86,19 @@ namespace Managers
             }
         }
 
-        public KeyCode toggleInventoryKey;
+        public KeyCode toggleInventoryKey = KeyCode.Tab;
         public KeyCode togglePassTimeKey;
 
-        public void SetKeyPreference(string key, out KeyCode desiredKey)
+        private void SetKeyPreference(string key, out KeyCode desiredKey)
         {
             var inventoryKey = PlayerPrefs.GetString(key);
             if (Enum.TryParse(inventoryKey, out KeyCode kc))
             {
                 desiredKey = kc;
-                Debug.Log("Converted correctly");
             }
             else
             {
                 desiredKey = KeyCode.None;
-                Debug.Log("Failed to convert");
             }
         }
         private void CheckUserInput()

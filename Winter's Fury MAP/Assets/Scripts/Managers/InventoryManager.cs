@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Inventory;
 using Player;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Managers
@@ -65,7 +65,6 @@ namespace Managers
         public static bool inventoryOpened;
         private string currentDetailedItem;
         private float currentDetailedCondition;
-        private string currentFilter = "";
 
         public static InventoryManager Instance { get; private set; }
 
@@ -117,7 +116,7 @@ namespace Managers
             {
                 // Open inventory
                 inventoryOpened = true;
-                SelectFilterType("All");
+                DisplayFilterUI("All");
                 
                 if(PlayerInteraction.equippedItem != null) UpdateItemData(PlayerInteraction.equippedItem);
 
@@ -133,7 +132,7 @@ namespace Managers
             items.Add(itemData);
         }
 
-        public void SelectFilterType(string filter)
+        public void DisplayFilterUI(string filter)
         {
             inventoryFilterName.text = filter;
 
@@ -168,8 +167,6 @@ namespace Managers
 
         public void ListItems(string filter = "")
         {
-            currentFilter = filter;
-            
             DeleteInventoryContents();
             DeleteNeedContents();
             HideItemDetail();
@@ -362,7 +359,7 @@ namespace Managers
             {
                 DeleteItem(itemData);
 
-                ListItems();
+                ListItems("FoodAndDrink");
             }
             else
             {
@@ -371,7 +368,7 @@ namespace Managers
                 items[itemIndex].waterIntake = returnedWater;
                 items[itemIndex].caloriesIntake = calories;
 
-                ListItems();
+                ListItems("FoodAndDrink");
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
         }
@@ -384,7 +381,7 @@ namespace Managers
             {
                 DeleteItem(itemData);
 
-                ListItems();
+                ListItems("FoodAndDrink");
             }
             else
             {
@@ -392,7 +389,7 @@ namespace Managers
 
                 items[itemIndex].caloriesIntake = returnedCalories;
 
-                ListItems();
+                ListItems("FoodAndDrink");
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using Managers;
 using Pinwheel.Jupiter;
 using UnityEngine;
-using Wind;
+using Weather.Wind;
 using Random = UnityEngine.Random;
 
 namespace Weather
@@ -63,8 +63,6 @@ namespace Weather
         private IEnumerator SelectWeather(int weatherIndex)
         {
             selectedWeather = weatherData[weatherIndex];
-
-            Debug.Log("Current weather: " + selectedWeather.name);
 
             if (selectedWeather.name.Equals("Blizzard"))
             {

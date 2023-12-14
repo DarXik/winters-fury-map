@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Linq;
 using Managers;
 using UnityEngine;
-using Weather;
 using Random = UnityEngine.Random;
 
-namespace Wind
+namespace Weather.Wind
 {
     [Serializable]
     public struct WindTypes
@@ -77,8 +75,6 @@ namespace Wind
             
             windTimer = 0;
 
-            Debug.Log("Current wind: " + currentWind.name);
-            Debug.Log("Wind direction: " + windDirection);
         }
 
         public Vector3 GetWindDirection()

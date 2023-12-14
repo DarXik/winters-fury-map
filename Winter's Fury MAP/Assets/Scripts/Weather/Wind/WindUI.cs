@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Wind
+namespace Weather.Wind
 {
     public class WindUI : MonoBehaviour
     {
