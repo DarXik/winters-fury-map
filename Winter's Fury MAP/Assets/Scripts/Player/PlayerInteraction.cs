@@ -5,6 +5,7 @@ using Interaction;
 using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -28,7 +29,12 @@ namespace Player
         public static ItemData equippedItem;
         private float interactItemTimeElapsed;
 
-        [Header("HUD Interaction")] public GameObject hud;
+        [Header("HUD Interaction")] 
+        public GameObject hud;
+
+        [Header("HUD Interaction")] 
+        public GameObject leftAction;
+        public GameObject rightAction;
         public TextMeshProUGUI leftActionText, rightActionText;
 
         public static HeatSource interactedCampfire;
@@ -51,6 +57,9 @@ namespace Player
             holdCircle.fillAmount = 0f;
 
             foundItemWindow.SetActive(false);
+            hud.SetActive(false);
+            leftAction.SetActive(false);
+            rightAction.SetActive(false);
         }
 
         private void Update()
@@ -221,6 +230,12 @@ namespace Player
             equippedItem = item;
 
             Instantiate(equippedItem.itemObj, itemHolder, false);
+            
+            // HUD
+            hud.SetActive(true);
+            leftAction.SetActive(true);
+            leftActionText.text = equippedItem.leftActionText;
+            rightActionText.text = equippedItem.rightActionText;
         }
 
         public void UnEquipTool()
@@ -233,6 +248,8 @@ namespace Player
             equippedItem = null;
 
             Destroy(itemHolder.GetChild(0).gameObject);
+            
+            hud.SetActive(false);
         }
 
         private void Light()
@@ -252,6 +269,9 @@ namespace Player
                 Destroy(itemHolder.GetChild(0).gameObject);
                 Instantiate(equippedItem.burningItemObj, itemHolder, false);
                 equippedItem.isLit = true;
+                
+                rightAction.SetActive(true);
+                leftAction.SetActive(false);
             }
         }
 
@@ -274,6 +294,9 @@ namespace Player
                 equippedItem.isLit = false;
                 
                 InventoryManager.Instance.UpdateItemData(equippedItem);
+                
+                rightAction.SetActive(false);
+                leftAction.SetActive(true);
             }
         }
 

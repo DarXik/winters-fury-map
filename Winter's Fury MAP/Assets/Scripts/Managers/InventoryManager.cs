@@ -291,6 +291,7 @@ namespace Managers
 
                                 actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Drink";
                                 actionBtn.onClick.AddListener(() => { TryDrink(item.waterIntake, item); });
+                                if (item.caloriesIntake > 0) actionBtn.onClick.AddListener(() => {TryEat(item.caloriesIntake, item);});
                             }
                             else
                             {
@@ -454,6 +455,11 @@ namespace Managers
 
                     currentWeight -= item.ItemWeight;
 
+                    if (item == PlayerInteraction.equippedItem)
+                    {
+                        PlayerInteraction.Instance.UnEquipTool();
+                    }
+
                     items.RemoveAt(i);
                     totalCount++;
                 }
@@ -467,6 +473,8 @@ namespace Managers
         private void DropAll(string itemName)
         {
             Debug.Log("Dropping all items of: " + itemName);
+            
+            PlayerInteraction.Instance.UnEquipTool();
 
             var playerPos = PlayerController.Instance.GetPlayerPosition();
             float offset = 0f;
@@ -554,6 +562,8 @@ namespace Managers
         public void DeleteItem(ItemData itemToDelete)
         {
             var itemIndex = items.IndexOf(itemToDelete);
+
+            if (itemIndex == -1) return;
 
             items.RemoveAt(itemIndex);
 

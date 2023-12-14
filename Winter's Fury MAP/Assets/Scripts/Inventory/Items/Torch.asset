@@ -35,5 +35,6 @@ MonoBehaviour:
   burnDensity: 0.45
   heatBonus: 2
   interactTime: 1.25
-  interactText: Lighting...
+  leftActionText: Light
+  rightActionText: Extinguish
   isLit: 0

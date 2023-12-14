@@ -78,6 +78,8 @@ public class ItemData : ScriptableObject
     [HideInInspector] public float burnDensity;
     [HideInInspector] public float heatBonus;
     [HideInInspector] public float interactTime;
+    [HideInInspector] public string leftActionText;
+    [HideInInspector] public string rightActionText;
     [HideInInspector] public bool isLit;
     
     public float MaxLightSourceBurnTime => (burnDensity / toolWeight * 100) / 100f;

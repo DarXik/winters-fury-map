@@ -88,7 +88,7 @@ namespace Wind
 
         public bool IsWindHigh()
         {
-            return currentWind.name.Equals("High");
+            return currentWind.name.Equals("High") || currentWind.name.Equals("Blizzard");
         }
 
         private int GetRandomOne()

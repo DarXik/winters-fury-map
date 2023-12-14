@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa5278d11d9502245b5cc174a196561b, type: 3}
-  m_Name: SkyProfile-741169173868421736
+  m_Name: NormalSky
   m_EditorClassIdentifier: 
   skyColor: {r: 0.1238506, g: 0.14360116, b: 0.34576786, a: 1}
   horizonColor: {r: 0.1238506, g: 0.14360116, b: 0.34576786, a: 1}

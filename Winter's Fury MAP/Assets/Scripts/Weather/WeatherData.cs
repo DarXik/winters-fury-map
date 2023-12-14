@@ -10,6 +10,8 @@ namespace Weather
 
         public ParticleSystem particleSystem;
 
+        public bool foggySkyEnabled;
+        
         public float fogDensity;
         public float temperatureImpact;
         public bool cloudsEnabled;
