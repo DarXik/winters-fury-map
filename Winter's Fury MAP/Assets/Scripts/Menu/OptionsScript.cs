@@ -41,8 +41,8 @@ public class OptionsScript : MonoBehaviour
     {
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
-        mainVolumePreference = PlayerPrefs.HasKey("mainVolumePreference") ? PlayerPrefs.GetFloat("mainVolumePreference") : 10f;
-        brigtnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.46f;
+        mainVolumePreference = PlayerPrefs.HasKey("mainVolumePreference") ? PlayerPrefs.GetFloat("mainVolumePreference") : -10f;
+        brigtnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
         Debug.Log("Načteno");
     }
@@ -56,6 +56,7 @@ public class OptionsScript : MonoBehaviour
     {
         mainVolumePreference = volume;
         audioMixer.SetFloat("MyMainVolume", mainVolumePreference);
+        Debug.Log("Vol: " + mainVolumePreference);
     }
 
     public void SetFullScreen(bool isFullscreen) // nefunguje ukazování value v togglu
@@ -78,6 +79,7 @@ public class OptionsScript : MonoBehaviour
         }
 
         Application.targetFrameRate = fpsPreference;
+        Debug.Log("FPS " + fpsPreference);
     }
 
     // public void SetVisibility(float change)
@@ -93,6 +95,7 @@ public class OptionsScript : MonoBehaviour
         brigtnessPreference = lumen;
         sliderTextBrigtness.text = brigtnessPreference.ToString("0.00");
         sliderBrightness.value = brigtnessPreference;
+        Debug.Log("Brig. " + brigtnessPreference);
     }
 
     private void QualitySwitcher()
@@ -108,6 +111,7 @@ public class OptionsScript : MonoBehaviour
 
         QualitySettings.SetQualityLevel(currentQualityIndex);
         qualityOptionsText.text = QualitySettings.names[currentQualityIndex];
+        Debug.Log("Qua. " + currentQualityIndex);
     }
 
     public void RightClick()
@@ -161,6 +165,7 @@ public class OptionsScript : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        Debug.Log("Res. updated");
     }
 
     [Header("Brightness")]

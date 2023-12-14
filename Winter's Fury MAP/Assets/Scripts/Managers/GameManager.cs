@@ -37,6 +37,7 @@ namespace Managers
         {
             cycle.AutoTimeIncrement = autoCycle;
             previousTimeIncrement = cycle.TimeIncrement;
+            volume.profile.TryGet(out ca);
 
             SetBrightness();
             if(randomizeSpawn) SpawnPlayer();
@@ -56,7 +57,6 @@ namespace Managers
 
         private void SetBrightness() // NEFUNGUJE - object ca bez instance
         {
-            volume.profile.TryGet(out ca);
             ca.postExposure.value = PlayerPrefs.GetFloat("brightnessPreference");
             Debug.Log("BrightnessPref načtena");
         }
