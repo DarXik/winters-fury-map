@@ -82,14 +82,6 @@ public class OptionsScript : MonoBehaviour
         Debug.Log("FPS " + fpsPreference);
     }
 
-    // public void SetVisibility(float change)
-    // {
-    //
-    //     Debug.Log("1");
-    // }
-
-
-
     public void SetBrightness(float lumen)
     {
         brigtnessPreference = lumen;
