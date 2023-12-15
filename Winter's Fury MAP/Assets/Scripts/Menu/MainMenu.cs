@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class MainMenu : MonoBehaviour
         ShowUI();
         mainCamera.fieldOfView = baseFOV;
     }
+
+    public Button generalButton;
+    public Button videoButton;
+    public Button audioButton;
+    public Button controlsButton;
 
     private void Update()
     {
@@ -27,6 +33,42 @@ public class MainMenu : MonoBehaviour
                 }
             }
         }
+
+        if (optionsGeneralObj.activeSelf)
+        {
+            generalButton.interactable = false;
+        }
+        else
+        {
+            generalButton.interactable = true;
+        }
+
+        if (optionsVideoObj.activeSelf)
+        {
+            videoButton.interactable = false;
+        }
+        else
+        {
+            videoButton.interactable = true;
+        }
+
+        if (optionsAudioObj.activeSelf)
+        {
+            audioButton.interactable = false;
+        }
+        else
+        {
+            audioButton.interactable = true;
+        }
+
+        if (optionsControlsObj.activeSelf)
+        {
+            controlsButton.interactable = false;
+        }
+        else
+        {
+            controlsButton.interactable = true;
+        }
     }
 
     private void ShowUI()
@@ -38,34 +80,9 @@ public class MainMenu : MonoBehaviour
         fadeIn = true;
     }
 
-    private IEnumerator MoveCamera(Transform target, float targetFOV)
-    {
-        var elapsedTime = 0f;
-
-        var currentPos = mainCamera.transform.position;
-        var currentRotation = mainCamera.transform.rotation;
-        var currentFov = mainCamera.fieldOfView;
-
-        while (elapsedTime < timeToMoveCamera)
-        {
-            mainCamera.transform.position =
-                Vector3.Lerp(currentPos, target.position, elapsedTime / timeToMoveCamera);
-            mainCamera.transform.rotation =
-                Quaternion.Lerp(currentRotation, target.rotation, elapsedTime / timeToMoveCamera);
-            mainCamera.fieldOfView = Mathf.Lerp(currentFov, targetFOV, elapsedTime / timeToMoveCamera);
-            elapsedTime += Time.deltaTime;
-
-            yield return null;
-        }
-
-        mainCamera.transform.position = target.position;
-        mainCamera.transform.rotation = target.rotation;
-        mainCamera.fieldOfView = targetFOV;
-    }
-
     public void OptionsToggle()
     {
-        if (!optionsOpened) // do nstavení
+        if (!optionsOpened) // do nastavení
         {
             startObj.SetActive(false);
             optionsObj.SetActive(true);
@@ -85,13 +102,6 @@ public class MainMenu : MonoBehaviour
 
             StartCoroutine(MoveCamera(start, 55));
         }
-    }
-
-    private static IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2f);
-
-        // startMenuRest.SetActive(true);
     }
 
     public void OptionsGeneral()
@@ -137,9 +147,37 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    private IEnumerator MoveCamera(Transform target, float targetFOV)
+    {
+        var elapsedTime = 0f;
 
-    [Header("Game Objecty")]
-    public GameObject startObj;
+        var currentPos = mainCamera.transform.position;
+        var currentRotation = mainCamera.transform.rotation;
+        var currentFov = mainCamera.fieldOfView;
+
+        while (elapsedTime < timeToMoveCamera)
+        {
+            mainCamera.transform.position =
+                Vector3.Lerp(currentPos, target.position, elapsedTime / timeToMoveCamera);
+            mainCamera.transform.rotation =
+                Quaternion.Lerp(currentRotation, target.rotation, elapsedTime / timeToMoveCamera);
+            mainCamera.fieldOfView = Mathf.Lerp(currentFov, targetFOV, elapsedTime / timeToMoveCamera);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        mainCamera.transform.position = target.position;
+        mainCamera.transform.rotation = target.rotation;
+        mainCamera.fieldOfView = targetFOV;
+    }
+    private static IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2f);
+
+        // startMenuRest.SetActive(true);
+    }
+    [Header("Game Objecty")] public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;
