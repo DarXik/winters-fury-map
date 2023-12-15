@@ -16,7 +16,6 @@ public class OptionsScript : MonoBehaviour
         QualitySwitcher();
         SetFPS(fpsPreference);
         SetBrightness(brigtnessPreference);
-        SetMainVolume(mainVolumePreference);
         SetFullScreen(fullscreenPreference);
     }
 
@@ -25,7 +24,7 @@ public class OptionsScript : MonoBehaviour
         // controlsScript.SavePreferences();
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
-        PlayerPrefs.SetFloat("mainVolumePreference", mainVolumePreference);
+
         PlayerPrefs.SetFloat("brightnessPreference", brigtnessPreference);
         PlayerPrefs.SetInt("fullscreenPreference", fullscreenPreference ? 1 : 0);
         Debug.Log("Uloženo");
@@ -36,7 +35,7 @@ public class OptionsScript : MonoBehaviour
         // controlsScript.LoadPreferences();
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
-        mainVolumePreference = PlayerPrefs.HasKey("mainVolumePreference") ? PlayerPrefs.GetFloat("mainVolumePreference") : -10f;
+
         brigtnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
         Debug.Log("Načteno");
@@ -45,13 +44,6 @@ public class OptionsScript : MonoBehaviour
     public void DefaultOptions()
     {
         PlayerPrefs.DeleteAll();
-    }
-
-    public void SetMainVolume(float volume)
-    {
-        mainVolumePreference = volume;
-        audioMixer.SetFloat("MyMainVolume", mainVolumePreference);
-        Debug.Log("Vol: " + mainVolumePreference);
     }
 
     public void SetFullScreen(bool isFullscreen) // nefunguje ukazování value v togglu
@@ -168,9 +160,7 @@ public class OptionsScript : MonoBehaviour
 
     [Header("Pro ukládání")] private int fpsPreference;
     private int currentQualityIndex;
-    private float mainVolumePreference;
     private float brigtnessPreference;
     private bool fullscreenPreference;
 
-    [Header("Zvuk")] public AudioMixer audioMixer;
 }
