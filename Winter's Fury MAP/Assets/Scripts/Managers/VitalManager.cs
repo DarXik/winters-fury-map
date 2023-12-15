@@ -202,7 +202,6 @@ namespace Managers
                 fatigueChevrons.transform.GetChild(i).gameObject.SetActive(i < fatigueChevronsToReveal);
             }
         }
-
         public float AddHunger(float caloriesIntake)
         {
             float totalCalories = currentCalories + caloriesIntake;

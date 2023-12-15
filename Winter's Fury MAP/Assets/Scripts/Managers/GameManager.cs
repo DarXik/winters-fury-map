@@ -42,7 +42,7 @@ namespace Managers
             volume.profile.TryGet(out ca);
 
             SetBrightness();
-            //SetKeyPreference("inventoryKey", out toggleInventoryKey);
+            SetKeyPreference("inventoryKey", out toggleInventoryKey);
             SetKeyPreference("passTimeKey", out togglePassTimeKey);
             if(randomizeSpawn) SpawnPlayer();
         }

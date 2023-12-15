@@ -5,32 +5,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HoverSlider : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class HoverSlider : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Animator animator;
-    public TextMeshProUGUI sliderTextFPS;
+    private Animator animator;
+    public GameObject sliderTextFPS;
     public Slider sliderFPS;
+
+    private void Awake()
+    {
+        animator = sliderTextFPS.GetComponent<Animator>();
+    }
 
     public void Start()
     {
         ToggleVisibility(false);
-        animator = GetComponent<Animator>();
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        ToggleVisibility(true);
-
-        Debug.Log("down");
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        ToggleVisibility(false);
-
-        Debug.Log("up");
-
-        // animator.SetBool("smallDur",false);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -39,7 +27,6 @@ public class HoverSlider : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
         Debug.Log("enter");
         // animator.Play("anim1");
-        animator.SetTrigger("HoverOver");
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -53,6 +40,6 @@ public class HoverSlider : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 
     public void ToggleVisibility(bool visibility)
     {
-        sliderTextFPS.gameObject.SetActive(visibility);
+        sliderTextFPS.SetActive(visibility);
     }
 }

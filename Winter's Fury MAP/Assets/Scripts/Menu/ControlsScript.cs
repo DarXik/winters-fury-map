@@ -69,32 +69,30 @@ public class ControlsScript : MonoBehaviour
         SavePreferences();
     }
 
-    public void PassTimeKey()
+    public void PassTimeKeyHandler()
     {
         StartCoroutine(PassTimeCoroutine(true));
     }
 
     private IEnumerator InventoryKeyCoroutine(bool keyPressed)
     {
-        while (true)
+        while (keyPressed)
         {
-            if (keyPressed)
+            if (Input.anyKeyDown)
             {
-                if (Input.anyKeyDown)
+                foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
                 {
-                    foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
+                    if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
                     {
-                        if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
-                        {
-                            Debug.Log("Key pressed: " + kc.ToString());
-                            inventoryKeyPreference = kc.ToString();
-                            keyPressed = false;
-                            inventoryKeyText.text = inventoryKeyPreference;
-                        }
+                        Debug.Log("Key pressed: " + kc.ToString());
+                        inventoryKeyPreference = kc.ToString();
+                        keyPressed = false;
+                        inventoryKeyText.text = inventoryKeyPreference;
                     }
                 }
             }
 
+            Debug.Log("jedu");
             yield return null;
         }
     }
@@ -102,24 +100,22 @@ public class ControlsScript : MonoBehaviour
 
     private IEnumerator PassTimeCoroutine(bool keyPressed)
     {
-        while (true)
+        while (keyPressed)
         {
-            if (keyPressed)
+            if (Input.anyKeyDown)
             {
-                if (Input.anyKeyDown)
+                foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
                 {
-                    foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
+                    if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
                     {
-                        if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
-                        {
-                            Debug.Log("Key pressed: " + kc.ToString());
-                            passTimeKeyPreference = kc.ToString();
-                            keyPressed = false;
-                            passTimeKeyText.text = passTimeKeyPreference;
-                        }
+                        Debug.Log("Key pressed: " + kc.ToString());
+                        passTimeKeyPreference = kc.ToString();
+                        keyPressed = false;
+                        passTimeKeyText.text = passTimeKeyPreference;
                     }
                 }
             }
+
 
             yield return null;
         }
