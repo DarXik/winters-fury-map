@@ -91,7 +91,7 @@ public class VitalUI : MonoBehaviour
     private void GetPercents()
     {
         healthPercent = VitalManager.Instance.HealthPercent;
-        temperaturePercent = VitalManager.Instance.TemperaturePercent;
+        temperaturePercent = VitalManager.Instance.WarmthPercent;
         fatiguePercent = VitalManager.Instance.FatiguePercent;
         thirstPercent = VitalManager.Instance.ThirstPercent;
         hungerPercent = VitalManager.Instance.HungerPercent;

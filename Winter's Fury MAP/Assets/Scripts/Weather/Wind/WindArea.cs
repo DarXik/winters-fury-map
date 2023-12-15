@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Managers;
+using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,7 +19,7 @@ namespace Weather.Wind
     public class WindArea : MonoBehaviour
     {
         public WindTypes[] windTypes;
-        public static WindTypes currentWind;
+        private WindTypes currentWind;
         private Vector3 windDirection;
 
         public float windChangeMin, windChangeMax;
@@ -75,6 +76,16 @@ namespace Weather.Wind
             
             windTimer = 0;
 
+        }
+
+        public float GetWindChill()
+        {
+            if (PlayerController.isWindProtected)
+            {
+                return 0;
+            }
+
+            return currentWind.windChill;
         }
 
         public Vector3 GetWindDirection()

@@ -26,7 +26,9 @@ namespace Managers
         private float previousTimeIncrement, timeIncrement;
         public Volume volume;
         private ColorAdjustments ca;
-        // OptionsScript optionsScript = new OptionsScript();
+        
+        public KeyCode toggleInventoryKey;
+        public KeyCode togglePassTimeKey;
         
         public static GameManager Instance;
 
@@ -85,9 +87,6 @@ namespace Managers
                 previousTimeIncrement = currentIncrement;
             }
         }
-
-        public KeyCode toggleInventoryKey = KeyCode.Tab;
-        public KeyCode togglePassTimeKey;
 
         private void SetKeyPreference(string key, out KeyCode desiredKey)
         {

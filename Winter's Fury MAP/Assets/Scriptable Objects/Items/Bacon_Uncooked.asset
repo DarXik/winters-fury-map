@@ -20,7 +20,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 31b65225760184f4098ded879c68a02a, type: 3}
   inflictsAffliction: 1
   affliction: {fileID: 11400000, guid: 959e7f73d7453ac45adc49aadcbd2f5f, type: 2}
-  afflictionChance: 70
+  afflictionChance: 100
   calorieDensity: 1000
   waterIntake: 0
   caloriesIntake: 150

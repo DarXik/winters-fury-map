@@ -13,8 +13,21 @@ namespace Managers
 
         private float timeOfDay;
 
-        public static float ambientTemperature;
-        public static float indoorTemperature;
+        public float AmbientTemperature { get; private set; }
+        public static float IndoorTemperature { get; set; }
+        public static float HeatFromFire
+        {
+            private get;
+            set;
+        }
+        public float FeelsLike => AmbientTemperature - WindArea.Instance.GetWindChill();
+        
+        public static TemperatureManager Instance { get; private set; }
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Update()
         {
@@ -29,12 +42,10 @@ namespace Managers
             float nextTemp = hourlyTemperatures[nextHour];
 
             float normalizedTime = timeOfDay - currentHour;
-            ambientTemperature = Mathf.Lerp(currentTemp, nextTemp, normalizedTime);
-
-            if (PlayerInteraction.equippedItem != null && PlayerInteraction.equippedItem.isLit) ambientTemperature += PlayerInteraction.equippedItem.heatBonus;
-            ambientTemperature -= WindArea.currentWind.windChill;
-            ambientTemperature -= WeatherSystem.selectedWeather.temperatureImpact;
-            ambientTemperature += indoorTemperature;
+            AmbientTemperature = Mathf.Lerp(currentTemp, nextTemp, normalizedTime);
+            AmbientTemperature -= WeatherSystem.selectedWeather.temperatureImpact;
+            AmbientTemperature += IndoorTemperature;
+            AmbientTemperature += HeatFromFire;
         }
     }
 }

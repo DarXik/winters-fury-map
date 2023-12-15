@@ -128,7 +128,7 @@ namespace Managers
                     bedInfo.SetActive(true);
                     calorieStore.text = Mathf.RoundToInt(VitalManager.Instance.GetCurrentCalories()).ToString();
                     caloriesBurned.text = (VitalManager.Instance.sleepingBurnRate * hoursToPass).ToString();
-                    feelsLike.text = $"{Mathf.RoundToInt(VitalManager.Instance.feelsLikeTemp)}°C";
+                    feelsLike.text = $"{Mathf.RoundToInt(TemperatureManager.Instance.FeelsLike)}°C";
                     bedWarmth.text = $"+{bedWarmthBonus}°C";
                     break;
                 case PassTypes.PassTime:

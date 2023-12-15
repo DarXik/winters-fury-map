@@ -27,7 +27,8 @@ namespace Player
         public float runningSpeed;
         public float crouchSpeed;
         public float slopeSpeed;
-        public float againstWindPenalty; 
+        public float againstWindPenalty;
+        public static bool isWindProtected;
         private float movementSpeed;
         private bool isRunning;
 
@@ -100,10 +101,12 @@ namespace Player
             if (Physics.Raycast(transform.position, -windDir, 3f))
             {
                 WindUI.Instance.DisplayWindIcon();
+                isWindProtected = true;
             }
             else
             {
                 WindUI.Instance.HideWindIcon();
+                isWindProtected = false;
                 
                 if (dotProduct >= 0.775f && dotProduct <= 1f && WindArea.Instance.IsWindHigh())
                 {

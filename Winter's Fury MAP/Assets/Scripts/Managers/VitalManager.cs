@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using Inventory;
 using Player;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -9,7 +11,6 @@ namespace Managers
     {
         [FormerlySerializedAs("tempChevrons")] [Header("UI References")]
         public GameObject reduceTempChevrons;
-
         public GameObject increaseTempChevrons;
         public GameObject fatigueChevrons;
         public GameObject thirstChevrons;
@@ -24,6 +25,7 @@ namespace Managers
         public float hungerDrainRate;
         public float burnDamage;
         private float currentHealth;
+        public float CurrentHealth => currentHealth;
 
         [Header("Temperature")] public float maxTempBar;
 
@@ -31,8 +33,7 @@ namespace Managers
         public float[] reduceThresholds = new float[3];
 
         public float[] increaseThresholds = new float[3];
-        [HideInInspector] public float tempFromFire;
-        [HideInInspector] public float feelsLikeTemp;
+        private float feelsLikeTemp;
         private float currentTemp;
         private int reduceTempChevronsToReveal, increaseTempChevronsToReveal;
 
@@ -58,7 +59,10 @@ namespace Managers
         public float FatiguePercent => currentFatigue / maxFatigueBar;
         public float HungerPercent => currentCalories / maxCalories;
         public float ThirstPercent => currentThirst / maxThirst;
-        public float TemperaturePercent => currentTemp / maxTempBar;
+        public float WarmthPercent => currentTemp / maxTempBar;
+        
+        // Afflictions
+        private List<Affliction> currentAfflictions;
 
         public static VitalManager Instance { get; private set; }
 
@@ -85,7 +89,7 @@ namespace Managers
 
         private void Update()
         {
-            feelsLikeTemp = TemperatureManager.ambientTemperature + tempFromFire;
+            feelsLikeTemp = TemperatureManager.Instance.FeelsLike;
             currentActivity = PlayerController.Instance.currentActivity;
 
             ReduceHunger();
@@ -140,7 +144,7 @@ namespace Managers
 
         private void ReduceHealth()
         {
-            if (TemperaturePercent <= 0)
+            if (WarmthPercent <= 0)
             {
                 currentHealth -= warmthDrainRate * (Time.deltaTime * timeIncrement);
             }
@@ -375,6 +379,11 @@ namespace Managers
             {
                 reduceTempChevrons.transform.GetChild(i).gameObject.SetActive(i < reduceTempChevronsToReveal);
             }
+        }
+
+        public void InflictAffliction(Affliction affliction)
+        {
+            Debug.Log("Inflicted affliction: " + affliction.afflictionName);
         }
 
         private void HideReduceTempChevrons()

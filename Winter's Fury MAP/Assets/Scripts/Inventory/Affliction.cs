@@ -13,6 +13,7 @@ namespace Inventory
     {
         public string afflictionName;
         [TextArea] public string afflictionDescription;
+        public Sprite afflictionIcon;
         public AfflictionType afflictionType;
         [Header("Recovery Times")]
         [Range(1f, 24f)] public float recoveryTimeTreated;

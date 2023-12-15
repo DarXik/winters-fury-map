@@ -14,7 +14,7 @@ namespace Heat
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                TemperatureManager.indoorTemperature = indoorTemperatureBonus;
+                TemperatureManager.IndoorTemperature = indoorTemperatureBonus;
                 indoors = true;
             }
         }
@@ -23,7 +23,7 @@ namespace Heat
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                TemperatureManager.indoorTemperature = indoorTemperatureBonus;
+                TemperatureManager.IndoorTemperature = indoorTemperatureBonus;
                 indoors = true;
             }
         }
@@ -32,7 +32,7 @@ namespace Heat
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                TemperatureManager.indoorTemperature = 0;
+                TemperatureManager.IndoorTemperature = 0;
                 indoors = false;
             }
         }

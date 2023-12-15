@@ -5,8 +5,10 @@ using System.Linq;
 using Inventory;
 using Player;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -27,8 +29,6 @@ namespace Managers
         [SerializeField] private Slider weightBar;
         [SerializeField] private Image weightBarFill;
         [SerializeField] private TextMeshProUGUI weightValues;
-        [SerializeField] private GameObject backpack, crafting;
-        [SerializeField] private Image backpackBtn, craftingBtn;
 
         [Header("Inventory Filter")] [SerializeField]
         private TextMeshProUGUI inventoryFilterName;
@@ -81,8 +81,6 @@ namespace Managers
             HideItemDetail();
             dropItemWindow.SetActive(false);
             actionButtonObj.SetActive(false);
-            backpack.SetActive(true);
-            crafting.SetActive(false);
 
             weightBar.maxValue = maxWeight;
             weightBar.value = 0;
@@ -117,6 +115,7 @@ namespace Managers
                 // Open inventory
                 inventoryOpened = true;
                 DisplayFilterUI("All");
+                InventoryUI.Instance.UpdateConditionUI();
                 
                 if(PlayerInteraction.equippedItem != null) UpdateItemData(PlayerInteraction.equippedItem);
 
@@ -377,6 +376,16 @@ namespace Managers
         {
             var returnedCalories = VitalManager.Instance.AddHunger(caloriesIntake);
 
+            if (itemData.inflictsAffliction)
+            {
+                var chance = Mathf.Round(Random.value * 100);
+
+                if (chance <= itemData.afflictionChance)
+                {
+                    VitalManager.Instance.InflictAffliction(itemData.affliction);
+                }
+            }
+
             if (returnedCalories == 0)
             {
                 DeleteItem(itemData);
@@ -545,24 +554,6 @@ namespace Managers
 
                 item.itemCondition -= (item.conditionPerDay / 24f) * (Time.deltaTime * timeIncrement);
             }
-        }
-
-        public void DisplayBackpack()
-        {
-            backpack.SetActive(true);
-            crafting.SetActive(false);
-
-            backpackBtn.color = new Color32(255, 255, 255, 255);
-            craftingBtn.color = new Color32(255, 255, 255, 51);
-        }
-
-        public void DisplayCrafting()
-        {
-            backpack.SetActive(false);
-            crafting.SetActive(true);
-
-            backpackBtn.color = new Color32(255, 255, 255, 51);
-            craftingBtn.color = new Color32(255, 255, 255, 255);
         }
 
         public void UpdateWeightValues()
