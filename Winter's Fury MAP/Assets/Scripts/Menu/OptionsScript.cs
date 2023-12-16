@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class OptionsScript : MonoBehaviour
 {
-    // public ControlsScript controlsScript;
+    private ControlsScript cs;
 
     public void Start()
     {
+        cs = gameObject.AddComponent<ControlsScript>();
         LoadPreferences();
         GetResolutions();
         QualitySwitcher();
@@ -19,23 +20,40 @@ public class OptionsScript : MonoBehaviour
         SetFullScreen(fullscreenPreference);
     }
 
+    public void Update()
+    {
+        switch (currentQualityIndex)
+        {
+            case 2:
+                btnRight.interactable = false;
+                btnLeft.interactable = true;
+                break;
+            case 1:
+                btnRight.interactable = true;
+                btnLeft.interactable = true;
+                break;
+            case 0:
+                btnRight.interactable = true;
+                btnLeft.interactable = false;
+                break;
+        }
+    }
+
     public void SavePreferences()
     {
-        // controlsScript.SavePreferences();
+        cs.SavePreferences();
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
-
         PlayerPrefs.SetFloat("brightnessPreference", brigtnessPreference);
         PlayerPrefs.SetInt("fullscreenPreference", fullscreenPreference ? 1 : 0);
         Debug.Log("Uloženo");
     }
 
-    public void LoadPreferences()
+    private void LoadPreferences()
     {
-        // controlsScript.LoadPreferences();
+        cs.LoadPreferences();
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
-
         brigtnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
         Debug.Log("Načteno");
@@ -46,7 +64,7 @@ public class OptionsScript : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
-    public void SetFullScreen(bool isFullscreen) // nefunguje ukazování value v togglu
+    public void SetFullScreen(bool isFullscreen)
     {
         fullscreenPreference = isFullscreen;
         Screen.fullScreen = isFullscreen;
@@ -149,18 +167,23 @@ public class OptionsScript : MonoBehaviour
 
     [Header("Brightness")] public TextMeshProUGUI sliderTextBrigtness;
     public Slider sliderBrightness;
+
     [Header("FPS")] public TextMeshProUGUI sliderTextFPS;
     public Slider sliderFPS;
+
     [Header("Kvalita")] public TextMeshProUGUI qualityOptionsText;
     private bool clickedRight;
     private bool clickedLeft;
+    public Button btnRight;
+    public Button btnLeft;
+
     [Header("Rozlišení")] private Resolution[] resolutions;
     public TMP_Dropdown resolutionDropdown;
+
     [Header("Fullscreen")] public Toggle toggleFullscreen;
 
     [Header("Pro ukládání")] private int fpsPreference;
     private int currentQualityIndex;
     private float brigtnessPreference;
     private bool fullscreenPreference;
-
 }

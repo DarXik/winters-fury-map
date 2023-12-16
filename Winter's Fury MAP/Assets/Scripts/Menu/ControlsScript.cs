@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ControlsScript : MonoBehaviour
 {
-    // private Dictionary<string, KeyCode> keyCodes = new();
     private string inventoryKeyPreference;
     private string passTimeKeyPreference;
 
@@ -18,14 +17,8 @@ public class ControlsScript : MonoBehaviour
     public Button passTimeKeyButton;
     public TMP_Text passTimeKeyText;
 
-    public void Start()
-    {
-        LoadPreferences();
-    }
-
     public void SavePreferences()
     {
-        // keyCodes["inventoryKey"].ToString()
         PlayerPrefs.SetString("inventoryKey", inventoryKeyPreference);
         PlayerPrefs.SetString("passTimeKey", passTimeKeyPreference);
         Debug.Log("Keys uloženo");
@@ -33,21 +26,6 @@ public class ControlsScript : MonoBehaviour
 
     public void LoadPreferences()
     {
-        // keyCodes["inventoryKey"] = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString(Enum.TryParse("inventoryKey", out KeyCode )) : KeyCode.Tab;
-
-        // if (PlayerPrefs.HasKey("inventoryKey"))
-        // {
-        //     inventoryKeyPreference = PlayerPrefs.GetString("inventoryKey");
-        //     // if (Enum.TryParse(inventoryKeyPreference, out KeyCode keycode))
-        //     // {
-        //     //     keyCodes["inventoryKey"] = keycode;
-        //     // }
-        // }
-        // else
-        // {
-        //     inventoryKeyPreference = "Tab";
-        // }
-
         inventoryKeyPreference = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString("inventoryKey") : "Tab";
         inventoryKeyText.text = inventoryKeyPreference;
 
@@ -59,22 +37,20 @@ public class ControlsScript : MonoBehaviour
 
     public void InventoryKeyHandler()
     {
-        // inventoryKeyPressed = true;
-        // inventoryKeyPreference = preferredKey;
-        // inventoryKeyText.text = inventoryKeyPreference;
-        // Debug.Log("Inv. key: " + inventoryKeyText.text);
-        // StartCoroutine(KeyHandlerCoroutine(inventoryKeyText, key => inventoryKeyPreference = key, true));
-
-        StartCoroutine(InventoryKeyCoroutine(true));
-        SavePreferences();
+        // lambda expression - definuje akci, která se stane, pokud je key pressed
+        // bere string key a nastaví pref na key a text na key
+        StartCoroutine(HandleKeyCoroutine(true, (key) => { inventoryKeyPreference = key; inventoryKeyText.text = key; }));
     }
 
     public void PassTimeKeyHandler()
     {
-        StartCoroutine(PassTimeCoroutine(true));
+        StartCoroutine(HandleKeyCoroutine(true, (key) => { passTimeKeyPreference = key; passTimeKeyText.text = key; }));
     }
 
-    private IEnumerator InventoryKeyCoroutine(bool keyPressed)
+    // delegát Action - co se stane při stisku tlačítka
+    // Action<string> tak dovoluje passnout vlastní metodu (lambdu)
+    // Action je predefined method, bere string a je void - do ní je passnuta v handleKeyAction lambda
+    private IEnumerator HandleKeyCoroutine(bool keyPressed, Action<string> handleKeyAction)
     {
         while (keyPressed)
         {
@@ -82,40 +58,14 @@ public class ControlsScript : MonoBehaviour
             {
                 foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
                 {
-                    if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
+                    if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1) && !Input.GetMouseButtonDown(2))
                     {
-                        Debug.Log("Key pressed: " + kc.ToString());
-                        inventoryKeyPreference = kc.ToString();
+                        Debug.Log("Key pressed: " + kc);
+                        handleKeyAction.Invoke(kc.ToString()); // invokne daného delegáta, spustí tak to, co je v lambdě
                         keyPressed = false;
-                        inventoryKeyText.text = inventoryKeyPreference;
                     }
                 }
             }
-
-            Debug.Log("jedu");
-            yield return null;
-        }
-    }
-
-
-    private IEnumerator PassTimeCoroutine(bool keyPressed)
-    {
-        while (keyPressed)
-        {
-            if (Input.anyKeyDown)
-            {
-                foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
-                {
-                    if (Input.GetKeyDown(kc) && !Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
-                    {
-                        Debug.Log("Key pressed: " + kc.ToString());
-                        passTimeKeyPreference = kc.ToString();
-                        keyPressed = false;
-                        passTimeKeyText.text = passTimeKeyPreference;
-                    }
-                }
-            }
-
 
             yield return null;
         }
