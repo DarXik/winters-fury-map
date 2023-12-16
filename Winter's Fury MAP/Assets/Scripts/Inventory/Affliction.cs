@@ -19,5 +19,19 @@ namespace Inventory
         [Range(1f, 24f)] public float recoveryTimeTreated;
         [Range(1f, 24f)] public float recoveryTimeUntreatedMin;
         [Range(1f, 24f)] public float recoveryTimeUntreatedMax;
+        private float recoveryTimeUntreated;
+
+        public float RecoveryTimeUntreated
+        {
+            get
+            {
+                if (recoveryTimeUntreated == 0f)
+                {
+                    recoveryTimeUntreated = Random.Range(recoveryTimeUntreatedMin, recoveryTimeUntreatedMax);
+                }
+                
+                return recoveryTimeUntreated;
+            }
+        }
     }
 }

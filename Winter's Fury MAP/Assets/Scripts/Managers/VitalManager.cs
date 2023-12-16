@@ -62,7 +62,7 @@ namespace Managers
         public float WarmthPercent => currentTemp / maxTempBar;
         
         // Afflictions
-        private List<Affliction> currentAfflictions;
+        private List<Affliction> currentAfflictions = new();
 
         public static VitalManager Instance { get; private set; }
 
@@ -383,7 +383,9 @@ namespace Managers
 
         public void InflictAffliction(Affliction affliction)
         {
-            Debug.Log("Inflicted affliction: " + affliction.afflictionName);
+            Affliction afflictionCopy = Instantiate(affliction);
+
+            currentAfflictions.Add(afflictionCopy);
         }
 
         private void HideReduceTempChevrons()
@@ -409,6 +411,11 @@ namespace Managers
         public float GetCurrentCalories()
         {
             return currentCalories;
+        }
+
+        public List<Affliction> GetCurrentAfflictions()
+        {
+            return currentAfflictions;
         }
     }
 }
