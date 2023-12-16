@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Inventory;
 using Player;
+using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -125,6 +126,13 @@ namespace Managers
             if (currentCalories > 0 && currentFatigue > 0 && currentThirst > 0 && currentTemp > 0)
             {
                 RecoverHealth();   
+            }
+
+            // check afflictions
+            if (currentAfflictions.Count > 0)
+            {
+                CheckAfflictions();
+                ReduceAfflictionDuration();
             }
         }
 
@@ -381,11 +389,53 @@ namespace Managers
             }
         }
 
+        private void ReduceAfflictionDuration()
+        {
+            for (var i = currentAfflictions.Count - 1; i >= 0; i--)
+            {
+                var affliction = currentAfflictions[i];
+                if (affliction.currentDuration <= 0)
+                {
+                    currentAfflictions.Remove(affliction);
+
+                    continue;
+                }
+
+                affliction.currentDuration -= 1f * (Time.deltaTime * timeIncrement);
+            }
+        }
+
+        private void CheckAfflictions()
+        {
+            foreach (var affliction in currentAfflictions)
+            {
+                switch (affliction.afflictionType)
+                {
+                    case AfflictionType.FoodPoisoning:
+                        FoodPoisoning();
+                        break;
+                }
+            }
+        }
+
         public void InflictAffliction(Affliction affliction)
         {
             Affliction afflictionCopy = Instantiate(affliction);
-
+            afflictionCopy.totalDuration = Mathf.Round(Random.Range(affliction.untreatedMin, affliction.untreatedMax));
+            afflictionCopy.currentDuration = afflictionCopy.totalDuration;
+            
             currentAfflictions.Add(afflictionCopy);
+        }
+
+        private void FoodPoisoning()
+        {
+            // 10% of condition per hour if not below 15%
+            if (currentHealth > 15f)
+            {
+                currentHealth -= 10f * (Time.deltaTime * timeIncrement);
+            }
+            // 30% of fatigue per hour
+            currentFatigue -= 30f * (Time.deltaTime * timeIncrement);
         }
 
         private void HideReduceTempChevrons()

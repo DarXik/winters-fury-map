@@ -17,6 +17,9 @@ MonoBehaviour:
     it or you will gradually weaken and possibly die.
   afflictionIcon: {fileID: 21300000, guid: d55f5217edf4ed949b18f7210dc4092e, type: 3}
   afflictionType: 0
-  recoveryTimeTreated: 10
-  recoveryTimeUntreatedMin: 12
-  recoveryTimeUntreatedMax: 16
+  treated: 10
+  untreatedMin: 12
+  untreatedMax: 24
+  duration: 0
+  treatment: 0
+  treatmentAmount: 2

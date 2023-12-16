@@ -2,6 +2,11 @@
 
 namespace Inventory
 {
+    public enum Treatments
+    {
+        Antibiotics
+    }
+    
     public enum AfflictionType
     {
         FoodPoisoning
@@ -15,23 +20,16 @@ namespace Inventory
         [TextArea] public string afflictionDescription;
         public Sprite afflictionIcon;
         public AfflictionType afflictionType;
-        [Header("Recovery Times")]
-        [Range(1f, 24f)] public float recoveryTimeTreated;
-        [Range(1f, 24f)] public float recoveryTimeUntreatedMin;
-        [Range(1f, 24f)] public float recoveryTimeUntreatedMax;
-        private float recoveryTimeUntreated;
+        
+        [Header("Duration")] 
+        public float treated;
+        public float untreatedMin;
+        public float untreatedMax;
+        [HideInInspector] public float currentDuration;
+        [HideInInspector] public float totalDuration;
 
-        public float RecoveryTimeUntreated
-        {
-            get
-            {
-                if (recoveryTimeUntreated == 0f)
-                {
-                    recoveryTimeUntreated = Random.Range(recoveryTimeUntreatedMin, recoveryTimeUntreatedMax);
-                }
-                
-                return recoveryTimeUntreated;
-            }
-        }
+        [Header("Treatment")] 
+        public Treatments treatment;
+        public int treatmentAmount;
     }
 }

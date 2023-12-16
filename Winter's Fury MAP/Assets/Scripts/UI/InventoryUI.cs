@@ -14,11 +14,12 @@ namespace UI
         public GameObject crafting;
         public GameObject condition;
         public GameObject afflictionItem;
+        public GameObject noAfflictionItem;
         public Transform afflictionContainer;
         public Image backpackBtn, craftingBtn, conditionBtn;
         public Color32 activeColor, inactiveColor;
 
-        [Header("Condition")] 
+        [Header("Status")] 
         public TextMeshProUGUI conditionText;
         public Slider warmthBar;
         public Slider fatigueBar;
@@ -27,8 +28,15 @@ namespace UI
         public TextMeshProUGUI feelsLikeText, airTempText, windChillText;
         public Color32 lowTempColor, normalTempColor;
 
+        [Header("Treatment")] 
+        public GameObject treatmentObj;
+        public TextMeshProUGUI afflictionDesc;
+        public TextMeshProUGUI recoveryTimeText;
+
         [Header("Danger Icons")] 
         public GameObject stomachDanger;
+
+        private bool noAffliction;
         
         public static InventoryUI Instance { get; private set; }
 
@@ -42,6 +50,10 @@ namespace UI
             DisplayBackpack();
             
             stomachDanger.SetActive(false);
+            treatmentObj.SetActive(false);
+
+            noAffliction = true;
+            Instantiate(noAfflictionItem, afflictionContainer);
         }
 
         public void DisplayBackpack()
@@ -111,6 +123,7 @@ namespace UI
             if (afflictions.Count > 0)
             {
                 DeleteAffContainerContent();
+                noAffliction = false;
                 
                 foreach (var affliction in afflictions)
                 {
@@ -126,6 +139,13 @@ namespace UI
                     }
                 }
             }
+            else if (afflictions.Count == 0 && !noAffliction)
+            {
+                DeleteAffContainerContent();
+                noAffliction = true;
+
+                Instantiate(noAfflictionItem, afflictionContainer);
+            }
         }
 
         private void DeleteAffContainerContent()
@@ -134,6 +154,8 @@ namespace UI
             {
                 Destroy(aff.gameObject);
             }
+            
+            stomachDanger.SetActive(false);
         }
     }
 }
