@@ -427,6 +427,22 @@ namespace Managers
             currentAfflictions.Add(afflictionCopy);
         }
 
+        public void TreatAffliction(ItemData itemData, int itemCount, Affliction afflictionToTreat)
+        {
+            int index = currentAfflictions.IndexOf(afflictionToTreat);
+
+            currentAfflictions[index].totalDuration = currentAfflictions[index].treated;
+            currentAfflictions[index].currentDuration = currentAfflictions[index].totalDuration;
+            currentAfflictions[index].wasTreated = true;
+            
+            InventoryUI.Instance.HideTreatmentChooser();
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                InventoryManager.Instance.DeleteItemByName(itemData.itemName);
+            }
+        }
+
         private void FoodPoisoning()
         {
             // 10% of condition per hour if not below 15%

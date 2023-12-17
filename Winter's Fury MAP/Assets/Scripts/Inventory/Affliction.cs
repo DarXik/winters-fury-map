@@ -2,11 +2,6 @@
 
 namespace Inventory
 {
-    public enum Treatments
-    {
-        Antibiotics
-    }
-    
     public enum AfflictionType
     {
         FoodPoisoning
@@ -29,7 +24,8 @@ namespace Inventory
         [HideInInspector] public float totalDuration;
 
         [Header("Treatment")] 
-        public Treatments treatment;
+        public ItemData treatment;
         public int treatmentAmount;
+        [HideInInspector] public bool wasTreated;
     }
 }

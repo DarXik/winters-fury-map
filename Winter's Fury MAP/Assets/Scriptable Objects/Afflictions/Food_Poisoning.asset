@@ -20,6 +20,7 @@ MonoBehaviour:
   treated: 10
   untreatedMin: 12
   untreatedMax: 24
-  duration: 0
-  treatment: 0
+  currentDuration: 0
+  totalDuration: 0
+  treatment: {fileID: 11400000, guid: 2b6db52c979e51e4eb348b7ccd23e546, type: 2}
   treatmentAmount: 2

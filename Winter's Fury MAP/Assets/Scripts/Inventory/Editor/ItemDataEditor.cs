@@ -28,6 +28,8 @@ public class ItemDataEditor : UnityEditor.Editor
     private SerializedProperty interactTime;
     private SerializedProperty leftAction, rightAction;
 
+    private SerializedProperty unitWeightProp;
+
     void OnEnable()
     {
         afflictionProp = serializedObject.FindProperty("affliction");
@@ -54,6 +56,8 @@ public class ItemDataEditor : UnityEditor.Editor
         interactTime = serializedObject.FindProperty("interactTime");
         leftAction = serializedObject.FindProperty("leftActionText");
         rightAction = serializedObject.FindProperty("rightActionText");
+
+        unitWeightProp = serializedObject.FindProperty("unitWeight");
     }
 
     public override void OnInspectorGUI()
@@ -102,6 +106,10 @@ public class ItemDataEditor : UnityEditor.Editor
                 EditorGUILayout.PropertyField(leftAction);
                 EditorGUILayout.PropertyField(rightAction);
             }
+        }
+        else if (itemData.itemType == ItemType.FirstAid)
+        {
+            EditorGUILayout.PropertyField(unitWeightProp);
         }
 
         serializedObject.ApplyModifiedProperties();

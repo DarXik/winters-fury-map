@@ -78,6 +78,7 @@ namespace Managers
                 WeatherSystem.timeIncrement = currentIncrement;
                 WindArea.timeIncrement = currentIncrement;
                 PlayerInteraction.timeIncrement = currentIncrement;
+                InventoryManager.timeIncrement = currentIncrement;
 
                 previousTimeIncrement = currentIncrement;
             }

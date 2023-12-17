@@ -1,6 +1,7 @@
 ﻿using Inventory;
 using Managers;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Weather.Wind;
@@ -31,12 +32,22 @@ namespace UI
         [Header("Treatment")] 
         public GameObject treatmentObj;
         public TextMeshProUGUI afflictionDesc;
+        public Image treatmentIcon;
+        public TextMeshProUGUI treatmentAmount;
         public TextMeshProUGUI recoveryTimeText;
+
+        [Header("Treatment Chooser")] 
+        public GameObject treatmentChooser;
+        public GameObject wasTreatedObj;
+        public Image affIconImage;
+        public TextMeshProUGUI affNameText;
+        public Button treatAfflictionBtn;
 
         [Header("Danger Icons")] 
         public GameObject stomachDanger;
 
         private bool noAffliction;
+        private Affliction afflictionToTreat;
         
         public static InventoryUI Instance { get; private set; }
 
@@ -51,6 +62,7 @@ namespace UI
             
             stomachDanger.SetActive(false);
             treatmentObj.SetActive(false);
+            treatmentChooser.SetActive(false);
 
             noAffliction = true;
             Instantiate(noAfflictionItem, afflictionContainer);
@@ -119,6 +131,8 @@ namespace UI
             
             // Check for afflictions
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
+            
+            treatmentObj.SetActive(false);
 
             if (afflictions.Count > 0)
             {
@@ -132,6 +146,7 @@ namespace UI
                         affliction.afflictionName;
                     affItem.transform.Find("AfflictionIconBG/AfflictionIcon").GetComponent<Image>().sprite =
                         affliction.afflictionIcon;
+                    affItem.transform.GetComponent<Button>().onClick.AddListener(() => {DisplayTreatment(affliction);});
 
                     if (affliction.afflictionType == AfflictionType.FoodPoisoning)
                     {
@@ -146,6 +161,40 @@ namespace UI
 
                 Instantiate(noAfflictionItem, afflictionContainer);
             }
+        }
+
+        private void DisplayTreatment(Affliction affliction)
+        {
+            treatmentObj.SetActive(true);
+
+            afflictionDesc.text = affliction.afflictionDescription;
+            treatmentIcon.sprite = affliction.treatment.itemIcon;
+            treatmentIcon.preserveAspect = true;
+            treatmentAmount.text = affliction.treatmentAmount.ToString();
+            wasTreatedObj.SetActive(affliction.wasTreated);
+
+            recoveryTimeText.text = $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
+        }
+
+        public void DisplayTreatmentChooser(ItemData itemData, int itemCount)
+        {
+            int index = 0;
+            var afflictions = VitalManager.Instance.GetCurrentAfflictions();
+
+            if (afflictions.Count == 0) return;
+            
+            treatmentChooser.SetActive(true);
+            afflictionToTreat = afflictions[index];
+
+            affIconImage.sprite = afflictionToTreat.afflictionIcon;
+            affNameText.text = afflictionToTreat.afflictionName;
+            
+            treatAfflictionBtn.onClick.AddListener(() => {VitalManager.Instance.TreatAffliction(itemData, itemCount, afflictionToTreat);});
+        }
+
+        public void HideTreatmentChooser()
+        {
+            treatmentChooser.SetActive(false);
         }
 
         private void DeleteAffContainerContent()

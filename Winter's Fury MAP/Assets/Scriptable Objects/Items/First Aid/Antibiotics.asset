@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0100a35d0dccee41944fab246b77a0e, type: 3}
+  m_Name: Antibiotics
+  m_EditorClassIdentifier: 
+  itemObj: {fileID: 2753331033315470970, guid: 1da26aabb1ccc564ba5b6270f14a0614, type: 3}
+  itemName: Antibiotics
+  itemDescription: A small amount of Antibiotics. Take it to fight vairous diseases.
+  itemType: 3
+  itemCondition: 100
+  itemIcon: {fileID: 21300000, guid: 7d7fd08249fdbd94fa9f067449d775ef, type: 3}
+  inflictsAffliction: 0
+  affliction: {fileID: 0}
+  afflictionChance: 0
+  calorieDensity: 0
+  waterIntake: 0
+  caloriesIntake: 0
+  fatigueReduce: 0
+  conditionPerDay: 0
+  conditionVariability: 0
+  fuelItemWeight: 0
+  temperatureIncrease: 0
+  burnTime: 0
+  chanceBonus: 0
+  toolType: 0
+  toolWeight: 0
+  burningItemObj: {fileID: 0}
+  burnDensity: 0
+  heatBonus: 0
+  interactTime: 0
+  leftActionText: 
+  rightActionText: 
+  isLit: 0
+  unitCount: 3
+  unitWeight: 0.03

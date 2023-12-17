@@ -33,7 +33,7 @@ namespace Managers
         [Header("Inventory Filter")] [SerializeField]
         private TextMeshProUGUI inventoryFilterName;
 
-        [SerializeField] private Button filterAll, filterFuelSource, filterFood, filterTools;
+        [SerializeField] private Button filterAll, filterFirstAid, filterFuelSource, filterFood, filterTools;
 
         [Header("Item Detail References")] [SerializeField]
         private TextMeshProUGUI itemName;
@@ -60,10 +60,9 @@ namespace Managers
         [SerializeField] private Button dropAllButton;
 
         private List<Tuple<string, int, float>> itemCounts;
-        private float timeIncrement;
-        private float previousTimeIncrement;
+        public static float timeIncrement;
         public static bool inventoryOpened;
-        private string currentDetailedItem;
+        private string currentDetailedItem, currentFilter;
         private float currentDetailedCondition;
 
         public static InventoryManager Instance { get; private set; }
@@ -89,14 +88,6 @@ namespace Managers
         private void Update()
         {
             if (items.Count > 0) ReduceItemsCondition();
-
-            var currentIncrement = GameManager.Instance.cycle.TimeIncrement;
-            if (previousTimeIncrement != currentIncrement)
-            {
-                timeIncrement = currentIncrement;
-
-                previousTimeIncrement = currentIncrement;
-            }
         }
 
         public void ToggleInventory()
@@ -139,24 +130,35 @@ namespace Managers
             {
                 case "All":
                     filterAll.interactable = false;
+                    filterFirstAid.interactable = true;
+                    filterFuelSource.interactable = true;
+                    filterFood.interactable = true;
+                    filterTools.interactable = true;
+                    break;
+                case "First Aid":
+                    filterAll.interactable = true;
+                    filterFirstAid.interactable = false;
                     filterFuelSource.interactable = true;
                     filterFood.interactable = true;
                     filterTools.interactable = true;
                     break;
                 case "Fuel":
                     filterAll.interactable = true;
+                    filterFirstAid.interactable = true;
                     filterFuelSource.interactable = false;
                     filterFood.interactable = true;
                     filterTools.interactable = true;
                     break;
                 case "Food and Drink":
                     filterAll.interactable = true;
+                    filterFirstAid.interactable = true;
                     filterFuelSource.interactable = true;
                     filterFood.interactable = false;
                     filterTools.interactable = true;
                     break;
                 case "Tools":
                     filterAll.interactable = true;
+                    filterFirstAid.interactable = true;
                     filterFuelSource.interactable = true;
                     filterFood.interactable = true;
                     filterTools.interactable = false;
@@ -166,6 +168,8 @@ namespace Managers
 
         public void ListItems(string filter = "")
         {
+            currentFilter = filter;
+            
             DeleteInventoryContents();
             DeleteNeedContents();
             HideItemDetail();
@@ -274,7 +278,7 @@ namespace Managers
                         itemCountValue = count.Item2;
                     }
 
-                    itemWeight.text = (totalWeight).ToString(CultureInfo.InvariantCulture) + "kg";
+                    itemWeight.text = totalWeight.ToString(CultureInfo.InvariantCulture) + "KG";
 
                     dropItemButton.onClick.AddListener(() => OpenDropWindow(itemName));
 
@@ -328,6 +332,12 @@ namespace Managers
                             }
 
                             break;
+                        case ItemType.FirstAid:
+                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Use";
+                            actionButtonObj.SetActive(true);
+                            actionBtn.onClick.AddListener(() => { InventoryUI.Instance.DisplayTreatmentChooser(item, itemCountValue); });
+
+                            break;
                     }
 
                     break;
@@ -358,7 +368,7 @@ namespace Managers
             {
                 DeleteItem(itemData);
 
-                ListItems("FoodAndDrink");
+                ListItems(currentFilter);
             }
             else
             {
@@ -367,7 +377,7 @@ namespace Managers
                 items[itemIndex].waterIntake = returnedWater;
                 items[itemIndex].caloriesIntake = calories;
 
-                ListItems("FoodAndDrink");
+                ListItems(currentFilter);
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
         }
@@ -390,7 +400,7 @@ namespace Managers
             {
                 DeleteItem(itemData);
 
-                ListItems("FoodAndDrink");
+                ListItems(currentFilter);
             }
             else
             {
@@ -398,7 +408,7 @@ namespace Managers
 
                 items[itemIndex].caloriesIntake = returnedCalories;
 
-                ListItems("FoodAndDrink");
+                ListItems(currentFilter);
                 ShowItemDetail(itemData.itemName, Mathf.Round(itemData.itemCondition));
             }
         }
@@ -570,6 +580,16 @@ namespace Managers
 
             items.RemoveAt(itemIndex);
 
+            ListItems();
+            HideItemDetail();
+        }
+
+        public void DeleteItemByName(string itemName)
+        {
+            var index = items.FindIndex(item => item.itemName == itemName);
+            
+            items.RemoveAt(index);
+            
             ListItems();
             HideItemDetail();
         }

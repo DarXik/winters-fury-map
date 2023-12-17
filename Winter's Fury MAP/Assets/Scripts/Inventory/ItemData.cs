@@ -6,7 +6,8 @@ namespace Inventory
     {
         FoodAndDrink,
         Fuelsource,
-        Tool
+        Tool,
+        FirstAid
     }
 
     public enum ToolType
@@ -57,6 +58,11 @@ namespace Inventory
                 {
                     return toolWeight;
                 }
+
+                if (itemType == ItemType.FirstAid)
+                {
+                    return unitWeight;
+                }
             
                 return 0;
             }
@@ -88,6 +94,9 @@ namespace Inventory
         [HideInInspector] public string leftActionText;
         [HideInInspector] public string rightActionText;
         [HideInInspector] public bool isLit;
+
+        [Header("First Aid Properties")] 
+        [HideInInspector] public float unitWeight;
     
         public float MaxLightSourceBurnTime => (burnDensity / toolWeight * 100) / 100f;
     }
