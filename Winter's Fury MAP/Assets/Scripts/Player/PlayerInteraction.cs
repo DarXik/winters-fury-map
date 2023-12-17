@@ -193,8 +193,7 @@ namespace Player
         private IEnumerator TempHoldBlock()
         {
             interacting = true;
-
-            ;
+            
             yield return new WaitForSeconds(2);
 
             interacting = false;

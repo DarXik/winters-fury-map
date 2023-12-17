@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8df08ae92fd94934f8eff2ceae61743e, type: 3}
-  m_Name: Nightstand
+  m_Name: First_Aid_Kit
   m_EditorClassIdentifier: 
-  interactionText: Nightstand
+  interactionText: First Aid Kit
   interactableType: 2
   searched: 0
   warmthBonus: 0
   items:
-  - itemData: {fileID: 11400000, guid: b09d83ce934cf7e46b9109061dd617a3, type: 2}
-    chance: 45.5
-  - itemData: {fileID: 11400000, guid: b09d83ce934cf7e46b9109061dd617a3, type: 2}
-    chance: 33.5
+  - itemData: {fileID: 11400000, guid: 2b6db52c979e51e4eb348b7ccd23e546, type: 2}
+    chance: 75
+  - itemData: {fileID: 11400000, guid: 2b6db52c979e51e4eb348b7ccd23e546, type: 2}
+    chance: 65
+  - itemData: {fileID: 11400000, guid: 2b6db52c979e51e4eb348b7ccd23e546, type: 2}
+    chance: 60
