@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Inventory;
 using Player;
 using UI;
@@ -12,14 +13,14 @@ namespace Managers
     {
         [FormerlySerializedAs("tempChevrons")] [Header("UI References")]
         public GameObject reduceTempChevrons;
+
         public GameObject increaseTempChevrons;
         public GameObject fatigueChevrons;
         public GameObject thirstChevrons;
         public GameObject hungerChevrons;
 
-        [Header("Health")] 
-        public float maxHealth;
-        public float healthRecoveryRate;    
+        [Header("Health")] public float maxHealth;
+        public float healthRecoveryRate;
         public float warmthDrainRate;
         public float fatigueDrainRate;
         public float thirstDrainRate;
@@ -61,7 +62,7 @@ namespace Managers
         public float HungerPercent => currentCalories / maxCalories;
         public float ThirstPercent => currentThirst / maxThirst;
         public float WarmthPercent => currentTemp / maxTempBar;
-        
+
         // Afflictions
         private List<Affliction> currentAfflictions = new();
 
@@ -107,7 +108,7 @@ namespace Managers
                     HideRecoverTempChevrons();
                     break;
             }
-            
+
             switch (currentActivity)
             {
                 case PlayerActivity.Sleeping:
@@ -118,14 +119,14 @@ namespace Managers
                     break;
             }
 
-            if(currentTemp <= 0 || currentFatigue <= 0 || currentThirst <= 0 || currentCalories <= 0)
+            if (currentTemp <= 0 || currentFatigue <= 0 || currentThirst <= 0 || currentCalories <= 0)
             {
                 ReduceHealth();
             }
 
             if (currentCalories > 0 && currentFatigue > 0 && currentThirst > 0 && currentTemp > 0)
             {
-                RecoverHealth();   
+                RecoverHealth();
             }
 
             // check afflictions
@@ -139,7 +140,7 @@ namespace Managers
         public void BurnPlayer()
         {
             currentHealth -= burnDamage * Time.deltaTime;
-            
+
             // add visual effect
         }
 
@@ -182,7 +183,7 @@ namespace Managers
 
                 return;
             }
-            
+
             currentFatigue += sleepRecoveryRate * (Time.deltaTime * timeIncrement);
         }
 
@@ -214,6 +215,7 @@ namespace Managers
                 fatigueChevrons.transform.GetChild(i).gameObject.SetActive(i < fatigueChevronsToReveal);
             }
         }
+
         public float AddHunger(float caloriesIntake)
         {
             float totalCalories = currentCalories + caloriesIntake;
@@ -231,7 +233,7 @@ namespace Managers
 
             return Mathf.Round(excessCalories);
         }
-        
+
         private void ReduceHunger()
         {
             if (currentCalories <= 0)
@@ -322,11 +324,11 @@ namespace Managers
             {
                 if (increaseTempChevrons.activeInHierarchy) increaseTempChevrons.SetActive(false);
                 currentTemp = maxTempBar;
-                
+
                 return;
             }
-            
-            if(!increaseTempChevrons.activeInHierarchy) increaseTempChevrons.SetActive(true);
+
+            if (!increaseTempChevrons.activeInHierarchy) increaseTempChevrons.SetActive(true);
 
             if (feelsLikeTemp >= increaseThresholds[0] && feelsLikeTemp <= increaseThresholds[1])
             {
@@ -357,12 +359,12 @@ namespace Managers
         {
             if (currentTemp <= 0)
             {
-                if(reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(false);
+                if (reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(false);
 
                 return;
             }
-            
-            if(!reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(true);
+
+            if (!reduceTempChevrons.activeInHierarchy) reduceTempChevrons.SetActive(true);
 
             if (feelsLikeTemp <= reduceThresholds[0] && feelsLikeTemp >= reduceThresholds[1])
             {
@@ -401,7 +403,7 @@ namespace Managers
                     continue;
                 }
 
-                affliction.currentDuration -= 1f * (Time.deltaTime * timeIncrement);
+                affliction.currentDuration -= Time.deltaTime * timeIncrement;
             }
         }
 
@@ -412,7 +414,7 @@ namespace Managers
                 switch (affliction.afflictionType)
                 {
                     case AfflictionType.FoodPoisoning:
-                        FoodPoisoning();
+                        FoodPoisoning(affliction.wasTreated);
                         break;
                 }
             }
@@ -420,11 +422,21 @@ namespace Managers
 
         public void InflictAffliction(Affliction affliction)
         {
-            Affliction afflictionCopy = Instantiate(affliction);
-            afflictionCopy.totalDuration = Mathf.Round(Random.Range(affliction.untreatedMin, affliction.untreatedMax));
-            afflictionCopy.currentDuration = afflictionCopy.totalDuration;
-            
-            currentAfflictions.Add(afflictionCopy);
+            if (currentAfflictions.Any(a => a.afflictionName == affliction.afflictionName))
+            {
+                var index = currentAfflictions.FindIndex(a => a.afflictionName == affliction.afflictionName);
+
+                currentAfflictions[index].currentDuration = currentAfflictions[index].totalDuration;
+            }
+            else
+            {
+                Affliction afflictionCopy = Instantiate(affliction);
+                afflictionCopy.totalDuration =
+                    Mathf.Round(Random.Range(affliction.untreatedMin, affliction.untreatedMax));
+                afflictionCopy.currentDuration = afflictionCopy.totalDuration;
+
+                currentAfflictions.Add(afflictionCopy);
+            }
         }
 
         public void TreatAffliction(ItemData itemData, int itemCount, Affliction afflictionToTreat)
@@ -434,7 +446,7 @@ namespace Managers
             currentAfflictions[index].totalDuration = currentAfflictions[index].treated;
             currentAfflictions[index].currentDuration = currentAfflictions[index].totalDuration;
             currentAfflictions[index].wasTreated = true;
-            
+
             InventoryUI.Instance.HideTreatmentChooser();
 
             for (int i = 0; i < itemCount; i++)
@@ -443,13 +455,14 @@ namespace Managers
             }
         }
 
-        private void FoodPoisoning()
+        private void FoodPoisoning(bool treated)
         {
-            // 10% of condition per hour if not below 15%
-            if (currentHealth > 15f)
+            // 10% of condition per hour if not below 15%, not sleeping and not treated
+            if (currentHealth > 15f && PlayerController.Instance.currentActivity != PlayerActivity.Sleeping && !treated)
             {
-                currentHealth -= 10f * (Time.deltaTime * timeIncrement);
+                    currentHealth -= 10f * (Time.deltaTime * timeIncrement);
             }
+
             // 30% of fatigue per hour
             currentFatigue -= 30f * (Time.deltaTime * timeIncrement);
         }

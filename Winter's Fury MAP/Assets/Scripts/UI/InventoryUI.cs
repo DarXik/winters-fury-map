@@ -10,8 +10,7 @@ namespace UI
 {
     public class InventoryUI : MonoBehaviour
     {
-        [Header("Core References")] 
-        public GameObject backpack;
+        [Header("Core References")] public GameObject backpack;
         public GameObject crafting;
         public GameObject condition;
         public GameObject afflictionItem;
@@ -20,8 +19,7 @@ namespace UI
         public Image backpackBtn, craftingBtn, conditionBtn;
         public Color32 activeColor, inactiveColor;
 
-        [Header("Status")] 
-        public TextMeshProUGUI conditionText;
+        [Header("Status")] public TextMeshProUGUI conditionText;
         public Slider warmthBar;
         public Slider fatigueBar;
         public Slider thirstBar;
@@ -29,26 +27,23 @@ namespace UI
         public TextMeshProUGUI feelsLikeText, airTempText, windChillText;
         public Color32 lowTempColor, normalTempColor;
 
-        [Header("Treatment")] 
-        public GameObject treatmentObj;
+        [Header("Treatment")] public GameObject treatmentObj;
         public TextMeshProUGUI afflictionDesc;
         public Image treatmentIcon;
         public TextMeshProUGUI treatmentAmount;
         public TextMeshProUGUI recoveryTimeText;
 
-        [Header("Treatment Chooser")] 
-        public GameObject treatmentChooser;
+        [Header("Treatment Chooser")] public GameObject treatmentChooser;
         public GameObject wasTreatedObj;
         public Image affIconImage;
         public TextMeshProUGUI affNameText;
         public Button treatAfflictionBtn;
 
-        [Header("Danger Icons")] 
-        public GameObject stomachDanger;
+        [Header("Danger Icons")] public GameObject stomachDanger;
 
         private bool noAffliction;
         private Affliction afflictionToTreat;
-        
+
         public static InventoryUI Instance { get; private set; }
 
         private void Awake()
@@ -59,7 +54,7 @@ namespace UI
         private void Start()
         {
             DisplayBackpack();
-            
+
             stomachDanger.SetActive(false);
             treatmentObj.SetActive(false);
             treatmentChooser.SetActive(false);
@@ -84,7 +79,7 @@ namespace UI
             backpack.SetActive(false);
             crafting.SetActive(true);
             condition.SetActive(false);
-            
+
             backpackBtn.color = inactiveColor;
             craftingBtn.color = activeColor;
             conditionBtn.color = inactiveColor;
@@ -95,11 +90,11 @@ namespace UI
             backpack.SetActive(false);
             crafting.SetActive(false);
             condition.SetActive(true);
-            
+
             backpackBtn.color = inactiveColor;
             craftingBtn.color = inactiveColor;
             conditionBtn.color = activeColor;
-            
+
             UpdateConditionUI();
         }
 
@@ -110,7 +105,7 @@ namespace UI
             fatigueBar.value = VitalManager.Instance.FatiguePercent;
             thirstBar.value = VitalManager.Instance.ThirstPercent;
             hungerBar.value = VitalManager.Instance.HungerPercent;
-            
+
             // Display texts
             conditionText.text = $"{Mathf.RoundToInt(VitalManager.Instance.CurrentHealth)}%";
             feelsLikeText.text = $"{Mathf.RoundToInt(TemperatureManager.Instance.FeelsLike)}°C";
@@ -128,17 +123,17 @@ namespace UI
             }
 
             airTempText.color = TemperatureManager.Instance.AmbientTemperature < 1 ? lowTempColor : normalTempColor;
-            
+
             // Check for afflictions
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
-            
+
             treatmentObj.SetActive(false);
 
             if (afflictions.Count > 0)
             {
                 DeleteAffContainerContent();
                 noAffliction = false;
-                
+
                 foreach (var affliction in afflictions)
                 {
                     var affItem = Instantiate(afflictionItem, afflictionContainer);
@@ -146,7 +141,12 @@ namespace UI
                         affliction.afflictionName;
                     affItem.transform.Find("AfflictionIconBG/AfflictionIcon").GetComponent<Image>().sprite =
                         affliction.afflictionIcon;
-                    affItem.transform.GetComponent<Button>().onClick.AddListener(() => {DisplayTreatment(affliction);});
+                    affItem.transform.GetComponent<Button>().onClick
+                        .AddListener(() => { DisplayTreatment(affliction); });
+                    affItem.transform.GetComponent<Button>().onClick.AddListener(() =>
+                    {
+                        affItem.GetComponent<Image>().enabled = true;
+                    });
 
                     if (affliction.afflictionType == AfflictionType.FoodPoisoning)
                     {
@@ -173,7 +173,8 @@ namespace UI
             treatmentAmount.text = affliction.treatmentAmount.ToString();
             wasTreatedObj.SetActive(affliction.wasTreated);
 
-            recoveryTimeText.text = $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
+            recoveryTimeText.text =
+                $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
         }
 
         public void DisplayTreatmentChooser(ItemData itemData, int itemCount)
@@ -181,15 +182,18 @@ namespace UI
             int index = 0;
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
 
-            if (afflictions.Count == 0) return;
-            
+            if (afflictions.Count == 0 || afflictions[index].treatmentAmount > itemCount) return;
+
             treatmentChooser.SetActive(true);
             afflictionToTreat = afflictions[index];
 
             affIconImage.sprite = afflictionToTreat.afflictionIcon;
             affNameText.text = afflictionToTreat.afflictionName;
-            
-            treatAfflictionBtn.onClick.AddListener(() => {VitalManager.Instance.TreatAffliction(itemData, itemCount, afflictionToTreat);});
+
+            treatAfflictionBtn.onClick.AddListener(() =>
+            {
+                VitalManager.Instance.TreatAffliction(itemData, itemCount, afflictionToTreat);
+            });
         }
 
         public void HideTreatmentChooser()
@@ -203,7 +207,7 @@ namespace UI
             {
                 Destroy(aff.gameObject);
             }
-            
+
             stomachDanger.SetActive(false);
         }
     }
