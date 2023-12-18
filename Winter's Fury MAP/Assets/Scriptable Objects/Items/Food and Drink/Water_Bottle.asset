@@ -18,6 +18,9 @@ MonoBehaviour:
   itemType: 0
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: df5cfd92c9ee05c469538b198ab7d04c, type: 3}
+  inflictsAffliction: 0
+  affliction: {fileID: 0}
+  afflictionChance: 0
   calorieDensity: 0
   waterIntake: 500
   caloriesIntake: 0
@@ -34,5 +37,7 @@ MonoBehaviour:
   burnDensity: 0
   heatBonus: 0
   interactTime: 0
-  interactText: 
-  isBurning: 0
+  leftActionText: 
+  rightActionText: 
+  isLit: 0
+  unitWeight: 0
