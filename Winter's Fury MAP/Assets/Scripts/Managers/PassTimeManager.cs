@@ -112,7 +112,7 @@ namespace Managers
         private void AssignUI(PassTypes passType)
         {
             passButton.onClick.RemoveAllListeners();
-            
+
             switch (passType)
             {
                 case PassTypes.Sleep:

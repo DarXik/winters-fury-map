@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class OptionsScript : MonoBehaviour
 {
-    private ControlsScript cs;
+    public static OptionsScript Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void Start()
     {
-        cs = gameObject.AddComponent<ControlsScript>();
         LoadPreferences();
         GetResolutions();
         QualitySwitcher();
@@ -41,7 +44,7 @@ public class OptionsScript : MonoBehaviour
 
     public void SavePreferences()
     {
-        cs.SavePreferences();
+        ControlsScript.Instance.SavePreferences();
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
         PlayerPrefs.SetFloat("brightnessPreference", brigtnessPreference);
@@ -51,7 +54,6 @@ public class OptionsScript : MonoBehaviour
 
     private void LoadPreferences()
     {
-        cs.LoadPreferences();
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
         brigtnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;

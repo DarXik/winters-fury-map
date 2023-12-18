@@ -17,6 +17,18 @@ public class ControlsScript : MonoBehaviour
     public Button passTimeKeyButton;
     public TMP_Text passTimeKeyText;
 
+    public static ControlsScript Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void Start()
+    {
+        LoadPreferences();
+    }
+
     public void SavePreferences()
     {
         PlayerPrefs.SetString("inventoryKey", inventoryKeyPreference);

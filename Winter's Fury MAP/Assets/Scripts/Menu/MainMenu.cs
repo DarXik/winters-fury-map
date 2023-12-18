@@ -6,12 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-
-    // var optionsScript = startObj.AddComponent<OptionsScript>();
     private void Start()
     {
-        // var optionsScript = new OptionsScript();
-        // optionsScript.LoadPreferences();
         pitch = 0f;
         yaw = 80.55f;
         ShowUI();
@@ -43,6 +39,7 @@ public class MainMenu : MonoBehaviour
         videoButton.interactable = !optionsVideoObj.activeSelf;
         audioButton.interactable = !optionsAudioObj.activeSelf;
         controlsButton.interactable = !optionsControlsObj.activeSelf;
+        controlsButton.interactable = !optionsControlsObj.activeSelf;
     }
 
     public void OptionsToggle()
@@ -63,15 +60,10 @@ public class MainMenu : MonoBehaviour
             startObj.SetActive(true);
             optionsObj.SetActive(false);
             optionsOpened = false;
-            // var optionsScript = startObj.AddComponent<OptionsScript>();
-            // optionsScript.SavePreferences();
-
+            OptionsScript.Instance.SavePreferences();
             StartCoroutine(MoveCamera(start, 55));
 
-            yaw = 80.55f;
-
-            OptionsScript os = gameObject.AddComponent<OptionsScript>();
-            os.SavePreferences();
+            yaw = 80.55f;   
         }
     }
 
@@ -169,7 +161,8 @@ public class MainMenu : MonoBehaviour
         // startMenuRest.SetActive(true);
     }
 
-    [Header("Game Objecty")] public GameObject startObj;
+    [Header("Game Objecty")]
+    public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;
