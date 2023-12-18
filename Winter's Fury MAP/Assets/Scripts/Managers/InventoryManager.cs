@@ -590,7 +590,7 @@ namespace Managers
             
             items.RemoveAt(index);
             
-            ListItems();
+            ListItems(currentFilter);
             HideItemDetail();
         }
 
@@ -614,6 +614,11 @@ namespace Managers
         public void UpdateItemData(ItemData itemToEdit)
         {
             items.FirstOrDefault(item => item.itemName == itemToEdit.itemName)!.itemCondition = itemToEdit.itemCondition;
+        }
+
+        public string GetCurrentFilter()
+        {
+            return currentFilter;
         }
     }
 }

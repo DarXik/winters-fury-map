@@ -63,6 +63,8 @@ namespace Managers
         public float ThirstPercent => currentThirst / maxThirst;
         public float WarmthPercent => currentTemp / maxTempBar;
 
+        public static bool burningPlayer;
+        
         // Afflictions
         private List<Affliction> currentAfflictions = new();
 
@@ -137,11 +139,14 @@ namespace Managers
             }
         }
 
-        public void BurnPlayer()
+        public IEnumerator BurnPlayer()
         {
-            currentHealth -= burnDamage * Time.deltaTime;
-
-            // add visual effect
+            while (burningPlayer)
+            {
+                yield return new WaitForSeconds(1f);
+                
+                currentHealth -= burnDamage;
+            }
         }
 
         private void RecoverHealth()
@@ -436,6 +441,9 @@ namespace Managers
                 afflictionCopy.currentDuration = afflictionCopy.totalDuration;
 
                 currentAfflictions.Add(afflictionCopy);
+
+                StartCoroutine(InventoryUI.Instance.DisplayAfflictionAlert(afflictionCopy.afflictionName,
+                    afflictionCopy.afflictionIcon));
             }
         }
 

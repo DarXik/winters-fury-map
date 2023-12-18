@@ -1,4 +1,5 @@
-﻿using Inventory;
+﻿using System.Collections;
+using Inventory;
 using Managers;
 using TMPro;
 using Unity.VisualScripting;
@@ -33,22 +34,32 @@ namespace UI
         public TextMeshProUGUI treatmentAmount;
         public TextMeshProUGUI recoveryTimeText;
 
-        [Header("Treatment Chooser")] public GameObject treatmentChooser;
+        [Header("Treatment Chooser")] 
+        public GameObject treatmentChooser;
         public GameObject wasTreatedObj;
         public Image affIconImage;
         public TextMeshProUGUI affNameText;
         public Button treatAfflictionBtn;
 
-        [Header("Danger Icons")] public GameObject stomachDanger;
+        [Header("Danger Icons")] 
+        public GameObject stomachDanger;
+
+        [Header("Affliction Alert")] 
+        public GameObject afflictionAlert;
+        private Animator afflictionAlertAnim;
+        public TextMeshProUGUI nameToDisplay;
+        public Image iconToDisplay;
 
         private bool noAffliction;
         private Affliction afflictionToTreat;
+        private int index;
 
         public static InventoryUI Instance { get; private set; }
 
         private void Awake()
         {
             Instance = this;
+            afflictionAlertAnim = afflictionAlert.GetComponent<Animator>();
         }
 
         private void Start()
@@ -58,6 +69,7 @@ namespace UI
             stomachDanger.SetActive(false);
             treatmentObj.SetActive(false);
             treatmentChooser.SetActive(false);
+            afflictionAlert.SetActive(false);
 
             noAffliction = true;
             Instantiate(noAfflictionItem, afflictionContainer);
@@ -96,6 +108,17 @@ namespace UI
             conditionBtn.color = activeColor;
 
             UpdateConditionUI();
+        }
+
+        public IEnumerator DisplayAfflictionAlert(string name, Sprite icon)
+        {
+            afflictionAlert.SetActive(true);
+            nameToDisplay.text = name;
+            iconToDisplay.sprite = icon;
+
+            yield return new WaitForSeconds(2f);
+            
+            afflictionAlertAnim.SetTrigger("HideAlert");
         }
 
         public void UpdateConditionUI()
@@ -179,10 +202,11 @@ namespace UI
 
         public void DisplayTreatmentChooser(ItemData itemData, int itemCount)
         {
-            int index = 0;
+            index = 0;
+            
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
 
-            if (afflictions.Count == 0 || afflictions[index].treatmentAmount > itemCount) return;
+            if (afflictions.Count == 0) return;
 
             treatmentChooser.SetActive(true);
             afflictionToTreat = afflictions[index];
@@ -199,6 +223,38 @@ namespace UI
         public void HideTreatmentChooser()
         {
             treatmentChooser.SetActive(false);
+        }
+
+        public void NextAffliction()
+        {
+            var afflictionCount = VitalManager.Instance.GetCurrentAfflictions().Count;
+
+            if (index < afflictionCount - 1)
+            {
+                index++;
+            }
+            
+            UpdateTreatmentChooser();
+        }
+
+        public void PreviousAffliction()
+        {
+            if (index > 0)
+            {
+                index--;
+            }
+            
+            UpdateTreatmentChooser();
+        }
+
+        private void UpdateTreatmentChooser()
+        {
+            var afflictions = VitalManager.Instance.GetCurrentAfflictions();
+            
+            afflictionToTreat = afflictions[index];
+
+            affIconImage.sprite = afflictionToTreat.afflictionIcon;
+            affNameText.text = afflictionToTreat.afflictionName;
         }
 
         private void DeleteAffContainerContent()

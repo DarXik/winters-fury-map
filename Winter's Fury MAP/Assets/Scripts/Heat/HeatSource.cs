@@ -18,6 +18,7 @@ namespace Heat
         private Vector3 playerPos;
         public static float timeIncrement;
         private bool campfireDestroyed;
+        private bool burnPlayer;
         
         private void Start()
         {
@@ -32,7 +33,6 @@ namespace Heat
                 
                 LowerValues();
                 HeatPlayer();
-                DamagePlayerIfClose();
             }
             else
             {
@@ -59,11 +59,20 @@ namespace Heat
             Destroy(gameObject);
         }
 
-        private void DamagePlayerIfClose()
+        private void OnTriggerEnter(Collider other)
         {
-            if (Physics.Raycast(transform.position, transform.up, 5f, LayerMask.GetMask("Player")))
+            if (other.gameObject.CompareTag("Player"))
             {
-                VitalManager.Instance.BurnPlayer();
+                VitalManager.burningPlayer = true;
+                StartCoroutine(VitalManager.Instance.BurnPlayer());
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                VitalManager.burningPlayer = false;
             }
         }
     }

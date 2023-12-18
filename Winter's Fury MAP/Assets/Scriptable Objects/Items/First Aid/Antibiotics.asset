@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemObj: {fileID: 2753331033315470970, guid: 1da26aabb1ccc564ba5b6270f14a0614, type: 3}
   itemName: Antibiotics
-  itemDescription: A small amount of Antibiotics. Take it to fight vairous diseases.
+  itemDescription: A small amount of Antibiotics. Take it to help your body fight
+    various diseases.
   itemType: 3
   itemCondition: 100
   itemIcon: {fileID: 21300000, guid: 7d7fd08249fdbd94fa9f067449d775ef, type: 3}
@@ -40,5 +41,4 @@ MonoBehaviour:
   leftActionText: 
   rightActionText: 
   isLit: 0
-  unitCount: 3
   unitWeight: 0.03
