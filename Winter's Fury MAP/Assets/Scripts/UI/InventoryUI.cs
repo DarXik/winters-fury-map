@@ -200,12 +200,13 @@ namespace UI
                 $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
         }
 
-        public void DisplayTreatmentChooser(ItemData itemData, int itemCount)
+        public void DisplayTreatmentChooser(ItemData treatmentData, int itemCount)
         {
             index = 0;
             
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
 
+            // display something else when itemCount is not suitable
             if (afflictions.Count == 0) return;
 
             treatmentChooser.SetActive(true);
@@ -216,7 +217,7 @@ namespace UI
 
             treatAfflictionBtn.onClick.AddListener(() =>
             {
-                VitalManager.Instance.TreatAffliction(itemData, itemCount, afflictionToTreat);
+                VitalManager.Instance.TreatAffliction(treatmentData, afflictionToTreat.treatmentAmount, afflictionToTreat);
             });
         }
 
