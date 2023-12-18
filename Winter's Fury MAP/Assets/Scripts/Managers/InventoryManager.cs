@@ -107,8 +107,8 @@ namespace Managers
                 inventoryOpened = true;
                 DisplayFilterUI("All");
                 InventoryUI.Instance.UpdateConditionUI();
-                
-                if(PlayerInteraction.equippedItem != null) UpdateItemData(PlayerInteraction.equippedItem);
+
+                if (PlayerInteraction.equippedItem != null) UpdateItemData(PlayerInteraction.equippedItem);
 
                 PlayerLook.Instance.BlockRotation();
                 inventory.SetActive(true);
@@ -169,7 +169,7 @@ namespace Managers
         public void ListItems(string filter = "")
         {
             currentFilter = filter;
-            
+
             DeleteInventoryContents();
             DeleteNeedContents();
             HideItemDetail();
@@ -180,6 +180,8 @@ namespace Managers
 
             foreach (var item in items)
             {
+                currentWeight += item.ItemWeight;
+                
                 if (filter != "" && item.itemType.ToString() != filter)
                 {
                     continue;
@@ -210,15 +212,10 @@ namespace Managers
                     itemCounts.Add(new Tuple<string, int, float>(item.itemName, 1, Mathf.Round(item.itemCondition)));
                     itemIcons.Add(item.itemIcon);
                 }
-
-                if (filter == "") currentWeight += item.ItemWeight;
             }
 
-            if (filter == "")
-            {
-                weightBar.value = currentWeight;
-                weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
-            }
+            weightBar.value = currentWeight;
+            weightBarFill.color = weightGradient.Evaluate(weightBar.value / weightBar.maxValue);
 
             int num = 0;
 
@@ -335,7 +332,10 @@ namespace Managers
                         case ItemType.FirstAid:
                             actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Use";
                             actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() => { InventoryUI.Instance.DisplayTreatmentChooser(item, itemCountValue); });
+                            actionBtn.onClick.AddListener(() =>
+                            {
+                                InventoryUI.Instance.DisplayTreatmentChooser(item, itemCountValue);
+                            });
 
                             break;
                     }
@@ -587,9 +587,9 @@ namespace Managers
         public void DeleteItemByName(string itemName)
         {
             var index = items.FindIndex(item => item.itemName == itemName);
-            
+
             items.RemoveAt(index);
-            
+
             ListItems(currentFilter);
             HideItemDetail();
         }
@@ -610,10 +610,11 @@ namespace Managers
             return items.Where(item => item.itemType == ItemType.Fuelsource)
                 .Select(item => itemCounts.Find(tuple => tuple.Item1 == item.itemName)).ToList();
         }
-        
+
         public void UpdateItemData(ItemData itemToEdit)
         {
-            items.FirstOrDefault(item => item.itemName == itemToEdit.itemName)!.itemCondition = itemToEdit.itemCondition;
+            items.FirstOrDefault(item => item.itemName == itemToEdit.itemName)!.itemCondition =
+                itemToEdit.itemCondition;
         }
 
         public string GetCurrentFilter()

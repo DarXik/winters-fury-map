@@ -6,6 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 9f3926807d2823041ac7d6171b15697f
+  - enabled: 1
     path: Assets/Scenes/Glacial Frontier.unity
     guid: 684dd7a08e4051e42a64f90e9dffd3d7
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
