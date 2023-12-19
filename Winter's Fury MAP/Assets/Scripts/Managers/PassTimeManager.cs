@@ -19,6 +19,8 @@ namespace Managers
     {
         [Header("UI References")] 
         [SerializeField] private GameObject passTimeWindow;
+        [SerializeField] private GameObject sleepingInfoWindow;
+        [SerializeField] private GameObject passingTimeInfoWindow;
         [SerializeField] private Button sleepTypeButton, passTypeButton;
         [SerializeField] private TextMeshProUGUI header, subheader, hoursToText, passButtonText;
         [SerializeField] private GameObject bedInfo;
@@ -28,7 +30,8 @@ namespace Managers
         [SerializeField] private GameObject leftArrow, rightArrow;
         [SerializeField] private TextMeshProUGUI hoursText;
 
-        [Header("Setup")] public int maxPassHours;
+        [Header("Setup")] 
+        public int maxPassHours;
         public float passingTimeIncrement;
         private float normalTimeIncrement;
         private int hoursToPass;
@@ -49,6 +52,8 @@ namespace Managers
             passTypeButton.onClick.AddListener(() => AssignUI(PassTypes.PassTime));
             
             passTimeWindow.SetActive(false);
+            sleepingInfoWindow.SetActive(false);
+            passingTimeInfoWindow.SetActive(false);
 
             normalTimeIncrement = GameManager.Instance.GetTimeIncrement();
 
@@ -69,9 +74,6 @@ namespace Managers
             if (!passTimeWindowOpened)
             {
                 passTimeWindow.SetActive(true);
-                passButtonObj.SetActive(true);
-                leftArrow.SetActive(true);
-                rightArrow.SetActive(true);
                 PlayerLook.Instance.BlockRotation();
 
                 Clock.Instance.SetClock();
@@ -100,7 +102,11 @@ namespace Managers
         {
             StopAllCoroutines();
             GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
+            
             passTimeWindow.SetActive(false);
+            sleepingInfoWindow.SetActive(false);
+            passingTimeInfoWindow.SetActive(false);
+            
             PlayerLook.Instance.UnblockRotation();
             PlayerController.Instance.currentActivity = PlayerActivity.Standing;
             UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
@@ -145,21 +151,19 @@ namespace Managers
             }
         }
 
-        public void TrySleep()
+        private void TrySleep()
         {
             StartCoroutine(Sleep());
         }
 
-        public void TryPassTime()
+        private void TryPassTime()
         {
             StartCoroutine(PassTime());
         }
 
         private IEnumerator Sleep()
         {
-            passButtonObj.SetActive(false);
-            leftArrow.SetActive(false);
-            rightArrow.SetActive(false);
+            sleepingInfoWindow.SetActive(true);
 
             GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
             PlayerController.Instance.currentActivity = PlayerActivity.Sleeping;
@@ -171,21 +175,13 @@ namespace Managers
 
         private IEnumerator PassTime()
         {
-            passButtonObj.SetActive(false);
-            leftArrow.SetActive(false);
-            rightArrow.SetActive(false);
+            passingTimeInfoWindow.SetActive(true);
 
             GameManager.Instance.cycle.TimeIncrement = passingTimeIncrement;
 
             yield return new WaitForSeconds(hoursToPass / passingTimeIncrement);
-
-            // update everything but do not close the window
-            GameManager.Instance.cycle.TimeIncrement = normalTimeIncrement;
-            UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
-            hoursToPass = 1;
-            passButtonObj.SetActive(true);
-            leftArrow.SetActive(true);
-            rightArrow.SetActive(true);
+            
+            ClosePassWindow();
         }
 
         public void LowerHour()

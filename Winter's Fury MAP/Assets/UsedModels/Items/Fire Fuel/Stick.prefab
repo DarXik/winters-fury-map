@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6395936583452335520}
   - component: {fileID: 7405255441528343547}
   - component: {fileID: -5783976169655513735}
-  - component: {fileID: 2261227005870618140}
+  - component: {fileID: 3732672206046240494}
   m_Layer: 3
   m_Name: Stick
   m_TagString: Untagged
@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7585413835570720021}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 742.6085, y: 149.8446, z: 886.09534}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6395936583452335520
 MeshFilter:
@@ -60,6 +60,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -98,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 19c647012c276c64fb9cdaa8f33ab6a2, type: 2}
---- !u!64 &2261227005870618140
-MeshCollider:
+--- !u!65 &3732672206046240494
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -113,10 +115,9 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2257621098689611155, guid: da2f14757aae114459dcccf4932d8ff9, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.33540535, y: 0.030779593, z: 0.10969305}
+  m_Center: {x: -0.02481556, y: 0.0052477424, z: -0.003082037}

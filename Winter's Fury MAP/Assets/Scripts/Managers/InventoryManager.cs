@@ -505,8 +505,6 @@ namespace Managers
         {
             Debug.Log("Dropping all items of: " + itemName);
 
-            PlayerInteraction.Instance.UnEquipTool();
-
             var playerPos = PlayerController.Instance.GetPlayerPosition();
             float offset = 0f;
 
@@ -526,6 +524,11 @@ namespace Managers
                     }
 
                     currentWeight -= item.ItemWeight;
+
+                    if (item == PlayerInteraction.equippedItem)
+                    {
+                        PlayerInteraction.Instance.UnEquipTool();
+                    }
 
                     items.RemoveAt(i);
                 }
