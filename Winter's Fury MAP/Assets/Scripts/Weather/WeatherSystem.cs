@@ -37,7 +37,7 @@ namespace Weather
         {
             timeIncrement = GameManager.Instance.GetTimeIncrement();
             StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
-            //StartCoroutine(SelectWeather(7));
+            //StartCoroutine(SelectWeather(4));
         }
 
         private void Update()

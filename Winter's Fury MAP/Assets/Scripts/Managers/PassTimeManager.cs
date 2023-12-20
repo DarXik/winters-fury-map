@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Volumes;
 
 namespace Managers
 {
@@ -75,6 +76,8 @@ namespace Managers
             {
                 passTimeWindow.SetActive(true);
                 PlayerLook.Instance.BlockRotation();
+                DepthOfFieldController.Instance.ToggleBlurScreen();
+                VignetteController.Instance.ToggleVignette();
 
                 Clock.Instance.SetClock();
 
@@ -95,6 +98,8 @@ namespace Managers
             else
             {
                 ClosePassWindow();
+                DepthOfFieldController.Instance.ToggleBlurScreen();
+                VignetteController.Instance.ToggleVignette();
             }
         }
 

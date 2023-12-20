@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using Managers;
 using Player;
 using UnityEngine;
+using Weather.Wind;
+using Random = UnityEngine.Random;
 
 namespace Heat
 {
@@ -19,6 +22,7 @@ namespace Heat
         public static float timeIncrement;
         private bool campfireDestroyed;
         private bool burnPlayer;
+        private bool windblowingFire;
         
         private void Start()
         {
@@ -33,10 +37,38 @@ namespace Heat
                 
                 LowerValues();
                 HeatPlayer();
+
+                if (WindArea.Instance.IsWindHigh() && !windblowingFire)
+                {
+                    windblowingFire = true;
+
+                    StartCoroutine(WindBlowFire());
+                }
+                else if (!WindArea.Instance.IsWindHigh() && windblowingFire)
+                {
+                    windblowingFire = false;
+                }
             }
             else
             {
                 DestroyCampfire();
+            }
+        }
+
+        private IEnumerator WindBlowFire()
+        {
+            while (windblowingFire)
+            {
+                float chance = Mathf.Round(Random.value * 100);
+
+                if (chance <= 50f)
+                {
+                    windblowingFire = false;
+                    
+                    DestroyCampfire();
+                }
+
+                yield return new WaitForSeconds(10f);
             }
         }
 

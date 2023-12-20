@@ -90,14 +90,18 @@ namespace Managers
             if (items.Count > 0) ReduceItemsCondition();
         }
 
-        public void ToggleInventory()
+        public void ToggleInventory(bool controlBlocking = true)
         {
             if (inventoryOpened)
             {
                 // Close inventory
                 inventoryOpened = false;
 
-                PlayerLook.Instance.UnblockRotation();
+                if (controlBlocking)
+                {
+                    PlayerLook.Instance.UnblockRotation();
+                }
+                
                 inventory.SetActive(false);
                 HideItemDetail();
             }
@@ -110,7 +114,10 @@ namespace Managers
 
                 if (PlayerInteraction.equippedItem != null) UpdateItemData(PlayerInteraction.equippedItem);
 
-                PlayerLook.Instance.BlockRotation();
+                if (controlBlocking)
+                {
+                    PlayerLook.Instance.BlockRotation();
+                }
                 inventory.SetActive(true);
 
                 ListItems();
@@ -334,7 +341,7 @@ namespace Managers
                             actionButtonObj.SetActive(true);
                             actionBtn.onClick.AddListener(() =>
                             {
-                                InventoryUI.Instance.DisplayTreatmentChooser(item, itemCountValue);
+                                InventoryUI.Instance.ShowTreatmentChooser(item, itemCountValue);
                             });
 
                             break;

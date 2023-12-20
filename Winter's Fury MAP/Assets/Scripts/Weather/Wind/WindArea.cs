@@ -71,11 +71,22 @@ namespace Weather.Wind
                 currentWind = windTypes.First(wind => wind.name == "Blizzard");
             }
             
+            // randomize direction of winds
             if(currentWind.name == "Calm") windDirection = currentWind.windDirection;
             else windDirection = new Vector3((currentWind.windDirection.x + Random.Range(0f, 2f)) * GetRandomOne(), 0, currentWind.windDirection.z + Random.Range(0f, 2f)) * GetRandomOne();
             
             windTimer = 0;
-
+            
+            // change direction to particles if weather hasn't changed but wind have
+            if (WeatherSystem.selectedWeather.particleSystem != null)
+            {
+                var forceOverLifetime = WeatherSystem.selectedWeather.particleSystem.forceOverLifetime;
+                var windDir = GetWindDirection();
+                
+                forceOverLifetime.x = windDir.x;
+                forceOverLifetime.y = windDir.y;
+                forceOverLifetime.z = windDir.z;
+            }
         }
 
         public float GetWindChill()

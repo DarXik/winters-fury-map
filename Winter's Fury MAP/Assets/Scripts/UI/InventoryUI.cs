@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Volumes;
 using Weather.Wind;
 
 namespace UI
@@ -200,7 +201,7 @@ namespace UI
                 $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
         }
 
-        public void DisplayTreatmentChooser(ItemData treatmentData, int itemCount)
+        public void ShowTreatmentChooser(ItemData treatmentData, int itemCount)
         {
             index = 0;
             
@@ -210,6 +211,9 @@ namespace UI
             if (afflictions.Count == 0) return;
 
             treatmentChooser.SetActive(true);
+            DepthOfFieldController.Instance.ToggleBlurScreen();
+            InventoryManager.Instance.ToggleInventory(false);
+            
             afflictionToTreat = afflictions[index];
 
             affIconImage.sprite = afflictionToTreat.afflictionIcon;
@@ -224,6 +228,8 @@ namespace UI
         public void HideTreatmentChooser()
         {
             treatmentChooser.SetActive(false);
+            DepthOfFieldController.Instance.ToggleBlurScreen();
+            InventoryManager.Instance.ToggleInventory(false);
         }
 
         public void NextAffliction()

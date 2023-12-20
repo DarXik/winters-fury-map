@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1590759806622339634}
   - component: {fileID: 2430914694194568599}
   - component: {fileID: 457308055897270621}
-  - component: {fileID: 6259464230026324186}
   - component: {fileID: 6066707213508212393}
+  - component: {fileID: 6576062083377843880}
   m_Layer: 3
   m_Name: Green Book
   m_TagString: Untagged
@@ -87,28 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6259464230026324186
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2114531495875037320}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5233743780392465722, guid: c15b7d73296b9054c8e17343a5c273c0, type: 3}
 --- !u!114 &6066707213508212393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,3 +100,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: b09d83ce934cf7e46b9109061dd617a3, type: 2}
+--- !u!65 &6576062083377843880
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114531495875037320}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.050069377, y: 0.22653842, z: 0.16271168}
+  m_Center: {x: 0.24477828, y: 0.019648552, z: -0.008384615}
