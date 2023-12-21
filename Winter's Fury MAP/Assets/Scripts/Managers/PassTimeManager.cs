@@ -98,8 +98,6 @@ namespace Managers
             else
             {
                 ClosePassWindow();
-                DepthOfFieldController.Instance.ToggleBlurScreen();
-                VignetteController.Instance.ToggleVignette();
             }
         }
 
@@ -115,6 +113,9 @@ namespace Managers
             PlayerLook.Instance.UnblockRotation();
             PlayerController.Instance.currentActivity = PlayerActivity.Standing;
             UpdateLighting.Instance.ForceUpdateEnvironmentLighting();
+            
+            VignetteController.Instance.ToggleVignette();
+            DepthOfFieldController.Instance.ToggleBlurScreen();
 
             passTimeWindowOpened = false;
             hoursToPass = 1;

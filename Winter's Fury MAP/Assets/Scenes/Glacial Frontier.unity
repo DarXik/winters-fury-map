@@ -16,7 +16,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.86652094, g: 0.9722299, b: 0.9718577, a: 1}
+  m_FogColor: {r: 0.86951524, g: 0.9267164, b: 0.9148237, a: 1}
   m_FogMode: 3
   m_FogDensity: 0
   m_LinearFogStart: 0
@@ -11777,7 +11777,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 0.8431373, g: 0.9843138, b: 1, a: 1}
-  m_Intensity: 0.0075670686
+  m_Intensity: 0.014971824
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -11836,7 +11836,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362096504}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.26279667, y: 0.56287354, z: 0.19488096, w: 0.759034}
+  m_LocalRotation: {x: -0.101195574, y: 0.45602, z: 0.05228253, w: 0.88265043}
   m_LocalPosition: {x: 2657.0122, y: -206.90686, z: 227.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24195,7 +24195,7 @@ MonoBehaviour:
   sunOrbitPivot: {fileID: 1747990318}
   useMoonPivot: 1
   moonOrbitPivot: {fileID: 1747990318}
-  startTime: 15
+  startTime: 17
   timeIncrement: 0.003
   autoTimeIncrement: 0
   shouldUpdateEnvironmentReflection: 0
@@ -26051,7 +26051,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 0.99511117, b: 0.8632076, a: 1}
-  m_Intensity: 0.4371464
+  m_Intensity: 0.15679008
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -26109,7 +26109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872816394}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19488099, y: -0.75903404, z: 0.2627967, w: 0.56287354}
+  m_LocalRotation: {x: -0.05228253, y: 0.88265043, z: -0.101195574, w: -0.45602}
   m_LocalPosition: {x: 2657.0122, y: -206.90686, z: 227.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32317,7 +32317,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 20000
+    maxNumParticles: 28000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 1
@@ -32583,7 +32583,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10000
+      scalar: 15000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -33902,7 +33902,7 @@ ParticleSystem:
         m_RotationOrder: 4
     m_Range: {x: 0, y: 1}
   ForceModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -52294,7 +52294,7 @@ MonoBehaviour:
     windDirection: {x: 6.5, y: 0, z: 6.5}
   - name: Blizzard
     windChill: 5
-    windDirection: {x: 10, y: 0, z: 10}
+    windDirection: {x: 12, y: 0, z: 12}
   windChangeMin: 1
   windChangeMax: 3
 --- !u!1001 &1429531000
@@ -62373,6 +62373,7 @@ MonoBehaviour:
   hungerChevrons: {fileID: 1319788626}
   maxHealth: 100
   healthRecoveryRate: 1.04
+  sleepHealthRecoveryRate: 2.08
   warmthDrainRate: 18.75
   fatigueDrainRate: 1.04
   thirstDrainRate: 2.08

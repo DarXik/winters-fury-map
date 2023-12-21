@@ -21,6 +21,7 @@ namespace Managers
 
         [Header("Health")] public float maxHealth;
         public float healthRecoveryRate;
+        public float sleepHealthRecoveryRate;
         public float warmthDrainRate;
         public float fatigueDrainRate;
         public float thirstDrainRate;
@@ -153,7 +154,15 @@ namespace Managers
         {
             if (currentHealth >= maxHealth) return;
 
-            currentHealth += healthRecoveryRate * (Time.deltaTime * timeIncrement);
+            switch (currentActivity)
+            {
+                case PlayerActivity.Sleeping:
+                    currentHealth += sleepHealthRecoveryRate * (Time.deltaTime * timeIncrement);
+                    break;
+                case PlayerActivity.Standing or PlayerActivity.Walking or PlayerActivity.Running:
+                    currentHealth += healthRecoveryRate * (Time.deltaTime * timeIncrement);
+                    break;
+            }
         }
 
         private void ReduceHealth()
