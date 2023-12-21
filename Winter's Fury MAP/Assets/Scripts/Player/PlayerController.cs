@@ -1,5 +1,6 @@
 using System.Collections;
 using Heat;
+using Managers;
 using UI;
 using UnityEngine;
 using Weather.Wind;
@@ -176,15 +177,21 @@ namespace Player
             if (Input.GetKey(KeyCode.LeftShift) && !isCrouching && !staminaDepleted &&
                 Mathf.Approximately(charController.height, standingHeight))
             {
-                movementSpeed = runningSpeed;
-
-                isRunning = true;
-
-                currentActivity = PlayerActivity.Running;
-
-                DecreaseStamina();
-
-                HUD.Instance.ShowStaminaIcon();
+                if (VitalManager.Instance.FatiguePercent > 0)
+                {
+                    movementSpeed = runningSpeed;
+                    isRunning = true;
+                    currentActivity = PlayerActivity.Running;
+                    
+                    DecreaseStamina();
+                    HUD.Instance.ShowStaminaIcon();
+                }
+                else
+                {
+                    movementSpeed = walkSpeed;
+                    currentStamina = maxStamina;
+                    HUD.Instance.ShowStaminaIcon(true);
+                }
             }
             else
             {
@@ -195,6 +202,7 @@ namespace Player
                 currentActivity = PlayerActivity.Walking;
 
                 if (currentStamina < maxStamina) StartCoroutine(StartRegeneratingStamina());
+                else HUD.Instance.FadeAwayStaminaIcon();
             }
 
             if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))

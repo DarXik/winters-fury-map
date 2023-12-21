@@ -211,5 +211,10 @@ namespace Managers
             hoursText.text = hoursToPass.ToString();
             caloriesBurned.text = (VitalManager.Instance.sleepingBurnRate * hoursToPass).ToString();
         }
+
+        public int GetHoursToPass()
+        {
+            return hoursToPass;
+        }
     }
 }

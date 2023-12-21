@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Managers;
 using Player;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace UI
         [SerializeField] private GameObject staminaIcon;
         [SerializeField] private Image staminaFill, runningIcon;
         [SerializeField] private Gradient staminaGradient;
+        [SerializeField] private Color unavailableColor;
         private Animator staminaAnim;
         
         public static HUD Instance { get; private set; }
@@ -30,11 +32,17 @@ namespace UI
 
         private void Update()
         {
-            if (staminaIcon.activeInHierarchy) HandleStaminaFill();
+            if (staminaIcon.activeInHierarchy && VitalManager.Instance.FatiguePercent > 0) HandleStaminaFill();
         }
 
-        public void ShowStaminaIcon()
+        public void ShowStaminaIcon(bool emptyFatigue = false)
         {
+            if (emptyFatigue)
+            {
+                staminaFill.color = unavailableColor;
+                runningIcon.color = unavailableColor;
+            }
+            
             if(!staminaIcon.activeInHierarchy) staminaIcon.SetActive(true);
         }
 
