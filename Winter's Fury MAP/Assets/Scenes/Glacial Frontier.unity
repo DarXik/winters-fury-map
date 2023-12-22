@@ -62389,6 +62389,7 @@ MonoBehaviour:
   - 1
   - 10
   - 18
+  timeToHypothermia: 2
   maxFatigueBar: 100
   smallDecreaseRate: 8.3
   mediumDecreaseRate: 35

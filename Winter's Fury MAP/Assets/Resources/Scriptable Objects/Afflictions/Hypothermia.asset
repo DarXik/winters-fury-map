@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 769f06f5a5a24f8cb1c2da6d40a9e47a, type: 3}
+  m_Name: Hypothermia
+  m_EditorClassIdentifier: 
+  afflictionName: Hypothermia
+  afflictionDescription: You have been exposed to cold temperatures for too long.
+    You must stay warm for a while to cure it.
+  afflictionIcon: {fileID: 21300000, guid: 5981ee9e385150540982460333e4acf2, type: 3}
+  afflictionType: 1
+  hasSetDuration: 0
+  hasTreatment: 0
+  treated: 0
+  untreatedMin: 0
+  untreatedMax: 0
+  currentDuration: 0
+  totalDuration: 0
+  treatment: {fileID: 0}
+  treatmentAmount: 0
+  wasTreated: 0

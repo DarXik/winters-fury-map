@@ -30,11 +30,9 @@ namespace Managers
         public float CurrentHealth => currentHealth;
 
         [Header("Temperature")] public float maxTempBar;
-
-        [FormerlySerializedAs("chevronThresholds")]
         public float[] reduceThresholds = new float[3];
-
         public float[] increaseThresholds = new float[3];
+        public float timeToHypothermia;
         private float feelsLikeTemp;
         private float currentTemp;
         private int reduceTempChevronsToReveal, increaseTempChevronsToReveal;
@@ -136,6 +134,12 @@ namespace Managers
             {
                 CheckAfflictions();
                 ReduceAfflictionDuration();
+            }
+            
+            // check for hypothermia risk
+            if (currentTemp <= 0 && timeToHypothermia > 0)
+            {
+                CheckForHypothermia();
             }
         }
 
@@ -423,11 +427,24 @@ namespace Managers
             }
         }
 
+        private void CheckForHypothermia()
+        {
+            timeToHypothermia -= Time.deltaTime * timeIncrement;
+
+            if (timeToHypothermia <= 0)
+            {
+                InflictAffliction(Resources.Load<Affliction>("Scriptable Objects/Afflictions/Hypothermia"));
+            }
+        }
+
         private void ReduceAfflictionDuration()
         {
             for (var i = currentAfflictions.Count - 1; i >= 0; i--)
             {
                 var affliction = currentAfflictions[i];
+
+                if (!affliction.hasSetDuration) return;
+                
                 if (affliction.currentDuration <= 0)
                 {
                     currentAfflictions.Remove(affliction);

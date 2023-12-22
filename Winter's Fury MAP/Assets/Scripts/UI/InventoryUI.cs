@@ -192,10 +192,13 @@ namespace UI
             treatmentObj.SetActive(true);
 
             afflictionDesc.text = affliction.afflictionDescription;
-            treatmentIcon.sprite = affliction.treatment.itemIcon;
-            treatmentIcon.preserveAspect = true;
-            treatmentAmount.text = affliction.treatmentAmount.ToString();
-            wasTreatedObj.SetActive(affliction.wasTreated);
+            if (affliction.treatment.itemIcon)
+            {
+                treatmentIcon.sprite = affliction.treatment.itemIcon;
+                treatmentIcon.preserveAspect = true;
+                treatmentAmount.text = affliction.treatmentAmount.ToString();
+                wasTreatedObj.SetActive(affliction.wasTreated);
+            }
 
             recoveryTimeText.text =
                 $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
