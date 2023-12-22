@@ -37,16 +37,15 @@ namespace UI
 
         [Header("Treatment Chooser")] 
         public GameObject treatmentChooser;
+        public GameObject listOfTreatments, timeText, recoveryTimes;
         public GameObject wasTreatedObj;
         public Image affIconImage;
         public TextMeshProUGUI affNameText;
         public Button treatAfflictionBtn;
 
-        [Header("Danger Icons")] 
-        public GameObject stomachDanger;
+        [Header("Danger Icons")] public GameObject stomachDanger;
 
-        [Header("Affliction Alert")] 
-        public GameObject afflictionAlert;
+        [Header("Affliction Alert")] public GameObject afflictionAlert;
         private Animator afflictionAlertAnim;
         public TextMeshProUGUI nameToDisplay;
         public Image iconToDisplay;
@@ -54,6 +53,8 @@ namespace UI
         private bool noAffliction;
         private Affliction afflictionToTreat;
         private int index;
+
+        private GameObject selectedAffItem;
 
         public static InventoryUI Instance { get; private set; }
 
@@ -118,7 +119,7 @@ namespace UI
             iconToDisplay.sprite = icon;
 
             yield return new WaitForSeconds(2f);
-            
+
             afflictionAlertAnim.SetTrigger("HideAlert");
         }
 
@@ -165,11 +166,18 @@ namespace UI
                         affliction.afflictionName;
                     affItem.transform.Find("AfflictionIconBG/AfflictionIcon").GetComponent<Image>().sprite =
                         affliction.afflictionIcon;
-                    affItem.transform.GetComponent<Button>().onClick
-                        .AddListener(() => { DisplayTreatment(affliction); });
                     affItem.transform.GetComponent<Button>().onClick.AddListener(() =>
                     {
+                        if (selectedAffItem != null)
+                        {
+                            selectedAffItem.GetComponent<Image>().enabled = false;
+                        }
+                        
                         affItem.GetComponent<Image>().enabled = true;
+
+                        selectedAffItem = affItem;
+                        
+                        DisplayTreatment(affliction);
                     });
 
                     if (affliction.afflictionType == AfflictionType.FoodPoisoning)
@@ -192,22 +200,33 @@ namespace UI
             treatmentObj.SetActive(true);
 
             afflictionDesc.text = affliction.afflictionDescription;
-            if (affliction.treatment.itemIcon)
+
+            if (affliction.hasTreatment)
             {
+                listOfTreatments.SetActive(true);
+                timeText.SetActive(true);
+                recoveryTimes.SetActive(true);
+                
                 treatmentIcon.sprite = affliction.treatment.itemIcon;
                 treatmentIcon.preserveAspect = true;
                 treatmentAmount.text = affliction.treatmentAmount.ToString();
                 wasTreatedObj.SetActive(affliction.wasTreated);
-            }
 
-            recoveryTimeText.text =
-                $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
+                recoveryTimeText.text =
+                    $"{Mathf.RoundToInt(affliction.currentDuration)} HOURS / {Mathf.RoundToInt(affliction.totalDuration)} HOURS";
+            }
+            else
+            {
+                listOfTreatments.SetActive(false);
+                timeText.SetActive(false);
+                recoveryTimes.SetActive(false);
+            }
         }
 
         public void ShowTreatmentChooser(ItemData treatmentData, int itemCount)
         {
             index = 0;
-            
+
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
 
             // display something else when itemCount is not suitable
@@ -216,7 +235,7 @@ namespace UI
             treatmentChooser.SetActive(true);
             DepthOfFieldController.Instance.ToggleBlurScreen();
             InventoryManager.Instance.ToggleInventory(false);
-            
+
             afflictionToTreat = afflictions[index];
 
             affIconImage.sprite = afflictionToTreat.afflictionIcon;
@@ -224,7 +243,8 @@ namespace UI
 
             treatAfflictionBtn.onClick.AddListener(() =>
             {
-                VitalManager.Instance.TreatAffliction(treatmentData, afflictionToTreat.treatmentAmount, afflictionToTreat);
+                VitalManager.Instance.TreatAffliction(treatmentData, afflictionToTreat.treatmentAmount,
+                    afflictionToTreat);
             });
         }
 
@@ -243,7 +263,7 @@ namespace UI
             {
                 index++;
             }
-            
+
             UpdateTreatmentChooser();
         }
 
@@ -253,14 +273,14 @@ namespace UI
             {
                 index--;
             }
-            
+
             UpdateTreatmentChooser();
         }
 
         private void UpdateTreatmentChooser()
         {
             var afflictions = VitalManager.Instance.GetCurrentAfflictions();
-            
+
             afflictionToTreat = afflictions[index];
 
             affIconImage.sprite = afflictionToTreat.afflictionIcon;

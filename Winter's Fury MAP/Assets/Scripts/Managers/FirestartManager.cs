@@ -160,7 +160,7 @@ public class FirestartManager : MonoBehaviour
 
                 // add burnTime to fire minus the 5 minutes of the inGameStartingTime
                 heatSource.burnTime += (burnTime / 60f) - (inGameStartingTime / 60f);
-                heatSource.heatOutput += temperatureIncrease;
+                heatSource.HeatOutput += temperatureIncrease;
             }
         }
 

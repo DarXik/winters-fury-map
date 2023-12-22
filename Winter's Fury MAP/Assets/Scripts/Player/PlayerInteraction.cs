@@ -149,7 +149,7 @@ namespace Player
             {
                 interactedCampfire = clickHit.transform.GetComponent<HeatSource>();
                 var fireDuration = interactedCampfire.burnTime;
-                var heatOutput = interactedCampfire.heatOutput;
+                var heatOutput = interactedCampfire.HeatOutput;
 
                 AddFuelManager.Instance.OpenAddFuelWindow(fireDuration, heatOutput, clickHit.transform);
             }

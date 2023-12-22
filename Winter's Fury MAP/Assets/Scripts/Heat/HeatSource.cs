@@ -3,6 +3,7 @@ using System.Collections;
 using Managers;
 using Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Weather.Wind;
 using Random = UnityEngine.Random;
 
@@ -16,7 +17,12 @@ namespace Heat
         [SerializeField] private float heatRange;
 
         [HideInInspector] public float burnTime;
-        [HideInInspector] public float heatOutput;
+        private float heatOutput;
+        public float HeatOutput
+        {
+            get => heatOutput;
+            set => heatOutput = Mathf.Clamp(value, 0, 80);
+        }
 
         private Vector3 playerPos;
         public static float timeIncrement;
@@ -38,7 +44,7 @@ namespace Heat
                 LowerValues();
                 HeatPlayer();
 
-                if (WindArea.Instance.IsWindHigh() && !windblowingFire)
+                if (WindArea.Instance.IsWindHigh() && !windblowingFire && !PlayerController.isWindProtected)
                 {
                     windblowingFire = true;
 
@@ -74,7 +80,7 @@ namespace Heat
 
         private void HeatPlayer()
         {
-            TemperatureManager.HeatFromFire = Vector3.Distance(transform.position, playerPos) < heatRange ? heatOutput : 0;
+            TemperatureManager.HeatFromFire = Vector3.Distance(transform.position, playerPos) < heatRange ? HeatOutput : 0;
         }
 
         private void LowerValues()

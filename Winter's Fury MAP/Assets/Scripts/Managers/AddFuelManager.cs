@@ -85,7 +85,7 @@ namespace Managers
 
             // add fuel item into HeatSource
             PlayerInteraction.interactedCampfire.burnTime += chosenFuelItem.burnTime / 60f;
-            PlayerInteraction.interactedCampfire.heatOutput += chosenFuelItem.temperatureIncrease;
+            PlayerInteraction.interactedCampfire.HeatOutput += chosenFuelItem.temperatureIncrease;
 
             // update UI text
             var duration = Mathf.RoundToInt(PlayerInteraction.interactedCampfire.burnTime * 60f);
@@ -99,7 +99,7 @@ namespace Managers
                 fireDurText.text = $"{BurnConverter.GetFuelMinutes(duration)}M";
             }
 
-            heatOutText.text = $"{PlayerInteraction.interactedCampfire.heatOutput}°C";
+            heatOutText.text = $"{PlayerInteraction.interactedCampfire.HeatOutput}°C";
 
             // delete fuel item and update UI
             InventoryManager.Instance.DeleteItem(chosenFuelItem);

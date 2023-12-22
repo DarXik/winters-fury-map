@@ -19,7 +19,8 @@ namespace Managers
         public GameObject thirstChevrons;
         public GameObject hungerChevrons;
 
-        [Header("Health")] public float maxHealth;
+        [Header("Health")] 
+        public float maxHealth;
         public float healthRecoveryRate;
         public float warmthDrainRate;
         public float fatigueDrainRate;
@@ -32,7 +33,9 @@ namespace Managers
         [Header("Temperature")] public float maxTempBar;
         public float[] reduceThresholds = new float[3];
         public float[] increaseThresholds = new float[3];
-        public float timeToHypothermia;
+        public float totalTimeToHypothermia;
+        public float totalTimeToHealHypothermia;
+        private float currentTimeToHypothermia, currentTimeToHealHypothermia;
         private float feelsLikeTemp;
         private float currentTemp;
         private int reduceTempChevronsToReveal, increaseTempChevronsToReveal;
@@ -83,6 +86,9 @@ namespace Managers
             currentTemp = maxTempBar;
             currentFatigue = maxFatigueBar;
 
+            currentTimeToHypothermia = totalTimeToHypothermia;
+            currentTimeToHealHypothermia = totalTimeToHealHypothermia;
+
             timeIncrement = GameManager.Instance.GetTimeIncrement();
 
             HideRecoverTempChevrons();
@@ -99,11 +105,11 @@ namespace Managers
 
             switch (feelsLikeTemp)
             {
-                case >= 1:
+                case >= 0.5f:
                     RecoverTemperature();
                     HideReduceTempChevrons();
                     break;
-                case <= 0.99f:
+                case <= 0.49f:
                     ReduceTemperature();
                     HideRecoverTempChevrons();
                     break;
@@ -136,10 +142,17 @@ namespace Managers
                 ReduceAfflictionDuration();
             }
             
-            // check for hypothermia risk
-            if (currentTemp <= 0 && timeToHypothermia > 0)
+            // if currentTemp is below 0 and we don't have it, inflict it after a set amount of hours
+            if (currentTemp <= 0 && currentAfflictions.All(afflictions => afflictions.afflictionType != AfflictionType.Hypothermia))
             {
                 CheckForHypothermia();
+            }
+            
+            // if currentTemp is above 0 and we have Hypothermia, heal it
+            if (currentTemp > 0 &&
+                currentAfflictions.All(afflictions => afflictions.afflictionType == AfflictionType.Hypothermia))
+            {
+                HealHypothermia();
             }
         }
 
@@ -429,11 +442,25 @@ namespace Managers
 
         private void CheckForHypothermia()
         {
-            timeToHypothermia -= Time.deltaTime * timeIncrement;
+            currentTimeToHypothermia -= Time.deltaTime * timeIncrement;
 
-            if (timeToHypothermia <= 0)
+            if (currentTimeToHypothermia <= 0)
             {
                 InflictAffliction(Resources.Load<Affliction>("Scriptable Objects/Afflictions/Hypothermia"));
+
+                currentTimeToHypothermia = totalTimeToHypothermia;
+            }
+        }
+
+        private void HealHypothermia()
+        {
+            currentTimeToHealHypothermia -= Time.deltaTime * timeIncrement;
+
+            if (currentTimeToHealHypothermia <= 0)
+            {
+                currentAfflictions.RemoveAll(afflictions => afflictions.afflictionType == AfflictionType.Hypothermia);
+
+                currentTimeToHealHypothermia = totalTimeToHealHypothermia;
             }
         }
 
@@ -443,7 +470,7 @@ namespace Managers
             {
                 var affliction = currentAfflictions[i];
 
-                if (!affliction.hasSetDuration) return;
+                if (!affliction.hasSetDuration) continue;
                 
                 if (affliction.currentDuration <= 0)
                 {
@@ -464,6 +491,9 @@ namespace Managers
                 {
                     case AfflictionType.FoodPoisoning:
                         FoodPoisoning(affliction.wasTreated);
+                        break;
+                    case AfflictionType.Hypothermia:
+                        Hypothermia();
                         break;
                 }
             }
@@ -505,6 +535,14 @@ namespace Managers
             {
                 InventoryManager.Instance.DeleteItemByName(itemData.itemName);
             }
+        }
+
+        private void Hypothermia()
+        {
+            // lose condition and fatigue twice
+
+            currentHealth -= warmthDrainRate * (Time.deltaTime * timeIncrement);
+            currentHealth -= fatigueDrainRate * (Time.deltaTime * timeIncrement);
         }
 
         private void FoodPoisoning(bool treated)

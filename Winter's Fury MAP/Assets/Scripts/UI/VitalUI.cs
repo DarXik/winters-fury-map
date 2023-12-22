@@ -41,10 +41,10 @@ public class VitalUI : MonoBehaviour
         GetPercents();
         UpdateNeedsUI();
 
-        if (temperaturePercent <= 0 || fatiguePercent <= 0 || thirstPercent <= 0 || hungerPercent <= 0)
+        if (temperaturePercent <= 0 || fatiguePercent <= 0 || thirstPercent <= 0 || hungerPercent <= 0 || VitalManager.Instance.GetCurrentAfflictions().Count > 0)
             DisplayCaution();
         
-        if (temperaturePercent > 0 && fatiguePercent > 0 && thirstPercent > 0 && hungerPercent > 0)
+        if (temperaturePercent > 0 && fatiguePercent > 0 && thirstPercent > 0 && hungerPercent > 0 && VitalManager.Instance.GetCurrentAfflictions().Count == 0)
             HideCaution();
     }
 
