@@ -97,6 +97,24 @@ namespace Heat
             Destroy(gameObject);
         }
 
+        public void UpdateParticles()
+        {
+            var fireParticles = transform.Find("Fire").transform.Find("FireParticles").GetComponent<ParticleSystem>();
+            var smokeParticles = transform.Find("Fire").transform.Find("SmokeParticles").GetComponent<ParticleSystem>();
+
+            var fireForce = fireParticles.forceOverLifetime;
+            var smokeForce = smokeParticles.forceOverLifetime;
+
+            var windDir = WindArea.Instance.GetWindDirection();
+            
+            fireForce.x = windDir.x;
+            fireForce.y = windDir.y;
+            fireForce.z = windDir.z;
+            smokeForce.x = windDir.x;
+            smokeForce.y = windDir.y;
+            smokeForce.z = windDir.z;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Player"))

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Heat;
 using Managers;
 using Player;
 using UnityEngine;
@@ -76,7 +77,7 @@ namespace Weather.Wind
             else windDirection = new Vector3((currentWind.windDirection.x + Random.Range(0f, 2f)) * GetRandomOne(), 0, currentWind.windDirection.z + Random.Range(0f, 2f)) * GetRandomOne();
             
             windTimer = 0;
-            
+
             // change direction to particles if weather hasn't changed but wind have
             if (WeatherSystem.selectedWeather.particleSystem != null)
             {
@@ -86,6 +87,13 @@ namespace Weather.Wind
                 forceOverLifetime.x = windDir.x;
                 forceOverLifetime.y = windDir.y;
                 forceOverLifetime.z = windDir.z;
+            }
+
+            HeatSource heatSource = FindFirstObjectByType<HeatSource>();
+
+            if (heatSource != null)
+            {
+                heatSource.UpdateParticles();
             }
         }
 

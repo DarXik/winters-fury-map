@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using Heat;
 using Inventory;
 using Managers;
@@ -41,6 +42,7 @@ public class FirestartManager : MonoBehaviour
     [Tooltip("In-game minutes of attempting to start the fire.")] 
     [SerializeField] private float inGameStartingTime;
 
+    private ItemData previousItem;
     private ItemData currentItem;
     private int currentItemIndex;
     private int maxFuelCount;
@@ -140,23 +142,10 @@ public class FirestartManager : MonoBehaviour
             {
                 var campfire = Instantiate(this.campfire, hit.point, Quaternion.identity);
                 campfire.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-
-                var fireParticles = campfire.transform.Find("Fire").transform.Find("FireParticles").GetComponent<ParticleSystem>();
-                var fireForce = fireParticles.forceOverLifetime;
-                
-                var smokeParticles = campfire.transform.Find("Fire").transform.Find("SmokeParticles").GetComponent<ParticleSystem>();
-                var smokeForce = smokeParticles.forceOverLifetime;
-
-                var windDir = WindArea.Instance.GetWindDirection();
-
-                fireForce.x = windDir.x;
-                fireForce.y = windDir.y;
-                fireForce.z = windDir.z;
-                smokeForce.x = windDir.x;
-                smokeForce.y = windDir.y;
-                smokeForce.z = windDir.z;
                 
                 var heatSource = campfire.GetComponent<HeatSource>();
+                
+                heatSource.UpdateParticles();
 
                 // add burnTime to fire minus the 5 minutes of the inGameStartingTime
                 heatSource.burnTime += (burnTime / 60f) - (inGameStartingTime / 60f);
@@ -194,23 +183,20 @@ public class FirestartManager : MonoBehaviour
 
     public void SwitchFuelSource()
     {
-        var fuelItems = InventoryManager.Instance.GetFuelItems();
+        var fuelItems = InventoryManager.Instance.GetFuelItems().GroupBy(x => x.itemName).Select(g => g.First())
+            .ToList();
         var itemCounts = InventoryManager.Instance.GetItemCounts();
 
         chanceOfSuccess = baseFireStartingChance;
         chosenFuelCount = 1;
 
-        if (currentItemIndex < fuelItems.Count - 1)
-        {
-            currentItemIndex += 1;
-            
-            currentItemIndex = fuelItems.FindLastIndex(item => item == fuelItems[currentItemIndex]);
-        }
-        else
-        {
-            currentItemIndex = fuelItems.FindLastIndex(item => item == fuelItems[0]);
-        }
+        currentItemIndex++;
 
+        if (currentItemIndex >= fuelItems.Count)
+        {
+            currentItemIndex = 0;
+        }
+        
         currentItem = fuelItems[currentItemIndex];
 
         foreach (var count in itemCounts)
