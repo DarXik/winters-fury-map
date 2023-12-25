@@ -1,2 +1,2 @@
 # winters-fury-map
-The best game
+The best game made by two best friends!
