@@ -47,10 +47,10 @@ namespace Managers
             SetKeyPreference("inventoryKey", out toggleInventoryKey);
             SetKeyPreference("passTimeKey", out togglePassTimeKey);
 
-            if (randomizeSpawn) SpawnPlayer();
+            if (randomizeSpawn) RandomizeSpawn();
         }
 
-        private void SpawnPlayer()
+        private void RandomizeSpawn()
         {
             int randomTime = Random.Range(0, times.Length);
             int randomLoc = Random.Range(0, spawnPoints.Length);
