@@ -316,9 +316,13 @@ namespace Managers
 
                             break;
                         case ItemType.Fuelsource:
-                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "Start fire";
+                            actionButtonObj.GetComponentInChildren<TextMeshProUGUI>().text = "N/A";
                             actionButtonObj.SetActive(true);
-                            actionBtn.onClick.AddListener(() => { TryStartFire(item, itemCountValue); });
+                            /*
+                             * 3. VÝSTUP ONLY
+                             *
+                             * actionBtn.onClick.AddListener(() => { TryStartFire(item, itemCountValue); });
+                             */
                             break;
                         case ItemType.Tool:
                             if (PlayerInteraction.equippedItem != null &&
