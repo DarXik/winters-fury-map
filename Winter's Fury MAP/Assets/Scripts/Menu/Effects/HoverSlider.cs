@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HoverSlider : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HoverSlider : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
     private Animator animator;
     public GameObject sliderTextFPS;
@@ -24,21 +24,28 @@ public class HoverSlider : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         ToggleVisibility(true);
-
-        Debug.Log("enter");
         // animator.Play("anim1");
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        ToggleVisibility(true);
+    }
+    public void OnPointerUp(PointerEventData eventData)
     {
         ToggleVisibility(false);
-
-        Debug.Log("leave");
-        // animator.Play("anim2");
-        animator.SetTrigger("HoverOut");
     }
 
-    public void ToggleVisibility(bool visibility)
+public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!Input.GetMouseButton(0))
+        {
+            ToggleVisibility(false);
+        }
+        // animator.SetTrigger("HoverOut");
+    }
+
+    private void ToggleVisibility(bool visibility)
     {
         sliderTextFPS.SetActive(visibility);
     }

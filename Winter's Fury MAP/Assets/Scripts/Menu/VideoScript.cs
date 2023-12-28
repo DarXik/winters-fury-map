@@ -4,26 +4,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionsScript : MonoBehaviour
+public class VideoScript : MonoBehaviour
 {
-    public static OptionsScript Instance { get; private set; }
+    // Start is called before the first frame update
+    public static VideoScript Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void Start()
+    private void Start()
     {
         LoadPreferences();
         GetResolutions();
         QualitySwitcher();
         SetFPS(fpsPreference);
-        SetBrightness(brigtnessPreference);
+        SetBrightness(brightnessPreference);
         SetFullScreen(fullscreenPreference);
     }
 
-    public void Update()
+    private void Update()
     {
         switch (currentQualityIndex)
         {
@@ -44,10 +45,9 @@ public class OptionsScript : MonoBehaviour
 
     public void SavePreferences()
     {
-        ControlsScript.Instance.SavePreferences();
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
-        PlayerPrefs.SetFloat("brightnessPreference", brigtnessPreference);
+        PlayerPrefs.SetFloat("brightnessPreference", brightnessPreference);
         PlayerPrefs.SetInt("fullscreenPreference", fullscreenPreference ? 1 : 0);
         Debug.Log("Uloženo");
     }
@@ -56,7 +56,7 @@ public class OptionsScript : MonoBehaviour
     {
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
-        brigtnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
+        brightnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
         Debug.Log("Načteno");
     }
@@ -91,10 +91,12 @@ public class OptionsScript : MonoBehaviour
 
     public void SetBrightness(float lumen)
     {
-        brigtnessPreference = lumen;
-        sliderTextBrigtness.text = brigtnessPreference.ToString("0.00");
-        sliderBrightness.value = brigtnessPreference;
-        Debug.Log("Brig. " + brigtnessPreference);
+        brightnessPreference = lumen;
+        double numToBeShown = 33.333333 * brightnessPreference + (33.3333333 / 2) + 50;
+        sliderTextBrigtness.text = numToBeShown.ToString("0") + "%";
+        sliderBrightness.value = brightnessPreference;
+        Debug.Log("Brig. " + brightnessPreference);
+
     }
 
     private void QualitySwitcher()
@@ -186,6 +188,6 @@ public class OptionsScript : MonoBehaviour
 
     [Header("Pro ukládání")] private int fpsPreference;
     private int currentQualityIndex;
-    private float brigtnessPreference;
+    private float brightnessPreference;
     private bool fullscreenPreference;
 }

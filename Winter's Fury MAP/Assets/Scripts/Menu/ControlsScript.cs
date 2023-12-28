@@ -36,7 +36,7 @@ public class ControlsScript : MonoBehaviour
         Debug.Log("Keys uloženo");
     }
 
-    public void LoadPreferences()
+    private void LoadPreferences()
     {
         inventoryKeyPreference = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString("inventoryKey") : "Tab";
         inventoryKeyText.text = inventoryKeyPreference;

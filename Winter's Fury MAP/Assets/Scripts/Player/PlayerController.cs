@@ -52,6 +52,7 @@ namespace Player
         [Header("Utilities")] public Headbob headBob = new();
 
         public static PlayerController Instance { get; private set; }
+        private bool headBobPref;
 
         private void Awake()
         {
@@ -64,6 +65,8 @@ namespace Player
             standingHeight = currentHeight = charController.height;
             initialCameraPos = cameraTransform.localPosition;
             currentStamina = maxStamina;
+
+            SetHeadBobPreference();
 
             headBob.Setup();
         }
@@ -118,10 +121,16 @@ namespace Player
 
         private void CheckForHeadBob()
         {
+            if (!headBobPref) return;
             if (isRunning)
             {
                 headBob.StartHeadBob();
             }
+        }
+
+        private void SetHeadBobPreference()
+        {
+            headBobPref  = PlayerPrefs.HasKey("headBobbingPreference") ? PlayerPrefs.GetInt("headBobbingPreference") == 1 : PlayerPrefs.GetInt("headBobbingPreference") == 0;
         }
 
         private void CrouchHandler()

@@ -30,9 +30,19 @@ public class MainMenu : MonoBehaviour
             }
         }
 
+        // if (optionsObj.activeSelf)
+        // {
+        //     background.color = new(0, 0, 0, 0.8352941f);
+        // }
+        //
         // if (startObj.activeSelf)
         // {
-            CameraShake();
+        //     background.color = new(0, 0, 0, 0.5607843f);
+        // }
+
+        // if (startObj.activeSelf)
+        // {
+        CameraShake();
         // }
 
         generalButton.interactable = !optionsGeneralObj.activeSelf;
@@ -60,16 +70,19 @@ public class MainMenu : MonoBehaviour
             startObj.SetActive(true);
             optionsObj.SetActive(false);
             optionsOpened = false;
-            OptionsScript.Instance.SavePreferences();
+            VideoScript.Instance.SavePreferences();
+            ControlsScript.Instance.SavePreferences();
+            AudioScript.Instance.SavePreferences();
+            GeneralScript.Instance.SavePreferences();
             StartCoroutine(MoveCamera(start, 55));
 
-            yaw = 80.55f;   
+            yaw = 80.55f;
         }
     }
 
     private void CameraShake()
     {
-        yaw +=  speedH * Input.GetAxis("Mouse X");
+        yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");
 
         mainCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
@@ -161,8 +174,7 @@ public class MainMenu : MonoBehaviour
         // startMenuRest.SetActive(true);
     }
 
-    [Header("Game Objecty")]
-    public GameObject startObj;
+    [Header("Game Objecty")] public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;
@@ -173,8 +185,7 @@ public class MainMenu : MonoBehaviour
     public Button audioButton;
     public Button controlsButton;
 
-    [Header("Kamera")]
-    public Camera mainCamera;
+    [Header("Kamera")] public Camera mainCamera;
     public Transform target, start;
     public float speedH;
     public float speedV;
@@ -193,6 +204,6 @@ public class MainMenu : MonoBehaviour
     private bool controlsOpened;
 
     [Header("Efekty")] [SerializeField] private CanvasGroup myUIGroup;
+    public Image background;
     private bool fadeIn;
-
 }

@@ -122,14 +122,7 @@ namespace Managers
         private void SetKeyPreference(string key, out KeyCode desiredKey)
         {
             var inventoryKey = PlayerPrefs.GetString(key);
-            if (Enum.TryParse(inventoryKey, out KeyCode kc))
-            {
-                desiredKey = kc;
-            }
-            else
-            {
-                desiredKey = KeyCode.None;
-            }
+            desiredKey = Enum.TryParse(inventoryKey, out KeyCode kc) ? kc : KeyCode.None;
         }
     }
 }
