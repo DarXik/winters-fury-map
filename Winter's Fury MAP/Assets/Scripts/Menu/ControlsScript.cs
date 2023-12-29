@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,16 +17,11 @@ public class ControlsScript : MonoBehaviour
     public TMP_Text inventoryKeyText;
     public Button passTimeKeyButton;
     public TMP_Text passTimeKeyText;
-
     public static ControlsScript Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
         LoadPreferences();
     }
 
@@ -51,21 +47,33 @@ public class ControlsScript : MonoBehaviour
     {
         // lambda expression - definuje akci, která se stane, pokud je key pressed
         // bere string key a nastaví pref na key a text na key
-        StartCoroutine(HandleKeyCoroutine(true, (key) => { inventoryKeyPreference = key; inventoryKeyText.text = key; }));
+        StartCoroutine(HandleKeyCoroutine(true, (key) =>
+        {
+            inventoryKeyPreference = key;
+            inventoryKeyText.text = key;
+        }));
     }
 
     public void PassTimeKeyHandler()
     {
-        StartCoroutine(HandleKeyCoroutine(true, (key) => { passTimeKeyPreference = key; passTimeKeyText.text = key; }));
+        StartCoroutine(HandleKeyCoroutine(true, (key) =>
+        {
+            passTimeKeyPreference = key;
+            passTimeKeyText.text = key;
+        }));
     }
 
     // delegát Action - co se stane při stisku tlačítka
     // Action<string> tak dovoluje passnout vlastní metodu (lambdu)
     // Action je predefined method, bere string a je void - do ní je passnuta v handleKeyAction lambda
+    public Animation anim;
+
     private IEnumerator HandleKeyCoroutine(bool keyPressed, Action<string> handleKeyAction)
     {
         while (keyPressed)
         {
+            // buttonAnimator.SetTrigger("Pulsate");
+            anim.Play("PulseAnim");
             if (Input.anyKeyDown)
             {
                 foreach (KeyCode kc in Enum.GetValues(typeof(KeyCode)))
@@ -75,6 +83,7 @@ public class ControlsScript : MonoBehaviour
                         Debug.Log("Key pressed: " + kc);
                         handleKeyAction.Invoke(kc.ToString()); // invokne daného delegáta, spustí tak to, co je v lambdě
                         keyPressed = false;
+                        anim.Play("DefaultPulse");
                     }
                 }
             }

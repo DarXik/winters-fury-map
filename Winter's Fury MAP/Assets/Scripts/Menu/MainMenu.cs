@@ -70,16 +70,20 @@ public class MainMenu : MonoBehaviour
             startObj.SetActive(true);
             optionsObj.SetActive(false);
             optionsOpened = false;
-            VideoScript.Instance.SavePreferences();
-            ControlsScript.Instance.SavePreferences();
-            AudioScript.Instance.SavePreferences();
-            GeneralScript.Instance.SavePreferences();
+            // Probrat se Zbyňou, nefunguje --------------------------------------------------
+            // VideoScript.Instance.SavePreferences();
+            // ControlsScript.Instance.SavePreferences();
+            // AudioScript.Instance.SavePreferences();
+            // GeneralScript.Instance.SavePreferences();
             StartCoroutine(MoveCamera(start, 55));
 
             yaw = 80.55f;
         }
     }
-
+    public void DefaultOptions()
+    {
+        PlayerPrefs.DeleteAll();
+    }
     private void CameraShake()
     {
         yaw += speedH * Input.GetAxis("Mouse X");

@@ -61,11 +61,6 @@ public class VideoScript : MonoBehaviour
         Debug.Log("Načteno");
     }
 
-    public void DefaultOptions()
-    {
-        PlayerPrefs.DeleteAll();
-    }
-
     public void SetFullScreen(bool isFullscreen)
     {
         fullscreenPreference = isFullscreen;
