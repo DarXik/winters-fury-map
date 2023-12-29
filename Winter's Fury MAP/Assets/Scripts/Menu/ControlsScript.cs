@@ -51,7 +51,7 @@ public class ControlsScript : MonoBehaviour
         {
             inventoryKeyPreference = key;
             inventoryKeyText.text = key;
-        }));
+        }, inventoryAnim));
     }
 
     public void PassTimeKeyHandler()
@@ -60,15 +60,16 @@ public class ControlsScript : MonoBehaviour
         {
             passTimeKeyPreference = key;
             passTimeKeyText.text = key;
-        }));
+        }, passTimeAnim));
     }
 
     // delegát Action - co se stane při stisku tlačítka
     // Action<string> tak dovoluje passnout vlastní metodu (lambdu)
     // Action je predefined method, bere string a je void - do ní je passnuta v handleKeyAction lambda
-    public Animation anim;
+    public Animation passTimeAnim;
+    public Animation inventoryAnim;
 
-    private IEnumerator HandleKeyCoroutine(bool keyPressed, Action<string> handleKeyAction)
+    private IEnumerator HandleKeyCoroutine(bool keyPressed, Action<string> handleKeyAction, Animation anim)
     {
         while (keyPressed)
         {

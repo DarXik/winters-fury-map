@@ -197,7 +197,7 @@ public class MainMenu : MonoBehaviour
     private float pitch;
 
     // [Tooltip("Time in seconds to move the camera to the desired position.")]
-    [Header("Nastavení meníčka")] private readonly float timeToMoveCamera = 0.2f; // méně -> rychlejší
+    [Header("Nastavení meníčka")] private readonly float timeToMoveCamera = 0.3f; // méně -> rychlejší
     private readonly float baseFOV = 55f;
     private bool cameraMoveEnabled;
 
