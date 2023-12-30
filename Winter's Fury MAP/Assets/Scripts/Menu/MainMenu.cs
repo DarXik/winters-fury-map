@@ -70,11 +70,13 @@ public class MainMenu : MonoBehaviour
             startObj.SetActive(true);
             optionsObj.SetActive(false);
             optionsOpened = false;
-            // Probrat se Zbyňou, nefunguje --------------------------------------------------
+
+            // --------------------------------- Probrat se Zbyňou, nefunguje --------------------------------------------------
             // VideoScript.Instance.SavePreferences();
             // ControlsScript.Instance.SavePreferences();
             // AudioScript.Instance.SavePreferences();
             // GeneralScript.Instance.SavePreferences();
+
             StartCoroutine(MoveCamera(start, 55));
 
             yaw = 80.55f;

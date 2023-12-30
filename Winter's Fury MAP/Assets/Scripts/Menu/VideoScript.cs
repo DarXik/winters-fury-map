@@ -12,13 +12,13 @@ public class VideoScript : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        LoadPreferences();
+        GetResolutions();
+        QualitySwitcher();
     }
 
     private void Start()
     {
-        LoadPreferences();
-        GetResolutions();
-        QualitySwitcher();
         SetFPS(fpsPreference);
         SetBrightness(brightnessPreference);
         SetFullScreen(fullscreenPreference);
