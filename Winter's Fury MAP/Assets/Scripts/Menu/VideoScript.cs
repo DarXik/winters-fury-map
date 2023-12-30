@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Slider = UnityEngine.UI.Slider;
+using Toggle = UnityEngine.UI.Toggle;
 
 public class VideoScript : MonoBehaviour
 {
@@ -133,7 +137,8 @@ public class VideoScript : MonoBehaviour
 
         // list pro dostupná rozlišení
         var availableResolutions = new List<string>();
-
+        Array.Reverse(resolutions);
+        
         int currResIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
