@@ -95,6 +95,12 @@ namespace Managers
             {
                 PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.PassTime);
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                QuitScript.qs.ToggleGame();
+
+            }
         }
 
         public float GetCurrentTime()
