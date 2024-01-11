@@ -16,7 +16,7 @@ public class PauseMenuOpitions : MonoBehaviour
     public Button controlsButton;
 
     public static PauseMenuOpitions PSoptions { get; set; }
-    private void Awake()
+    void Awake()
     {
         PSoptions = this;
     }

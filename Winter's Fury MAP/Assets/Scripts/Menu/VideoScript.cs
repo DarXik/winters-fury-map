@@ -10,7 +10,6 @@ using Toggle = UnityEngine.UI.Toggle;
 
 public class VideoScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     public static VideoScript Instance { get; private set; }
 
     private void Awake()
