@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PulseEffect : MonoBehaviour
 {
-
-
     public Animator animator;
     public static PulseEffect Instance { get; set; }
 

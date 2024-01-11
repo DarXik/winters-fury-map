@@ -30,20 +30,7 @@ public class MainMenu : MonoBehaviour
             }
         }
 
-        // if (optionsObj.activeSelf)
-        // {
-        //     background.color = new(0, 0, 0, 0.8352941f);
-        // }
-        //
-        // if (startObj.activeSelf)
-        // {
-        //     background.color = new(0, 0, 0, 0.5607843f);
-        // }
-
-        // if (startObj.activeSelf)
-        // {
         CameraShake();
-        // }
 
         generalButton.interactable = !optionsGeneralObj.activeSelf;
         videoButton.interactable = !optionsVideoObj.activeSelf;
@@ -82,10 +69,12 @@ public class MainMenu : MonoBehaviour
             yaw = 80.55f;
         }
     }
+
     public void DefaultOptions()
     {
         PlayerPrefs.DeleteAll();
     }
+
     private void CameraShake()
     {
         yaw += speedH * Input.GetAxis("Mouse X");
@@ -179,8 +168,7 @@ public class MainMenu : MonoBehaviour
         // startMenuRest.SetActive(true);
     }
 
-    [Header("Game Objecty")]
-    public GameObject startObj;
+    [Header("Game Objecty")] public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;
