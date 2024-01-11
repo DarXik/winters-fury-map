@@ -3,27 +3,23 @@ using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class QuitScript : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenuObj;
+    public GameObject pauseMenuObj, pauseMenuNavObj, pauseMenuOptionsObj;
 
-    public static QuitScript qs;
+    public static PauseMenu PM;
     // Start is called before the first frame update
     private void Awake()
     {
-        qs = this;
+        PM = this;
     }
 
     private void Start()
     {
         pauseMenuObj.SetActive(false);
+        pauseMenuNavObj.SetActive(false);
+        pauseMenuOptionsObj.SetActive(false);
     }
-
-    // Update is called once per frame
-    // void Update()
-    // {
-    //
-    // }
 
     public void ExitGame()
     {
@@ -36,9 +32,36 @@ public class QuitScript : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void ToggleGame()
+    public void TogglePauseMenu()
     {
-        pauseMenuObj.SetActive(!pauseMenuObj.activeSelf); // do hry
+        if (pauseMenuObj.activeSelf)
+        {
+            pauseMenuObj.SetActive(false);
+            pauseMenuNavObj.SetActive(false);
+            pauseMenuOptionsObj.SetActive(false);
+        }
+        else
+        {
+            pauseMenuObj.SetActive(true);
+            pauseMenuNavObj.SetActive(true);
+            pauseMenuOptionsObj.SetActive(false);
+        }
         InventoryManager.Instance.ToggleInventory();
+    }
+
+    public void ToggleOptions()
+    {
+        if (pauseMenuOptionsObj.activeSelf)
+        {
+            pauseMenuOptionsObj.SetActive(false);
+            pauseMenuNavObj.SetActive(true);
+            PauseMenuOpitions.PSoptions.OptionsGeneral();
+        }
+        else
+        {
+            pauseMenuNavObj.SetActive(false);
+            pauseMenuOptionsObj.SetActive(true);
+            PauseMenuOpitions.PSoptions.OptionsGeneral();
+        }
     }
 }

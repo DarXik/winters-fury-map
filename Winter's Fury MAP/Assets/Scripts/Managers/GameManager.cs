@@ -98,8 +98,7 @@ namespace Managers
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                QuitScript.qs.ToggleGame();
-
+                PauseMenu.PM.TogglePauseMenu();
             }
         }
 

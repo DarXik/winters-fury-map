@@ -122,7 +122,6 @@ public class MainMenu : MonoBehaviour
         mainCamera.fieldOfView = targetFOV;
     }
 
-
     private void ShowUI()
     {
         startObj.SetActive(true);
@@ -180,7 +179,8 @@ public class MainMenu : MonoBehaviour
         // startMenuRest.SetActive(true);
     }
 
-    [Header("Game Objecty")] public GameObject startObj;
+    [Header("Game Objecty")]
+    public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;
