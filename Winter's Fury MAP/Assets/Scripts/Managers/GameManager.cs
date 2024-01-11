@@ -98,7 +98,7 @@ namespace Managers
 
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                PauseMenu.PM.TogglePauseMenu();
+                PauseMenu.Instance.TogglePauseMenu();
             }
         }
 

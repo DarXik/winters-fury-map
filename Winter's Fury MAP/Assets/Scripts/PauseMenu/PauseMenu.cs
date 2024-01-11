@@ -1,5 +1,6 @@
 using System;
 using Managers;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,14 +9,13 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuObj, pauseMenuNavObj, pauseMenuOptionsObj;
 
-    public static PauseMenu PM;
+    public static PauseMenu Instance;
 
     public TMP_Text mainSign;
 
-
     void Awake()
     {
-        PM = this;
+        Instance = this;
     }
 
     void Start()
@@ -44,15 +44,15 @@ public class PauseMenu : MonoBehaviour
             pauseMenuObj.SetActive(false);
             pauseMenuNavObj.SetActive(false);
             pauseMenuOptionsObj.SetActive(false);
+            PlayerLook.Instance.UnblockRotation();
         }
         else
         {
             pauseMenuObj.SetActive(true);
             pauseMenuNavObj.SetActive(true);
             pauseMenuOptionsObj.SetActive(false);
+            PlayerLook.Instance.BlockRotation();
         }
-
-        InventoryManager.Instance.ToggleInventory();
     }
 
     public void ToggleOptions()
@@ -61,15 +61,13 @@ public class PauseMenu : MonoBehaviour
         {
             pauseMenuOptionsObj.SetActive(false);
             pauseMenuNavObj.SetActive(true);
-            PauseMenuOpitions.PSoptions.OptionsGeneral();
-            // mainSign.SetText("Paused");
+            PauseMenuOpitions.Instance.OptionsGeneral();
         }
         else // do nastavení
         {
             pauseMenuNavObj.SetActive(false);
             pauseMenuOptionsObj.SetActive(true);
-            PauseMenuOpitions.PSoptions.OptionsGeneral();
-            // mainSign.SetText("Options");
+            PauseMenuOpitions.Instance.OptionsGeneral();
         }
     }
 }

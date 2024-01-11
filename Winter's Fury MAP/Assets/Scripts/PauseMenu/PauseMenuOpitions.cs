@@ -15,19 +15,10 @@ public class PauseMenuOpitions : MonoBehaviour
     public Button audioButton;
     public Button controlsButton;
 
-    public static PauseMenuOpitions PSoptions { get; set; }
+    public static PauseMenuOpitions Instance { get; set; }
     void Awake()
     {
-        PSoptions = this;
-    }
-
-    void Update()
-    {
-        generalButton.interactable = !optionsGeneralObj.activeSelf;
-        videoButton.interactable = !optionsVideoObj.activeSelf;
-        audioButton.interactable = !optionsAudioObj.activeSelf;
-        controlsButton.interactable = !optionsControlsObj.activeSelf;
-        controlsButton.interactable = !optionsControlsObj.activeSelf;
+        Instance = this;
     }
     public void DefaultOptions()
     {
@@ -39,6 +30,11 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsVideoObj.SetActive(false);
         optionsAudioObj.SetActive(false);
         optionsControlsObj.SetActive(false);
+
+        generalButton.interactable = false;
+        videoButton.interactable = true;
+        audioButton.interactable = true;
+        controlsButton.interactable = true;
     }
 
     public void OptionsVideo()
@@ -47,6 +43,11 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsVideoObj.SetActive(true);
         optionsAudioObj.SetActive(false);
         optionsControlsObj.SetActive(false);
+
+        generalButton.interactable = true;
+        videoButton.interactable = false;
+        audioButton.interactable = true;
+        controlsButton.interactable = true;
     }
 
     public void OptionsAudio()
@@ -55,6 +56,11 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsVideoObj.SetActive(false);
         optionsAudioObj.SetActive(true);
         optionsControlsObj.SetActive(false);
+
+        generalButton.interactable = true;
+        videoButton.interactable = true;
+        audioButton.interactable = false;
+        controlsButton.interactable = true;
     }
 
     public void OptionsControls()
@@ -63,5 +69,10 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsVideoObj.SetActive(false);
         optionsAudioObj.SetActive(false);
         optionsControlsObj.SetActive(true);
+
+        generalButton.interactable = true;
+        videoButton.interactable = true;
+        audioButton.interactable = true;
+        controlsButton.interactable = false;
     }
 }

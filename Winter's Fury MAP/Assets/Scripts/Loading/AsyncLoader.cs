@@ -35,9 +35,10 @@ public class AsyncLoader : MonoBehaviour
 
     private void Start()
     {
-
         pkcg = pressKeyInfo.GetComponent<CanvasGroup>();
         pkcg.alpha = 0;
+        // pkcg.LeanAlpha(1, 2);
+        // LeanTween.alpha(pressKeyInfo, 1f, 0.5f).setEase(LeanTweenType.easeInCirc);
     }
 
     private void Update()
@@ -49,11 +50,12 @@ public class AsyncLoader : MonoBehaviour
 
         if (isReadyToPlay)
         {
-            // LeanTween.alpha(pressKeyInfo, 1f, 0.5f).setEase(LeanTweenType.easeInCirc);
             if (pkcg.alpha < 1)
             {
                 pkcg.alpha += Time.deltaTime;
             }
+            // pkcg.LeanAlpha(1, 1);
+            // isReadyToPlay = false;
         }
     }
 
@@ -64,7 +66,8 @@ public class AsyncLoader : MonoBehaviour
         SetRandomTip();
 
         fill.fillAmount = progressValue;
-        StartCoroutine(LoadLevelAsync());
+        // StartCoroutine(LoadLevelAsync());
+        SceneManager.LoadScene(1);
     }
 
     void SetRandomTip()
@@ -79,13 +82,11 @@ public class AsyncLoader : MonoBehaviour
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync("Glacial Frontier");
         loadOperation.allowSceneActivation = false;
 
-        var elapsedTime = 0f;
-
-        while (elapsedTime < minLoadingTime & !loadOperation.isDone)
+        while (!loadOperation.isDone)
         {
             progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
-            fill.fillAmount = elapsedTime / minLoadingTime; // chtěl bych nějak spojit čas a progressValue
-            elapsedTime += Time.deltaTime;
+            fill.fillAmount = progressValue;
+
             yield return null;
         }
 

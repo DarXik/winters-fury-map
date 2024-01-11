@@ -36,7 +36,6 @@ public class MainMenu : MonoBehaviour
         videoButton.interactable = !optionsVideoObj.activeSelf;
         audioButton.interactable = !optionsAudioObj.activeSelf;
         controlsButton.interactable = !optionsControlsObj.activeSelf;
-        controlsButton.interactable = !optionsControlsObj.activeSelf;
     }
 
     public void OptionsToggle()
@@ -58,9 +57,8 @@ public class MainMenu : MonoBehaviour
             optionsObj.SetActive(false);
             optionsOpened = false;
 
-            // --------------------------------- Probrat se Zbyňou, nefunguje --------------------------------------------------
             // VideoScript.Instance.SavePreferences();
-            // ControlsScript.Instance.SavePreferences();
+            ControlsScript.Instance.SavePreferences();
             // AudioScript.Instance.SavePreferences();
             // GeneralScript.Instance.SavePreferences();
 
@@ -154,11 +152,6 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Hra ukončena");
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene(0);
     }
 
     private static IEnumerator Wait()
