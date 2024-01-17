@@ -24,13 +24,14 @@ namespace Managers
         [SerializeField] private Transform[] spawnPoints;
 
         private float previousTimeIncrement, timeIncrement;
+        private float currentTimeIncrement;
         public Volume volume;
         private ColorAdjustments ca;
 
         public KeyCode toggleInventoryKey;
         public KeyCode togglePassTimeKey;
 
-        public static GameManager Instance;
+        public static GameManager Instance { get; private set; }
 
         private void Awake()
         {
@@ -70,17 +71,17 @@ namespace Managers
 
         private void CheckTimeIncrement()
         {
-            var currentIncrement = GetTimeIncrement();
-            if (previousTimeIncrement != currentIncrement)
+            var currIncrement = GetTimeIncrement();
+            if (previousTimeIncrement != currIncrement)
             {
-                VitalManager.timeIncrement = currentIncrement;
-                HeatSource.timeIncrement = currentIncrement;
-                WeatherSystem.timeIncrement = currentIncrement;
-                WindArea.timeIncrement = currentIncrement;
-                PlayerInteraction.timeIncrement = currentIncrement;
-                InventoryManager.timeIncrement = currentIncrement;
+                VitalManager.timeIncrement = currIncrement;
+                HeatSource.timeIncrement = currIncrement;
+                WeatherSystem.timeIncrement = currIncrement;
+                WindArea.timeIncrement = currIncrement;
+                PlayerInteraction.timeIncrement = currIncrement;
+                InventoryManager.timeIncrement = currIncrement;
 
-                previousTimeIncrement = currentIncrement;
+                previousTimeIncrement = currIncrement;
             }
         }
 
@@ -100,6 +101,17 @@ namespace Managers
             {
                 PauseMenu.Instance.TogglePauseMenu();
             }
+        }
+
+        public void PauseTime()
+        {
+            currentTimeIncrement = cycle.TimeIncrement;
+            cycle.TimeIncrement = 0;
+        }
+
+        public void ResumeTime()
+        {
+            cycle.TimeIncrement = currentTimeIncrement;
         }
 
         public float GetCurrentTime()

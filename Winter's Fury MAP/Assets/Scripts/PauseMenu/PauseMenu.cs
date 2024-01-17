@@ -9,16 +9,16 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuObj, pauseMenuNavObj, pauseMenuOptionsObj;
 
-    public static PauseMenu Instance;
+    public static PauseMenu Instance { get; private set; }
 
     public TMP_Text mainSign;
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         pauseMenuObj.SetActive(false);
         pauseMenuNavObj.SetActive(false);
@@ -45,6 +45,8 @@ public class PauseMenu : MonoBehaviour
             pauseMenuNavObj.SetActive(false);
             pauseMenuOptionsObj.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
+
+            GameManager.Instance.ResumeTime();
         }
         else
         {
@@ -52,6 +54,8 @@ public class PauseMenu : MonoBehaviour
             pauseMenuNavObj.SetActive(true);
             pauseMenuOptionsObj.SetActive(false);
             PlayerLook.Instance.BlockRotation();
+
+            GameManager.Instance.PauseTime();
         }
     }
 

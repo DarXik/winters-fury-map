@@ -10,7 +10,7 @@ namespace Inventory
         [Range(0f, 100f)] public float chance = 100f;
         [HideInInspector] public float weight;
     }
-    
+
     public class ItemSpawner : MonoBehaviour
     {
         [SerializeField] private Item[] items;
@@ -22,7 +22,7 @@ namespace Inventory
 
         private void SpawnRandomItem()
         {
-            Item randomItem = items[ GetRandomItemIndex() ];
+            Item randomItem = items[GetRandomItemIndex()];
 
             var spawnedItem = Instantiate(randomItem.prefab, transform.position, randomItem.prefab.transform.rotation);
 
@@ -51,7 +51,7 @@ namespace Inventory
                     return i;
                 }
             }
-            
+
             return 0;
         }
     }
