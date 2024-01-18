@@ -14,29 +14,22 @@ namespace PolyPerfect
     {
         private const float contingencyDistance = 1f;
 
-        [SerializeField]
-        public IdleState[] idleStates;
-        [SerializeField]
-        private MovementState[] movementStates;
-        [SerializeField]
-        private AIState[] attackingStates;
-        [SerializeField]
-        private AIState[] deathStates;
+        [SerializeField] public IdleState[] idleStates;
+        [SerializeField] private MovementState[] movementStates;
+        [SerializeField] private AIState[] attackingStates;
+        [SerializeField] private AIState[] deathStates;
 
-        [SerializeField]
-        private string species = "NA";
+        [SerializeField] private string species = "NA";
 
         [SerializeField, Tooltip("This specific animal stats asset, create a new one from the asset menu under (LowPolyAnimals/NewAnimalStats)")]
         AIStats stats;
 
         [SerializeField, Tooltip("How far away from it's origin this animal will wander by itself.")]
         private float wanderZone = 10f;
+
         public float MaxDistance
         {
-            get
-            {
-                return wanderZone;
-            }
+            get { return wanderZone; }
             set
             {
 #if UNITY_EDITOR
@@ -55,6 +48,7 @@ namespace PolyPerfect
 
         [SerializeField, Tooltip("How far this animal can sense it's prey.")]
         private float scent = 30f;
+
         private float originalScent = 0f;
 
         // [SerializeField, Tooltip("How many seconds this animal can run for before it gets tired.")]
@@ -86,31 +80,34 @@ namespace PolyPerfect
         private string[] nonAgressiveTowards;
 
         private static List<WanderScript> allAnimals = new List<WanderScript>();
-        public static List<WanderScript> AllAnimals { get { return allAnimals; } }
+
+        public static List<WanderScript> AllAnimals
+        {
+            get { return allAnimals; }
+        }
 
         //[Space(), Space(5)]
         [SerializeField, Tooltip("If true, this animal will rotate to match the terrain. Ensure you have set the layer of the terrain as 'Terrain'.")]
         private bool matchSurfaceRotation = false;
+
         [SerializeField, Tooltip("How fast the animnal rotates to match the surface rotation.")]
         private float surfaceRotationSpeed = 2f;
 
         //[Space(), Space(5)]
         [SerializeField, Tooltip("If true, AI changes to this animal will be logged in the console.")]
         private bool logChanges = false;
+
         [SerializeField, Tooltip("If true, gizmos will be drawn in the editor.")]
         private bool showGizmos = false;
-        [SerializeField]
-        private bool drawWanderRange = true;
-        [SerializeField]
-        private bool drawScentRange = true;
-        [SerializeField]
-        private bool drawAwarenessRange = true;
+
+        [SerializeField] private bool drawWanderRange = true;
+        [SerializeField] private bool drawScentRange = true;
+        [SerializeField] private bool drawAwarenessRange = true;
 
         public UnityEngine.Events.UnityEvent deathEvent;
         public UnityEngine.Events.UnityEvent attackingEvent;
         public UnityEngine.Events.UnityEvent idleEvent;
         public UnityEngine.Events.UnityEvent movementEvent;
-
 
 
         private Color distanceColor = new Color(0f, 0f, 205f);
@@ -195,21 +192,24 @@ namespace PolyPerfect
 
             if (runtimeController == null)
             {
-                Debug.LogError(string.Format("{0} has no animator controller, make sure you put one in to allow the character to walk. See documentation for more details (1)", gameObject.name));
+                Debug.LogError(string.Format("{0} has no animator controller, make sure you put one in to allow the character to walk. See documentation for more details (1)",
+                    gameObject.name));
                 enabled = false;
                 return;
             }
 
             if (animator.avatar == null)
             {
-                Debug.LogError(string.Format("{0} has no avatar, make sure you put one in to allow the character to animate. See documentation for more details (2)", gameObject.name));
+                Debug.LogError(string.Format("{0} has no avatar, make sure you put one in to allow the character to animate. See documentation for more details (2)",
+                    gameObject.name));
                 enabled = false;
                 return;
             }
 
             if (animator.hasRootMotion == true)
             {
-                Debug.LogError(string.Format("{0} has root motion applied, consider turning this off as our script will deactivate this on play as we do not use it (3)", gameObject.name));
+                Debug.LogError(string.Format("{0} has root motion applied, consider turning this off as our script will deactivate this on play as we do not use it (3)",
+                    gameObject.name));
                 animator.applyRootMotion = false;
             }
 
@@ -226,7 +226,9 @@ namespace PolyPerfect
                 {
                     if (idleStates[i].animationBool == "")
                     {
-                        Debug.LogError(string.Format("{0} has " + idleStates.Length + " Idle states, you need to make sure that each state has an animation boolean. See documentation for more details (4)", gameObject.name));
+                        Debug.LogError(string.Format(
+                            "{0} has " + idleStates.Length + " Idle states, you need to make sure that each state has an animation boolean. See documentation for more details (4)",
+                            gameObject.name));
                         enabled = false;
                         return;
                     }
@@ -239,21 +241,28 @@ namespace PolyPerfect
                 {
                     if (movementStates[i].animationBool == "")
                     {
-                        Debug.LogError(string.Format("{0} has " + movementStates.Length + " Movement states, you need to make sure that each state has an animation boolean to see the character walk. See documentation for more details (4)", gameObject.name));
+                        Debug.LogError(string.Format(
+                            "{0} has " + movementStates.Length +
+                            " Movement states, you need to make sure that each state has an animation boolean to see the character walk. See documentation for more details (4)",
+                            gameObject.name));
                         enabled = false;
                         return;
                     }
 
                     if (movementStates[i].moveSpeed <= 0)
                     {
-                        Debug.LogError(string.Format("{0} has a movement state with a speed of 0 or less, you need to set the speed higher than 0 to see the character move. See documentation for more details (4)", gameObject.name));
+                        Debug.LogError(string.Format(
+                            "{0} has a movement state with a speed of 0 or less, you need to set the speed higher than 0 to see the character move. See documentation for more details (4)",
+                            gameObject.name));
                         enabled = false;
                         return;
                     }
 
                     if (movementStates[i].turnSpeed <= 0)
                     {
-                        Debug.LogError(string.Format("{0} has a turn speed state with a speed of 0 or less, you need to set the speed higher than 0 to see the character turn. See documentation for more details (4)", gameObject.name));
+                        Debug.LogError(string.Format(
+                            "{0} has a turn speed state with a speed of 0 or less, you need to set the speed higher than 0 to see the character turn. See documentation for more details (4)",
+                            gameObject.name));
                         enabled = false;
                         return;
                     }
@@ -262,7 +271,8 @@ namespace PolyPerfect
 
             if (attackingStates.Length == 0)
             {
-                Debug.Log(string.Format("{0} has " + attackingStates.Length + " this character will not be able to attack. See documentation for more details (4)", gameObject.name));
+                Debug.Log(
+                    string.Format("{0} has " + attackingStates.Length + " this character will not be able to attack. See documentation for more details (4)", gameObject.name));
             }
 
             if (attackingStates.Length > 0)
@@ -271,7 +281,9 @@ namespace PolyPerfect
                 {
                     if (attackingStates[i].animationBool == "")
                     {
-                        Debug.LogError(string.Format("{0} has " + attackingStates.Length + " attacking states, you need to make sure that each state has an animation boolean. See documentation for more details (4)", gameObject.name));
+                        Debug.LogError(string.Format(
+                            "{0} has " + attackingStates.Length +
+                            " attacking states, you need to make sure that each state has an animation boolean. See documentation for more details (4)", gameObject.name));
                         enabled = false;
                         return;
                     }
@@ -350,7 +362,8 @@ namespace PolyPerfect
             {
                 for (int i = 0; i < allAnimals.Count; i++)
                 {
-                    if (allAnimals[i].dead == true || allAnimals[i] == this || allAnimals[i].species == species || allAnimals[i].dominance <= dominance || allAnimals[i].stealthy || allAnimals[i].gameObject.activeSelf == false)
+                    if (allAnimals[i].dead == true || allAnimals[i] == this || allAnimals[i].species == species || allAnimals[i].dominance <= dominance || allAnimals[i].stealthy ||
+                        allAnimals[i].gameObject.activeSelf == false)
                     {
                         continue;
                     }
@@ -383,7 +396,8 @@ namespace PolyPerfect
             {
                 for (int i = 0; i < allAnimals.Count; i++)
                 {
-                    if (allAnimals[i].dead == true || allAnimals[i] == this || (allAnimals[i].species == species && !territorial) || allAnimals[i].dominance > dominance || allAnimals[i].stealthy)
+                    if (allAnimals[i].dead == true || allAnimals[i] == this || (allAnimals[i].species == species && !territorial) || allAnimals[i].dominance > dominance ||
+                        allAnimals[i].stealthy)
                     {
                         continue;
                     }
@@ -425,6 +439,7 @@ namespace PolyPerfect
                 {
                     Debug.Log(string.Format("{0}: Wandering.", gameObject.name));
                 }
+
                 BeginWanderState();
                 return;
             }
@@ -434,6 +449,7 @@ namespace PolyPerfect
                 {
                     Debug.Log(string.Format("{0}: Idling.", gameObject.name));
                 }
+
                 BeginIdleState(firstState);
                 return;
             }
@@ -477,9 +493,9 @@ namespace PolyPerfect
                 animator.SetBool(idleStates[currentState].animationBool, true);
             }
 
-            float stateTime = firstState ?
-              (Random.Range(50f, idleStates[currentState].minStateTime * 100f)) / 100f
-              : (Random.Range(idleStates[currentState].minStateTime * 100f, idleStates[currentState].maxStateTime * 100f)) / 100f;
+            float stateTime = firstState
+                ? (Random.Range(50f, idleStates[currentState].minStateTime * 100f)) / 100f
+                : (Random.Range(idleStates[currentState].minStateTime * 100f, idleStates[currentState].maxStateTime * 100f)) / 100f;
 
             StartCoroutine(IdleState(stateTime));
         }
@@ -515,6 +531,7 @@ namespace PolyPerfect
                     slowestMovementState = i;
                 }
             }
+
             currentState = slowestMovementState;
 
             if (!string.IsNullOrEmpty(movementStates[currentState].animationBool))
@@ -616,6 +633,7 @@ namespace PolyPerfect
                     fastestMovementState = i;
                 }
             }
+
             currentState = fastestMovementState;
 
             if (!string.IsNullOrEmpty(movementStates[currentState].animationBool))
@@ -678,6 +696,7 @@ namespace PolyPerfect
                     fastestMovementState = i;
                 }
             }
+
             currentState = fastestMovementState;
 
             if (!string.IsNullOrEmpty(movementStates[currentState].animationBool))
@@ -737,6 +756,7 @@ namespace PolyPerfect
                 this.enabled = false;
                 return;
             }
+
             int fastestMovementState = 0;
             for (int i = 0; i < movementStates.Length; i++)
             {
@@ -745,6 +765,7 @@ namespace PolyPerfect
                     fastestMovementState = i;
                 }
             }
+
             currentState = fastestMovementState;
 
             if (!string.IsNullOrEmpty(movementStates[currentState].animationBool))
@@ -959,6 +980,7 @@ namespace PolyPerfect
             {
                 Debug.Log(string.Format("{0}: Getting attacked by {1}!", gameObject.name, attacker.gameObject.name));
             }
+
             StopAllCoroutines();
 
             StartCoroutine(TurnToLookAtTarget(attacker.transform));
