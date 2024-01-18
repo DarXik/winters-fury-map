@@ -24,8 +24,8 @@ public class RandomAnimalPlacer : MonoBehaviour
 
     private void Start()
     {
-        spawnAmount = spawnPoints.Length;
-        RandomAnimalPlacer.Instance.SpawnAnimals();
+        // spawnAmount = spawnPoints.Length;
+        // RandomAnimalPlacer.Instance.SpawnAnimals();
     }
 
     public void SpawnAnimals() // nemažou se při vypnutí

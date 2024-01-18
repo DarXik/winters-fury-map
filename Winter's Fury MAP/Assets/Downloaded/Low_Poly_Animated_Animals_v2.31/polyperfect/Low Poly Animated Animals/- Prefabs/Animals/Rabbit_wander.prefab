@@ -448,7 +448,7 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 0
+  logChanges: 1
   showGizmos: 1
   drawWanderRange: 1
   drawScentRange: 1
