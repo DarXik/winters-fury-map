@@ -15,9 +15,10 @@ public class AudioScript : MonoBehaviour
     public void Awake()
     {
         Instance = this;
+        LoadPreferences();
     }
 
-    public void Start()
+    public void LoadPreferences()
     {
         mainVolumePreference = PlayerPrefs.HasKey("mainVolumePreference") ? PlayerPrefs.GetFloat("mainVolumePreference") : -10f;
         SetMainVolume(mainVolumePreference);

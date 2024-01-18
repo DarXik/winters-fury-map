@@ -20,13 +20,6 @@ public class VideoScript : MonoBehaviour
         QualitySwitcher();
     }
 
-    private void Start()
-    {
-        SetFPS(fpsPreference);
-        SetBrightness(brightnessPreference);
-        SetFullScreen(fullscreenPreference);
-    }
-
     private void Update()
     {
         switch (currentQualityIndex)
@@ -55,12 +48,15 @@ public class VideoScript : MonoBehaviour
         Debug.Log("Uloženo");
     }
 
-    private void LoadPreferences()
+    public void LoadPreferences()
     {
         currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
         brightnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
+        SetFPS(fpsPreference);
+        SetBrightness(brightnessPreference);
+        SetFullScreen(fullscreenPreference);
         Debug.Log("Načteno");
     }
 
@@ -71,13 +67,14 @@ public class VideoScript : MonoBehaviour
         toggleFullscreen.isOn = fullscreenPreference;
     }
 
-    public void SetFPS(float fps)
+    public void SetFPS(int fps)
     {
         sliderTextFPS.text = fps.ToString("0");
-        fpsPreference = Convert.ToInt32(fps);
+        fpsPreference = fps;
 
-        sliderFPS.value = fpsPreference;
-        if (Convert.ToInt32(fps) == 241)
+        sliderFPS.value = fpsPreference >= 0 ? fpsPreference : 241; // oprava, 4.výstup
+        // auto ukládání a načítání 4.výstup, rozdělení do objektů
+        if (fps is 241 or -1)
         {
             fpsPreference = -1;
             sliderTextFPS.text = "Unlimited";

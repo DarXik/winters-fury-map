@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
         mainCamera.fieldOfView = baseFOV;
         myUIGroup.alpha = 0;
         fadeIn = true;
+        mainMenu.SetActive(true);
     }
 
     private void Update()
@@ -57,20 +58,12 @@ public class MainMenu : MonoBehaviour
             optionsObj.SetActive(false);
             optionsOpened = false;
 
-            // VideoScript.Instance.SavePreferences();
-            ControlsScript.Instance.SavePreferences();
-            // AudioScript.Instance.SavePreferences();
-            // GeneralScript.Instance.SavePreferences();
+            PreferencesManager.Instance.SavePreferences();
 
             StartCoroutine(MoveCamera(start, 55));
 
             yaw = 80.55f;
         }
-    }
-
-    public void DefaultOptions()
-    {
-        PlayerPrefs.DeleteAll();
     }
 
     private void CameraShake()
@@ -161,7 +154,8 @@ public class MainMenu : MonoBehaviour
         // startMenuRest.SetActive(true);
     }
 
-    [Header("Game Objecty")] public GameObject startObj;
+    [Header("Game Objecty")] public GameObject mainMenu;
+    public GameObject startObj;
     public GameObject optionsObj;
     public GameObject optionsGeneralObj;
     public GameObject optionsVideoObj;

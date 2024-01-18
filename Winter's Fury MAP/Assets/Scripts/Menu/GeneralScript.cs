@@ -16,13 +16,7 @@ public class GeneralScript : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
         LoadPreferences();
-        SetAutosave(autosavePreference);
-        SetHeadBobbing(headBobbingPreference);
     }
 
     public void SavePreferences()
@@ -32,10 +26,12 @@ public class GeneralScript : MonoBehaviour
         Debug.Log("General uloženo");
     }
 
-    private void LoadPreferences()
+    public void LoadPreferences()
     {
         headBobbingPreference = PlayerPrefs.HasKey("headBobbingPreference") ? PlayerPrefs.GetInt("headBobbingPreference") == 1 : PlayerPrefs.GetInt("headBobbingPreference") == 0;
         autosavePreference = PlayerPrefs.HasKey("autosavePreference") ? PlayerPrefs.GetInt("autosavePreference") == 1 : PlayerPrefs.GetInt("autosavePreference") == 0;
+        SetAutosave(autosavePreference);
+        SetHeadBobbing(headBobbingPreference);
     }
 
     public void SetHeadBobbing(bool headBobbing)

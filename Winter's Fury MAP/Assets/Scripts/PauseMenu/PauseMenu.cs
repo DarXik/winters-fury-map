@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Managers;
 using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Weather.Wind;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -37,6 +39,10 @@ public class PauseMenu : MonoBehaviour
         // uložilo by hru
     }
 
+    public GameObject SurvivalOverlay;
+    public GameObject FpsCounter;
+
+
     public void TogglePauseMenu()
     {
         if (pauseMenuObj.activeSelf)
@@ -46,14 +52,26 @@ public class PauseMenu : MonoBehaviour
             pauseMenuOptionsObj.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
 
+            SurvivalOverlay.SetActive(true);
+            FpsCounter.SetActive(true); // později toggle v nastavení, 4.výstup
+            WindUI.Instance.DisplayWindIcon();
+
+            PreferencesManager.Instance.SavePreferences();
             GameManager.Instance.ResumeTime();
         }
-        else
+        else // do pause menu
         {
             pauseMenuObj.SetActive(true);
             pauseMenuNavObj.SetActive(true);
             pauseMenuOptionsObj.SetActive(false);
             PlayerLook.Instance.BlockRotation();
+
+            SurvivalOverlay.SetActive(false);
+            FpsCounter.SetActive(false);
+            WindUI.Instance.HideWindIcon();
+            // PassTimeManager.Instance.ClosePassWindow();
+            // InventoryManager.Instance.ToggleInventory(true);
+            // FirestartManager.Instance.CloseFireStartWindow();
 
             GameManager.Instance.PauseTime();
         }

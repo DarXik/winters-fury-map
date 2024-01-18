@@ -37,16 +37,15 @@ namespace Managers
         {
             Instance = this;
             volume.profile.TryGet(out ca);
+            SetBrightness();
+            SetKeyPreference("inventoryKey", out toggleInventoryKey);
+            SetKeyPreference("passTimeKey", out togglePassTimeKey);
         }
 
         private void Start()
         {
             cycle.AutoTimeIncrement = autoCycle;
             previousTimeIncrement = cycle.TimeIncrement;
-
-            SetBrightness();
-            SetKeyPreference("inventoryKey", out toggleInventoryKey);
-            SetKeyPreference("passTimeKey", out togglePassTimeKey);
 
             if (randomizeSpawn) RandomizeSpawn();
         }

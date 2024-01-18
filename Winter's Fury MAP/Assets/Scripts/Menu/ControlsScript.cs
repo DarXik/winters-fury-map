@@ -43,7 +43,7 @@ public class ControlsScript : MonoBehaviour
         keys["inventoryKey"] = inventoryKeyPreference;
     }
 
-    private void LoadPreferences()
+    public void LoadPreferences()
     {
         inventoryKeyPreference = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString("inventoryKey") : "Tab";
         inventoryKeyText.text = inventoryKeyPreference;

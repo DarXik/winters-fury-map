@@ -31,10 +31,10 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsAudioObj.SetActive(false);
         optionsControlsObj.SetActive(false);
 
-        generalButton.interactable = false;
-        videoButton.interactable = true;
-        audioButton.interactable = true;
-        controlsButton.interactable = true;
+        // generalButton.interactable = false;
+        // videoButton.interactable = true;
+        // audioButton.interactable = true;
+        // controlsButton.interactable = true;
     }
 
     public void OptionsVideo()
@@ -44,10 +44,10 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsAudioObj.SetActive(false);
         optionsControlsObj.SetActive(false);
 
-        generalButton.interactable = true;
-        videoButton.interactable = false;
-        audioButton.interactable = true;
-        controlsButton.interactable = true;
+        // generalButton.interactable = true;
+        // videoButton.interactable = false;
+        // audioButton.interactable = true;
+        // controlsButton.interactable = true;
     }
 
     public void OptionsAudio()
@@ -57,10 +57,10 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsAudioObj.SetActive(true);
         optionsControlsObj.SetActive(false);
 
-        generalButton.interactable = true;
-        videoButton.interactable = true;
-        audioButton.interactable = false;
-        controlsButton.interactable = true;
+        // generalButton.interactable = true;
+        // videoButton.interactable = true;
+        // audioButton.interactable = false;
+        // controlsButton.interactable = true;
     }
 
     public void OptionsControls()
@@ -70,9 +70,9 @@ public class PauseMenuOpitions : MonoBehaviour
         optionsAudioObj.SetActive(false);
         optionsControlsObj.SetActive(true);
 
-        generalButton.interactable = true;
-        videoButton.interactable = true;
-        audioButton.interactable = true;
-        controlsButton.interactable = false;
+        // generalButton.interactable = true;
+        // videoButton.interactable = true;
+        // audioButton.interactable = true;
+        // controlsButton.interactable = false;
     }
 }

@@ -14,7 +14,7 @@ public class AsyncLoader : MonoBehaviour
 
     public Image fill;
     private float progressValue = 0f;
-    private readonly float minLoadingTime = 3f;
+    // private readonly float minLoadingTime = 3f;
 
     public TMP_Text gameTipPlaceholder;
 
@@ -37,6 +37,7 @@ public class AsyncLoader : MonoBehaviour
     {
         pkcg = pressKeyInfo.GetComponent<CanvasGroup>();
         pkcg.alpha = 0;
+        loadingScreen.SetActive(false);
         // pkcg.LeanAlpha(1, 2);
         // LeanTween.alpha(pressKeyInfo, 1f, 0.5f).setEase(LeanTweenType.easeInCirc);
     }
@@ -50,12 +51,12 @@ public class AsyncLoader : MonoBehaviour
 
         if (isReadyToPlay)
         {
-            if (pkcg.alpha < 1)
-            {
-                pkcg.alpha += Time.deltaTime;
-            }
-            // pkcg.LeanAlpha(1, 1);
-            // isReadyToPlay = false;
+            // if (pkcg.alpha < 1)
+            // {
+            //     pkcg.alpha += Time.deltaTime;
+            // }
+            pkcg.LeanAlpha(1, 1);
+            isReadyToPlay = false;
         }
     }
 
@@ -66,18 +67,18 @@ public class AsyncLoader : MonoBehaviour
         SetRandomTip();
 
         fill.fillAmount = progressValue;
-        // StartCoroutine(LoadLevelAsync());
-        SceneManager.LoadScene(1);
+        StartCoroutine(LoadLevelAsync());
+        // SceneManager.LoadScene(1);
     }
 
-    void SetRandomTip()
+    private void SetRandomTip()
     {
         int randomIndex = Random.Range(0, gameTips.Count);
         string randomTip = gameTips[randomIndex];
         gameTipPlaceholder.text = randomTip;
     }
 
-    private IEnumerator LoadLevelAsync()
+    private IEnumerator LoadLevelAsync() // NEFUNGUJE
     {
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync("Glacial Frontier");
         loadOperation.allowSceneActivation = false;
@@ -86,13 +87,15 @@ public class AsyncLoader : MonoBehaviour
         {
             progressValue = Mathf.Clamp01(loadOperation.progress / 0.9f);
             fill.fillAmount = progressValue;
-
+            Debug.Log("returning");
             yield return null;
         }
 
+        Debug.Log("isReadyToPlay");
         isReadyToPlay = true;
         while (!isClicked)
         {
+            Debug.Log("isClicked");
             yield return null;
         }
 

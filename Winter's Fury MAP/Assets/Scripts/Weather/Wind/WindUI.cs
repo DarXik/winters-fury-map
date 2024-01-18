@@ -5,7 +5,7 @@ namespace Weather.Wind
     public class WindUI : MonoBehaviour
     {
         public GameObject windIcon;
-        
+
         public static WindUI Instance { get; private set; }
 
         private void Awake()
@@ -20,20 +20,16 @@ namespace Weather.Wind
 
         public void DisplayWindIcon()
         {
-            /*
-             * 3. VÝSTUP ONLY
-             *
-             * windIcon.SetActive(true);
-             */
+            // 3. VÝSTUP ONLY
+
+            windIcon.SetActive(true);
         }
+
         public void HideWindIcon()
         {
-            /*
-             * 3. VÝSTUP ONLY
-             *
-             * windIcon.SetActive(false);
-             */
+            // 3. VÝSTUP ONLY
+
+            windIcon.SetActive(false);
         }
-        
     }
 }
