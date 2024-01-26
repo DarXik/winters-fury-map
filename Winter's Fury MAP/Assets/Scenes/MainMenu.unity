@@ -3658,8 +3658,21 @@ MonoBehaviour:
   mainMenu: {fileID: 8412962537592480177}
   fill: {fileID: 1888278478}
   gameTipPlaceholder: {fileID: 1235494317}
+  gameTips:
+  - Dehydration can still occur in cold weather. Always carry a sufficient supply
+    of water.
+  - In freezing conditions, maintaining body warmth is crucial. Always have enough
+    resources with you to start a fire.
+  - The frozen landscape is both beautiful and deadly. Respect its challenges by
+    arming yourself with warmth, sustenance, and a well-fortified refuge.
+  - "In the icy wilderness, fire is your ally. Carry the means to ignite warmth wherever
+    you go, for in winter, it's not just a luxury \u2013 it's a necessity."
+  - Blizzards can strike unexpectedly. Seek shelter immediately to wait out the storm,
+    and ensure you have enough supplies to weather the whiteout.
+  - Beware of hastily indulging in canned goods. Consuming uncooked or spoiled provisions
+    from crates may lead to food poisoning. Ensure proper preparation before dining.
   pressKeyInfo: {fileID: 1161110891}
-  pkcg: {fileID: 1161110893}
+  pressKeyGroup: {fileID: 1161110893}
 --- !u!4 &1381451629
 Transform:
   m_ObjectHideFlags: 0

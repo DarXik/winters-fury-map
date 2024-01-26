@@ -23,7 +23,6 @@ public class GeneralScript : MonoBehaviour
     {
         PlayerPrefs.SetInt("headBobbingPreference", headBobbingPreference ? 1 : 0);
         PlayerPrefs.SetInt("autosavePreference", autosavePreference ? 1 : 0);
-        Debug.Log("General uloženo");
     }
 
     public void LoadPreferences()

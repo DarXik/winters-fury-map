@@ -31,7 +31,6 @@ public class ControlsScript : MonoBehaviour
     {
         PlayerPrefs.SetString("inventoryKey", inventoryKeyPreference);
         PlayerPrefs.SetString("passTimeKey", passTimeKeyPreference);
-        Debug.Log("Keys uloženo");
     }
 
     private Dictionary<string, string> keys = new();

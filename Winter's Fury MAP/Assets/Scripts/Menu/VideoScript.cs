@@ -45,7 +45,6 @@ public class VideoScript : MonoBehaviour
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
         PlayerPrefs.SetFloat("brightnessPreference", brightnessPreference);
         PlayerPrefs.SetInt("fullscreenPreference", fullscreenPreference ? 1 : 0);
-        Debug.Log("Uloženo");
     }
 
     public void LoadPreferences()
@@ -57,7 +56,6 @@ public class VideoScript : MonoBehaviour
         SetFPS(fpsPreference);
         SetBrightness(brightnessPreference);
         SetFullScreen(fullscreenPreference);
-        Debug.Log("Načteno");
     }
 
     public void SetFullScreen(bool isFullscreen)
@@ -81,7 +79,6 @@ public class VideoScript : MonoBehaviour
         }
 
         Application.targetFrameRate = fpsPreference;
-        Debug.Log("FPS " + fpsPreference);
     }
 
     public void SetBrightness(float lumen)
@@ -90,7 +87,6 @@ public class VideoScript : MonoBehaviour
         double numToBeShown = 33.333333 * brightnessPreference + (33.3333333 / 2) + 50;
         sliderTextBrigtness.text = numToBeShown.ToString("0") + "%";
         sliderBrightness.value = brightnessPreference;
-        Debug.Log("Brig. " + brightnessPreference);
 
     }
 
@@ -107,7 +103,6 @@ public class VideoScript : MonoBehaviour
 
         QualitySettings.SetQualityLevel(currentQualityIndex);
         qualityOptionsText.text = QualitySettings.names[currentQualityIndex];
-        Debug.Log("Qua. " + currentQualityIndex);
     }
 
     public void RightClick()
@@ -162,7 +157,6 @@ public class VideoScript : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        Debug.Log("Res. updated");
     }
 
     [Header("Brightness")] public TextMeshProUGUI sliderTextBrigtness;

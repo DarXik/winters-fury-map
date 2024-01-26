@@ -36,6 +36,5 @@ public class AudioScript : MonoBehaviour
         double numToBeShown = 1.25 * mainVolumePreference + 100;
         sliderTextAudio.text = numToBeShown.ToString("0") + "%";
         sliderAudio.value = mainVolumePreference;
-        // Debug.Log("Vol. " + mainVolumePreference);
     }
 }

@@ -144,14 +144,6 @@ public class MainMenu : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-        Debug.Log("Hra ukončena");
-    }
-
-    private static IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2f);
-
-        // startMenuRest.SetActive(true);
     }
 
     [Header("Game Objecty")] public GameObject mainMenu;
