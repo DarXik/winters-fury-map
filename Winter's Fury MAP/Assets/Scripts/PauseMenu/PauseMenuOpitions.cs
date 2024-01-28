@@ -15,14 +15,10 @@ public class PauseMenuOpitions : MonoBehaviour
     public Button audioButton;
     public Button controlsButton;
 
-    public static PauseMenuOpitions Instance { get; set; }
-    void Awake()
+    public static PauseMenuOpitions Instance { get; private set; }
+    public void Awake()
     {
         Instance = this;
-    }
-    public void DefaultOptions()
-    {
-        PlayerPrefs.DeleteAll();
     }
     public void OptionsGeneral()
     {

@@ -79,7 +79,7 @@ namespace PolyPerfect
         [SerializeField, Tooltip("This animal will be peaceful towards species in this list.")]
         private string[] nonAgressiveTowards;
 
-        private static List<WanderScript> allAnimals = new List<WanderScript>();
+        public static List<WanderScript> allAnimals = new List<WanderScript>();
 
         public static List<WanderScript> AllAnimals
         {

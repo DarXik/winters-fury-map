@@ -27,7 +27,6 @@ public class AudioScript : MonoBehaviour
     public void SavePreferences()
     {
         PlayerPrefs.SetFloat("mainVolumePreference", mainVolumePreference);
-        Debug.Log("Zvuk uložen");
     }
 
     public void SetMainVolume(float volume)

@@ -18,14 +18,6 @@ public class PreferencesManager : MonoBehaviour
         AudioScript.Instance.SavePreferences();
         ControlsScript.Instance.SavePreferences();
     }
-
-    public void LoadPreferences()
-    {
-        GeneralScript.Instance.LoadPreferences();
-        VideoScript.Instance.LoadPreferences();
-        AudioScript.Instance.LoadPreferences();
-        ControlsScript.Instance.LoadPreferences();
-    }
     public void DefaultOptions()
     {
         PlayerPrefs.DeleteAll();

@@ -49,7 +49,7 @@ public class VideoScript : MonoBehaviour
 
     public void LoadPreferences()
     {
-        currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 1;
+        currentQualityIndex = PlayerPrefs.HasKey("qualityPreference") ? PlayerPrefs.GetInt("qualityPreference") : 0;
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
         brightnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
@@ -65,13 +65,15 @@ public class VideoScript : MonoBehaviour
         toggleFullscreen.isOn = fullscreenPreference;
     }
 
-    public void SetFPS(int fps)
+    public void SetFPS(float fps)
     {
+
         sliderTextFPS.text = fps.ToString("0");
-        fpsPreference = fps;
+        fpsPreference = (int) fps;
 
         sliderFPS.value = fpsPreference >= 0 ? fpsPreference : 241; // oprava, 4.výstup
         // auto ukládání a načítání 4.výstup, rozdělení do objektů
+
         if (fps is 241 or -1)
         {
             fpsPreference = -1;
@@ -87,7 +89,6 @@ public class VideoScript : MonoBehaviour
         double numToBeShown = 33.333333 * brightnessPreference + (33.3333333 / 2) + 50;
         sliderTextBrigtness.text = numToBeShown.ToString("0") + "%";
         sliderBrightness.value = brightnessPreference;
-
     }
 
     private void QualitySwitcher()

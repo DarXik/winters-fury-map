@@ -420,7 +420,7 @@ MonoBehaviour:
   - stateName: LookOut
     animationBool: isLookingOut
     minStateTime: 8
-    maxStateTime: 10
+    maxStateTime: 40
     stateWeight: 1
   movementStates:
   - stateName: Hop
@@ -441,14 +441,14 @@ MonoBehaviour:
     animationBool: isDead_1
   species: Rabbit
   stats: {fileID: 11400000, guid: 7c5c1c5c9a5e94647b0e5e541b0b1e6b, type: 2}
-  wanderZone: 5
+  wanderZone: 150
   awareness: 15
   scent: 0
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
+  logChanges: 0
   showGizmos: 1
   drawWanderRange: 1
   drawScentRange: 1
@@ -484,7 +484,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &1275589145405808

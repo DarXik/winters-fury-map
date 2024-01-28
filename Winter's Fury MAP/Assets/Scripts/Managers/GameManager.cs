@@ -30,6 +30,7 @@ namespace Managers
 
         public KeyCode toggleInventoryKey;
         public KeyCode togglePassTimeKey;
+        public KeyCode pauseMenuToggleKey;
 
         public static GameManager Instance { get; private set; }
 
@@ -38,8 +39,7 @@ namespace Managers
             Instance = this;
             volume.profile.TryGet(out ca);
             SetBrightness();
-            SetKeyPreference("inventoryKey", out toggleInventoryKey);
-            SetKeyPreference("passTimeKey", out togglePassTimeKey);
+            KeySetup();
         }
 
         private void Start()
@@ -96,7 +96,7 @@ namespace Managers
                 PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.PassTime);
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(pauseMenuToggleKey))
             {
                 PauseMenu.Instance.TogglePauseMenu();
             }
@@ -129,10 +129,15 @@ namespace Managers
         }
 
         // --- NAČTENÍ UŽIVATELSKÉHO NASTAVENÍ ---
-        private void SetBrightness()
+        public void SetBrightness()
         {
             ca.postExposure.value = PlayerPrefs.GetFloat("brightnessPreference");
-            Debug.Log("BrightnessPref načtena");
+        }
+
+        public void KeySetup()
+        {
+            SetKeyPreference("inventoryKey", out toggleInventoryKey);
+            SetKeyPreference("passTimeKey", out togglePassTimeKey);
         }
 
         private void SetKeyPreference(string key, out KeyCode desiredKey)

@@ -13,9 +13,7 @@ public class PauseMenu : MonoBehaviour
 
     public static PauseMenu Instance { get; private set; }
 
-    public TMP_Text mainSign;
-
-    private void Awake()
+    public void Awake()
     {
         Instance = this;
     }
@@ -30,7 +28,6 @@ public class PauseMenu : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
-        Debug.Log("Hra ukončena");
     }
 
     public void ExitToMenu()
@@ -42,9 +39,11 @@ public class PauseMenu : MonoBehaviour
     public GameObject SurvivalOverlay;
     public GameObject FpsCounter;
 
-
     public void TogglePauseMenu()
     {
+
+        // při kliku z podnabídky se odbarví tlačítko [general, video ...]
+
         if (pauseMenuObj.activeSelf)
         {
             pauseMenuObj.SetActive(false);
@@ -57,6 +56,10 @@ public class PauseMenu : MonoBehaviour
             WindUI.Instance.DisplayWindIcon();
 
             PreferencesManager.Instance.SavePreferences();
+            GameManager.Instance.KeySetup();
+            GameManager.Instance.SetBrightness();
+            VideoScript.Instance.LoadPreferences();
+            GeneralScript.Instance.LoadPreferences();
             GameManager.Instance.ResumeTime();
         }
         else // do pause menu

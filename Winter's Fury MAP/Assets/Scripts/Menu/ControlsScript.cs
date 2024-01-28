@@ -46,14 +46,11 @@ public class ControlsScript : MonoBehaviour
     {
         inventoryKeyPreference = PlayerPrefs.HasKey("inventoryKey") ? PlayerPrefs.GetString("inventoryKey") : "Tab";
         inventoryKeyText.text = inventoryKeyPreference;
-        keys.Add("inventoryKey", inventoryKeyPreference);
+        keys.TryAdd("inventoryKey", inventoryKeyPreference);
 
         passTimeKeyPreference = PlayerPrefs.HasKey("passTimeKey") ? PlayerPrefs.GetString("passTimeKey") : "T";
         passTimeKeyText.text = passTimeKeyPreference;
-        keys.Add("passTimeKey", passTimeKeyPreference);
-        // Keys.Add("passTimeKey", Enum.TryParse(passTimeKeyPreference, out KeyCode kc2) ? kc2 : KeyCode.T);
-
-        Debug.Log("Keys načteno");
+        keys.TryAdd("passTimeKey", passTimeKeyPreference);
     }
 
     public void InventoryKeyHandler()

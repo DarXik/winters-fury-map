@@ -3671,6 +3671,12 @@ MonoBehaviour:
     and ensure you have enough supplies to weather the whiteout.
   - Beware of hastily indulging in canned goods. Consuming uncooked or spoiled provisions
     from crates may lead to food poisoning. Ensure proper preparation before dining.
+  - In winter, daylight hours are shorter. Pack a reliable light source to ensure
+    visibility and prevent disorientation after dark.
+  - In the midst of a blizzard, the biting wind can slow your progress. Seek shelter
+    when possible to wait out the storm and conserve energy.
+  - In the midst of a blizzard, the biting wind can slow your progress. Seek shelter
+    when possible to wait out the storm and conserve energy.
   pressKeyInfo: {fileID: 1161110891}
   pressKeyGroup: {fileID: 1161110893}
 --- !u!4 &1381451629
@@ -5991,7 +5997,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232234}
         m_TargetAssemblyTypeName: VideoScript, Assembly-CSharp
         m_MethodName: SetBrightness
         m_Mode: 0
@@ -6283,7 +6289,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232234}
         m_TargetAssemblyTypeName: VideoScript, Assembly-CSharp
         m_MethodName: RightClick
         m_Mode: 1
@@ -7816,7 +7822,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232235}
         m_TargetAssemblyTypeName: GeneralScript, Assembly-CSharp
         m_MethodName: SetHeadBobbing
         m_Mode: 0
@@ -8988,7 +8994,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232234}
         m_TargetAssemblyTypeName: VideoScript, Assembly-CSharp
         m_MethodName: LeftClick
         m_Mode: 1
@@ -10649,7 +10655,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232233}
         m_TargetAssemblyTypeName: AudioScript, Assembly-CSharp
         m_MethodName: SetMainVolume
         m_Mode: 0
@@ -11601,7 +11607,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232234}
         m_TargetAssemblyTypeName: VideoScript, Assembly-CSharp
         m_MethodName: SetFPS
         m_Mode: 0
@@ -12117,7 +12123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232231}
         m_TargetAssemblyTypeName: ControlsScript, Assembly-CSharp
         m_MethodName: PassTimeKeyHandler
         m_Mode: 1
@@ -12947,7 +12953,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232235}
         m_TargetAssemblyTypeName: GeneralScript, Assembly-CSharp
         m_MethodName: SetAutosave
         m_Mode: 0
@@ -13663,7 +13669,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232234}
         m_TargetAssemblyTypeName: VideoScript, Assembly-CSharp
         m_MethodName: UpdateResolution
         m_Mode: 0
@@ -13999,7 +14005,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232231}
         m_TargetAssemblyTypeName: ControlsScript, Assembly-CSharp
         m_MethodName: InventoryKeyHandler
         m_Mode: 1
@@ -14761,7 +14767,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 505232234}
         m_TargetAssemblyTypeName: VideoScript, Assembly-CSharp
         m_MethodName: SetFullScreen
         m_Mode: 0

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Rabbit
   m_EditorClassIdentifier: 
   dominance: 1
-  stamina: 25
+  stamina: 50
   power: 0
   toughness: 5
   agression: 0
   attackSpeed: 0.1
   territorial: 0
-  stealthy: 1
+  stealthy: 0
