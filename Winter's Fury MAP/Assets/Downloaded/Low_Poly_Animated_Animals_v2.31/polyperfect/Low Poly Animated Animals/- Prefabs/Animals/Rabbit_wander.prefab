@@ -442,7 +442,7 @@ MonoBehaviour:
   species: Rabbit
   stats: {fileID: 11400000, guid: 7c5c1c5c9a5e94647b0e5e541b0b1e6b, type: 2}
   wanderZone: 150
-  awareness: 15
+  awareness: 0
   scent: 0
   constainedToWanderZone: 0
   nonAgressiveTowards: []

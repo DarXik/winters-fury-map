@@ -129,7 +129,7 @@ namespace PolyPerfect
         private float currentTurnSpeed = 0f;
         private bool attacking = false;
 
-        public static WanderScript Instance { get; set; }
+        // public static WanderScript Instance { get; set; }
 
         public void OnDrawGizmosSelected()
         {
@@ -191,7 +191,7 @@ namespace PolyPerfect
 
         private void Awake()
         {
-            Instance = this;
+            // Instance = this;
             animator = GetComponent<Animator>();
 
             var runtimeController = animator.runtimeAnimatorController;
@@ -226,54 +226,54 @@ namespace PolyPerfect
             //     return;
             // }
 
-            if (idleStates.Length > 0)
-            {
-                for (int i = 0; i < idleStates.Length; i++)
-                {
-                    if (idleStates[i].animationBool == "")
-                    {
-                        Debug.LogError(string.Format(
-                            "{0} has " + idleStates.Length + " Idle states, you need to make sure that each state has an animation boolean. See documentation for more details (4)",
-                            gameObject.name));
-                        enabled = false;
-                        return;
-                    }
-                }
-            }
-
-            if (movementStates.Length > 0)
-            {
-                for (int i = 0; i < movementStates.Length; i++)
-                {
-                    if (movementStates[i].animationBool == "")
-                    {
-                        Debug.LogError(string.Format(
-                            "{0} has " + movementStates.Length +
-                            " Movement states, you need to make sure that each state has an animation boolean to see the character walk. See documentation for more details (4)",
-                            gameObject.name));
-                        enabled = false;
-                        return;
-                    }
-
-                    if (movementStates[i].moveSpeed <= 0)
-                    {
-                        Debug.LogError(string.Format(
-                            "{0} has a movement state with a speed of 0 or less, you need to set the speed higher than 0 to see the character move. See documentation for more details (4)",
-                            gameObject.name));
-                        enabled = false;
-                        return;
-                    }
-
-                    if (movementStates[i].turnSpeed <= 0)
-                    {
-                        Debug.LogError(string.Format(
-                            "{0} has a turn speed state with a speed of 0 or less, you need to set the speed higher than 0 to see the character turn. See documentation for more details (4)",
-                            gameObject.name));
-                        enabled = false;
-                        return;
-                    }
-                }
-            }
+            // if (idleStates.Length > 0)
+            // {
+            //     for (int i = 0; i < idleStates.Length; i++)
+            //     {
+            //         if (idleStates[i].animationBool == "")
+            //         {
+            //             Debug.LogError(string.Format(
+            //                 "{0} has " + idleStates.Length + " Idle states, you need to make sure that each state has an animation boolean. See documentation for more details (4)",
+            //                 gameObject.name));
+            //             enabled = false;
+            //             return;
+            //         }
+            //     }
+            // }
+            //
+            // if (movementStates.Length > 0)
+            // {
+            //     for (int i = 0; i < movementStates.Length; i++)
+            //     {
+            //         if (movementStates[i].animationBool == "")
+            //         {
+            //             Debug.LogError(string.Format(
+            //                 "{0} has " + movementStates.Length +
+            //                 " Movement states, you need to make sure that each state has an animation boolean to see the character walk. See documentation for more details (4)",
+            //                 gameObject.name));
+            //             enabled = false;
+            //             return;
+            //         }
+            //
+            //         if (movementStates[i].moveSpeed <= 0)
+            //         {
+            //             Debug.LogError(string.Format(
+            //                 "{0} has a movement state with a speed of 0 or less, you need to set the speed higher than 0 to see the character move. See documentation for more details (4)",
+            //                 gameObject.name));
+            //             enabled = false;
+            //             return;
+            //         }
+            //
+            //         if (movementStates[i].turnSpeed <= 0)
+            //         {
+            //             Debug.LogError(string.Format(
+            //                 "{0} has a turn speed state with a speed of 0 or less, you need to set the speed higher than 0 to see the character turn. See documentation for more details (4)",
+            //                 gameObject.name));
+            //             enabled = false;
+            //             return;
+            //         }
+            //     }
+            // }
 
             // if (attackingStates.Length == 0)
             // {
@@ -281,20 +281,20 @@ namespace PolyPerfect
             //         string.Format("{0} has " + attackingStates.Length + " this character will not be able to attack. See documentation for more details (4)", gameObject.name));
             // }
 
-            if (attackingStates.Length > 0)
-            {
-                for (int i = 0; i < attackingStates.Length; i++)
-                {
-                    if (attackingStates[i].animationBool == "")
-                    {
-                        Debug.LogError(string.Format(
-                            "{0} has " + attackingStates.Length +
-                            " attacking states, you need to make sure that each state has an animation boolean. See documentation for more details (4)", gameObject.name));
-                        enabled = false;
-                        return;
-                    }
-                }
-            }
+            // if (attackingStates.Length > 0)
+            // {
+            //     for (int i = 0; i < attackingStates.Length; i++)
+            //     {
+            //         if (attackingStates[i].animationBool == "")
+            //         {
+            //             Debug.LogError(string.Format(
+            //                 "{0} has " + attackingStates.Length +
+            //                 " attacking states, you need to make sure that each state has an animation boolean. See documentation for more details (4)", gameObject.name));
+            //             enabled = false;
+            //             return;
+            //         }
+            //     }
+            // }
 
             if (stats == null)
             {
@@ -355,19 +355,14 @@ namespace PolyPerfect
 
         private IEnumerator InitYield()
         {
+            Debug.Log("called");
             yield return new WaitForSeconds((Random.Range(0, 200) / 100));
             DecideNextState(false, true);
         }
 
-
         private void DecideNextState(bool wasIdle, bool firstState = false)
         {
-            foreach (var VARIABLE in allAnimals)
-            {
-                Console.WriteLine("Animals: " + VARIABLE);
-            }
-
-
+            // CanRun = true;
             attacking = false;
 
             // Look for a predator.
@@ -375,15 +370,17 @@ namespace PolyPerfect
             {
                 for (int i = 0; i < allAnimals.Count; i++)
                 {
-                    if (allAnimals[i].dead || allAnimals[i] == this || allAnimals[i].species == species)
+                    if (allAnimals[i].dead || allAnimals[i] == this || allAnimals[i].species == species ||
+                        Vector3.Distance(transform.position, allAnimals[i].transform.position) > awareness)
                     {
                         continue;
                     }
-
-                    if (Vector3.Distance(transform.position, allAnimals[i].transform.position) > awareness)
-                    {
-                        continue;
-                    }
+                    // else
+                    // {
+                    //     Debug.Log(Vector3.Distance(transform.position, Position.Instance.transform.position));
+                    //     RunAwayFromAnimal(Position.Instance.transform);
+                    //     // CanRun = false;
+                    // }
 
                     // if (useNavMesh)
                     // {
@@ -394,10 +391,10 @@ namespace PolyPerfect
                     //     NonNavMeshRunAwayFromAnimal(allAnimals[i]);
                     // }
 
-                    if (logChanges)
-                    {
-                        Debug.Log($"{gameObject.name}: Found predator ({allAnimals[i].gameObject.name}), running away.");
-                    }
+                    // if (logChanges)
+                    // {
+                    //     Debug.Log($"{gameObject.name}: Found predator ({allAnimals[i].gameObject.name}), running away.");
+                    // }
 
                     return;
                 }
@@ -455,7 +452,8 @@ namespace PolyPerfect
                 BeginWanderState();
                 return;
             }
-            else if (idleStates.Length > 0)
+
+            if (idleStates.Length > 0)
             {
                 if (logChanges)
                 {
@@ -520,10 +518,10 @@ namespace PolyPerfect
 
             if (idleStates[currentState] != null || idleStates.Length < currentState)
             {
-                if (!string.IsNullOrEmpty(idleStates[currentState].animationBool))
-                {
-                    animator.SetBool(idleStates[currentState].animationBool, false);
-                }
+                // if (!string.IsNullOrEmpty(idleStates[currentState].animationBool))
+                // {
+                animator.Play("Rabbit_Idle");
+                // }
             }
 
             idleEvent.Invoke();
@@ -546,7 +544,7 @@ namespace PolyPerfect
 
             currentState = slowestMovementState;
 
-            if (!string.IsNullOrEmpty(movementStates[currentState].animationBool))
+            if (!string.IsNullOrEmpty(movementStates[currentState].animationBool) && species != "Player")
             {
                 animator.SetBool(movementStates[currentState].animationBool, true);
             }
@@ -620,15 +618,14 @@ namespace PolyPerfect
             DecideNextState(false);
         }
 
-        public void RunAwayFromAnimal(Transform predator)
+        private void RunAwayFromAnimal(Transform predator)
         {
             moving = true;
 
             Quaternion startRotation = transform.rotation;
             transform.rotation = Quaternion.LookRotation(transform.position - predator.transform.position);
             Vector3 areaAwayFromPredator = transform.position + transform.forward * 5f;
-            NavMeshHit hit;
-            NavMesh.SamplePosition(areaAwayFromPredator, out hit, 5, 1 << NavMesh.GetAreaFromName("Walkable"));
+            NavMesh.SamplePosition(areaAwayFromPredator, out var hit, 5, 1 << NavMesh.GetAreaFromName("Walkable"));
             Vector3 target = hit.position;
             transform.rotation = startRotation;
 
@@ -648,7 +645,7 @@ namespace PolyPerfect
 
             currentState = fastestMovementState;
 
-            if (!string.IsNullOrEmpty(movementStates[currentState].animationBool))
+            if (!string.IsNullOrEmpty(movementStates[currentState].animationBool) && species != "Player")
             {
                 animator.SetBool(movementStates[currentState].animationBool, true);
             }
@@ -676,11 +673,11 @@ namespace PolyPerfect
                 animator.SetBool(movementStates[currentState].animationBool, false);
             }
 
-            if (timeMoving > stamina || Vector3.Distance(transform.position, predator.transform.position) > awareness)
+            if (timeMoving > stamina || Vector3.Distance(transform.position, Position.Instance.transform.position) > awareness)
             {
                 BeginIdleState();
                 Debug.Log("began idle");
-                HarvestTrees.Instance.CanRun = true;
+                // CanRun = true;
             }
             else
             {

@@ -11,36 +11,18 @@ namespace Player
         private List<TreeInstance> TreeInstances;
         private TerrainCollider terrainCollider;
 
-        public static HarvestTrees Instance { get; set; }
-        public bool CanRun;
-
         private void Awake()
         {
-            Instance = this;
             terrainCollider = Terrain.activeTerrain.GetComponent<TerrainCollider>();
         }
 
         private void Start()
         {
-            CanRun = true;
             TreeInstances = new List<TreeInstance>(Terrain.activeTerrain.terrainData.treeInstances);
         }
 
         private void Update()
         {
-            if (CanRun)
-            {
-                foreach (var animal in WanderScript.allAnimals)
-                {
-                    if (Vector3.Distance(animal.transform.position, transform.position) < WanderScript.Instance.awareness)
-                    {
-                        Debug.Log("called");
-                        CanRun = false;
-                        WanderScript.Instance.RunAwayFromAnimal(transform);
-                    }
-                }
-            }
-
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hit;
