@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PolyPerfect;
 using UnityEngine;
 
 namespace Player
@@ -10,20 +11,36 @@ namespace Player
         private List<TreeInstance> TreeInstances;
         private TerrainCollider terrainCollider;
 
-        // Use this for initialization
+        public static HarvestTrees Instance { get; set; }
+        public bool CanRun;
+
         private void Awake()
         {
+            Instance = this;
             terrainCollider = Terrain.activeTerrain.GetComponent<TerrainCollider>();
         }
 
         private void Start()
         {
+            CanRun = true;
             TreeInstances = new List<TreeInstance>(Terrain.activeTerrain.terrainData.treeInstances);
-            Debug.Log("Tree Instances:" + TreeInstances.Count);
         }
 
         private void Update()
         {
+            if (CanRun)
+            {
+                foreach (var animal in WanderScript.allAnimals)
+                {
+                    if (Vector3.Distance(animal.transform.position, transform.position) < WanderScript.Instance.awareness)
+                    {
+                        Debug.Log("called");
+                        CanRun = false;
+                        WanderScript.Instance.RunAwayFromAnimal(transform);
+                    }
+                }
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 RaycastHit hit;
@@ -37,7 +54,7 @@ namespace Player
                     }
 
                     float sampleHeight = Terrain.activeTerrain.SampleHeight(hit.point);
-                    
+
                     if (hit.point.y <= sampleHeight + 0.01f)
                     {
                         return;

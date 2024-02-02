@@ -419,9 +419,9 @@ MonoBehaviour:
   idleStates:
   - stateName: LookOut
     animationBool: isLookingOut
-    minStateTime: 8
-    maxStateTime: 40
-    stateWeight: 1
+    minStateTime: 10
+    maxStateTime: 30
+    stateWeight: 10
   movementStates:
   - stateName: Hop
     animationBool: isJumping
@@ -430,8 +430,8 @@ MonoBehaviour:
     turnSpeed: 100
   - stateName: Run
     animationBool: isRunning
-    maxStateTime: 5
-    moveSpeed: 6
+    maxStateTime: 20
+    moveSpeed: 8
     turnSpeed: 200
   attackingStates: []
   deathStates:
@@ -448,7 +448,7 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 0
+  logChanges: 1
   showGizmos: 1
   drawWanderRange: 1
   drawScentRange: 1
@@ -484,9 +484,9 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.1
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 3
 --- !u!1 &1275589145405808
 GameObject:
   m_ObjectHideFlags: 0

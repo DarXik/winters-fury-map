@@ -37,16 +37,9 @@ public class RandomAnimalPlacer : MonoBehaviour
             for (int i = 0; i < spawnAmount - numOfChildren; i++)
             {
                 var value = Random.Range(0, animals.Length);
-                Instantiate(animals[value], RandomNavmeshLocation(600), Quaternion.identity, parent.transform);
-                Debug.Log(i);
+                Instantiate(animals[value], RandomNavmeshLocation(50), Quaternion.identity, parent.transform);
             }
         }
-        else
-        {
-            Debug.Log($"Already spawned: {numOfChildren}");
-        }
-
-
     }
 
     public GameObject spawnPoint;
