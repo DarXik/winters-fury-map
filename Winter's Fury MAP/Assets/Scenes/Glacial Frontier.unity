@@ -18,7 +18,7 @@ RenderSettings:
   m_Fog: 0
   m_FogColor: {r: 0.86951524, g: 0.9267164, b: 0.9148237, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.004
+  m_FogDensity: 0.025
   m_LinearFogStart: 0
   m_LinearFogEnd: 250
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -3025,11 +3025,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -6489,11 +6489,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -8631,11 +8631,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -11099,6 +11099,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 212432016}
   m_CullTransparentMesh: 1
+--- !u!1001 &212873640
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 167626, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_Name
+      value: TorchSmall
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 894.5634
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 143.92076
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 774.41925
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 438778, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1f782ade1705bca488bdcac46c171140, type: 3}
 --- !u!4 &214390723 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000013620029022, guid: a95cb6b4e170fc8449a186e245d254e6,
@@ -14300,11 +14357,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -15806,11 +15863,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -24916,11 +24973,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -33838,11 +33895,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -35861,11 +35918,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -40895,11 +40952,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -43318,7 +43375,7 @@ GameObject:
   - component: {fileID: 823554221}
   - component: {fileID: 823554216}
   - component: {fileID: 823554220}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57493,7 +57550,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 915188277}
-  - component: {fileID: 915188276}
   - component: {fileID: 915188274}
   - component: {fileID: 915188273}
   - component: {fileID: 915188279}
@@ -57562,14 +57618,6 @@ CharacterController:
   m_SkinWidth: 0.001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &915188276
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915188272}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &915188277
 Transform:
   m_ObjectHideFlags: 0
@@ -57579,7 +57627,7 @@ Transform:
   m_GameObject: {fileID: 915188272}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6901022, z: -0, w: -0.72371197}
-  m_LocalPosition: {x: 763.9, y: 154, z: 820.4}
+  m_LocalPosition: {x: 885.87, y: 145.36, z: 778.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -61994,7 +62042,7 @@ GameObject:
   - component: {fileID: 996497551}
   - component: {fileID: 996497550}
   m_Layer: 0
-  m_Name: Global Volume
+  m_Name: Post FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64532,11 +64580,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -68926,7 +68974,7 @@ GameObject:
   - component: {fileID: 1131136556}
   - component: {fileID: 1131136555}
   - component: {fileID: 1131136554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71355,11 +71403,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -83726,15 +83774,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417248435}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ecbd1fa7fe0e4242bd13c4c3401cc4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skyProfile: {fileID: 11400000, guid: e5bc0ed35fefb0c40a37544c3451413a, type: 2}
-  DNC: {fileID: 788761099}
-  normalProfile: {fileID: 11400000, guid: f1452483dfc6faf46821b29dba6061e0, type: 2}
-  foggyProfile: {fileID: 11400000, guid: 2bcea03898f903d4c9bf871fdb345356, type: 2}
   fogGradient:
     serializedVersion: 2
     key0: {r: 0, g: 0, b: 0, a: 1}
@@ -83768,53 +83813,54 @@ MonoBehaviour:
   weatherData:
   - name: Sunny
     particleSystem: {fileID: 0}
-    foggySkyEnabled: 0
-    fogDensity: 0
     temperatureImpact: 0
     cloudsEnabled: 0
+    fogIntensity: 0
+    fogDensity: 0
     lastsForMin: 2
     lastsForMax: 4
   - name: Light Fog
     particleSystem: {fileID: 0}
-    foggySkyEnabled: 0
-    fogDensity: 0.01
     temperatureImpact: 2
     cloudsEnabled: 1
+    fogIntensity: 0.858
+    fogDensity: 0.008
     lastsForMin: 2
     lastsForMax: 6
   - name: Moderate Fog
     particleSystem: {fileID: 0}
-    foggySkyEnabled: 0
-    fogDensity: 0.02
     temperatureImpact: 2
     cloudsEnabled: 1
+    fogIntensity: 0.88
+    fogDensity: 0.02
     lastsForMin: 2
     lastsForMax: 5
   - name: Heavy Fog
     particleSystem: {fileID: 0}
-    foggySkyEnabled: 0
-    fogDensity: 0.04
     temperatureImpact: 2
     cloudsEnabled: 1
+    fogIntensity: 0.972
+    fogDensity: 0.17
     lastsForMin: 1
     lastsForMax: 5
   - name: Snowfall
     particleSystem: {fileID: 881583060}
-    foggySkyEnabled: 1
-    fogDensity: 0.025
     temperatureImpact: 5
     cloudsEnabled: 0
+    fogIntensity: 0.834
+    fogDensity: 0.049
     lastsForMin: 2
     lastsForMax: 4
   - name: Blizzard
     particleSystem: {fileID: 901112247}
-    foggySkyEnabled: 1
-    fogDensity: 0.03
     temperatureImpact: 20
     cloudsEnabled: 0
+    fogIntensity: 0.972
+    fogDensity: 0.089
     lastsForMin: 0.5
     lastsForMax: 2
-  weatherFadeInTime: 10
+  weatherFadeInTime: 5
+  volume: {fileID: 996497550}
 --- !u!114 &1417248438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83822,7 +83868,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417248435}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9d60ad7c19ed7447af20b783ed6b437, type: 3}
   m_Name: 
@@ -88212,11 +88258,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -88813,11 +88859,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -92136,11 +92182,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -92800,11 +92846,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -93128,11 +93174,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -100552,11 +100598,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -106083,11 +106129,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -107361,11 +107407,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -112678,11 +112724,11 @@ MonoBehaviour:
   nonAgressiveTowards: []
   matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
-  logChanges: 1
-  showGizmos: 1
-  drawWanderRange: 1
-  drawScentRange: 1
-  drawAwarenessRange: 1
+  logChanges: 0
+  showGizmos: 0
+  drawWanderRange: 0
+  drawScentRange: 0
+  drawAwarenessRange: 0
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -128060,3 +128106,4 @@ SceneRoots:
   - {fileID: 1805110631}
   - {fileID: 251277784}
   - {fileID: 2029745005}
+  - {fileID: 212873640}

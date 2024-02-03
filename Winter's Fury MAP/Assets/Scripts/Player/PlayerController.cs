@@ -32,6 +32,7 @@ namespace Player
         public static bool isWindProtected;
         private float movementSpeed;
         private bool isRunning;
+        private float horizontalInput, verticalInput;
 
         [Header("Stamina")] public float maxStamina;
         public float decreaseRate, increaseRate;
@@ -151,8 +152,8 @@ namespace Player
 
         private void MovePlayer()
         {
-            float verticalInput = Input.GetAxisRaw("Vertical");
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
+            horizontalInput = Input.GetAxisRaw("Horizontal");
 
             if (verticalInput == 0 && horizontalInput == 0)
             {
@@ -186,6 +187,8 @@ namespace Player
             if (Input.GetKey(KeyCode.LeftShift) && !isCrouching && !staminaDepleted &&
                 Mathf.Approximately(charController.height, standingHeight))
             {
+                if (horizontalInput == 0 && verticalInput == 0) return;
+                
                 if (VitalManager.Instance.FatiguePercent > 0)
                 {
                     movementSpeed = runningSpeed;

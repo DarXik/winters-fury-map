@@ -135,8 +135,6 @@ namespace Managers
                 RecoverHealth();
             }
             
-            /* 3. VÝSTUP ONLY 
-
             // check afflictions
             if (currentAfflictions.Count > 0)
             {
@@ -157,7 +155,6 @@ namespace Managers
                 HealHypothermia();
             }
             
-            */
         }
 
         public IEnumerator BurnPlayer()

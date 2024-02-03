@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using Managers;
+using Meryuhi.Rendering;
 using Pinwheel.Jupiter;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Weather.Wind;
 using Random = UnityEngine.Random;
 
@@ -10,34 +13,31 @@ namespace Weather
     public class WeatherSystem : MonoBehaviour
     {
         public JSkyProfile skyProfile;
-        public JDayNightCycle DNC;
-        public JDayNightCycleProfile normalProfile, foggyProfile;
         public Gradient fogGradient;
-        
         public WeatherData[] weatherData;
         public static WeatherData selectedWeather;
 
         public float weatherFadeInTime;
         private float weatherChangeMin, weatherChangeMax;
 
+        [Space]
+        public Volume volume;
+        private FullScreenFog fog;
+        
         private float weatherChange;
         private float weatherTimer;
 
         public static float timeIncrement;
         public static bool isBlizzard;
-
-        private void Awake()
-        {
-            RenderSettings.fog = true;
-            RenderSettings.fogMode = FogMode.ExponentialSquared;
-            RenderSettings.fogDensity = 0;
-        }
+        
 
         private void Start()
         {
+            volume.profile.TryGet(out fog);
+
             timeIncrement = GameManager.Instance.GetTimeIncrement();
             StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
-            //StartCoroutine(SelectWeather(5));
+            //StartCoroutine(SelectWeather(1));
         }
 
         private void Update()
@@ -79,11 +79,10 @@ namespace Weather
             }
             
             var timeElapsed = 0f;
-            var previousFogDensity = RenderSettings.fogDensity;
 
             weatherChangeMin = selectedWeather.lastsForMin;
             weatherChangeMax = selectedWeather.lastsForMax;
-
+            
             // Snow, Blizzard
             if (selectedWeather.particleSystem != null)
             {
@@ -98,16 +97,21 @@ namespace Weather
                 forceOverLifetime.z = windDir.z;
             }
 
-            DNC.Profile = selectedWeather.foggySkyEnabled ? foggyProfile : normalProfile;
-            
             // Sunny
             skyProfile.EnableOverheadCloud = selectedWeather.cloudsEnabled;
             skyProfile.UpdateMaterialProperties();
             
-            // animate weather changes
+            // FOG
+            fog.color.value = fogGradient.Evaluate(GameManager.Instance.GetCurrentTime() / 24f);
+            
+            var previousFogIntensity = fog.intensity.value;
+            var previousFogDensity = fog.density.value;
+
             while (timeElapsed < weatherFadeInTime)
             {
-                RenderSettings.fogDensity = Mathf.Lerp(previousFogDensity, selectedWeather.fogDensity,
+                fog.intensity.value = Mathf.Lerp(previousFogIntensity, selectedWeather.fogIntensity,
+                    timeElapsed / weatherFadeInTime);
+                fog.density.value = Mathf.Lerp(previousFogDensity, selectedWeather.fogDensity,
                     timeElapsed / weatherFadeInTime);
 
                 timeElapsed += Time.deltaTime;
@@ -115,7 +119,8 @@ namespace Weather
                 yield return null;
             }
 
-            RenderSettings.fogDensity = selectedWeather.fogDensity;
+            fog.intensity.value = selectedWeather.fogIntensity;
+            fog.density.value = selectedWeather.fogDensity;
         }
 
         private void ResetWeather()

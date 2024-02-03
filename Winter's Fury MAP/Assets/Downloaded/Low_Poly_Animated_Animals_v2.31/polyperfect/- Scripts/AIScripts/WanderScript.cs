@@ -355,7 +355,6 @@ namespace PolyPerfect
 
         private IEnumerator InitYield()
         {
-            Debug.Log("called");
             yield return new WaitForSeconds((Random.Range(0, 200) / 100));
             DecideNextState(false, true);
         }

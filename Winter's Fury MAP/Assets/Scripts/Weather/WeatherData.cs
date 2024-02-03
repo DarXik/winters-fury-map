@@ -7,15 +7,16 @@ namespace Weather
     public struct WeatherData
     {
         public string name;
-
         public ParticleSystem particleSystem;
-
-        public bool foggySkyEnabled;
-        
-        public float fogDensity;
         public float temperatureImpact;
         public bool cloudsEnabled;
+        
+        [Header("Fog")]
+        [Range(0f, 1f)] public float fogIntensity;
+        [Range(0f, 1f)] public float fogDensity;
 
-        public float lastsForMin, lastsForMax;
+        [Space]
+        public float lastsForMin;
+        public float lastsForMax;
     }
 }

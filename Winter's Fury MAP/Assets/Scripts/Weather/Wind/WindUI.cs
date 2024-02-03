@@ -20,15 +20,11 @@ namespace Weather.Wind
 
         public void DisplayWindIcon()
         {
-            // 3. VÝSTUP ONLY
-
             windIcon.SetActive(true);
         }
 
         public void HideWindIcon()
         {
-            // 3. VÝSTUP ONLY
-
             windIcon.SetActive(false);
         }
     }
