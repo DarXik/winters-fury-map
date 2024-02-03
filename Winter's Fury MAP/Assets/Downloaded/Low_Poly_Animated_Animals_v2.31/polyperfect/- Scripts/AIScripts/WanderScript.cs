@@ -672,7 +672,7 @@ namespace PolyPerfect
                 animator.SetBool(movementStates[currentState].animationBool, false);
             }
 
-            if (timeMoving > stamina || Vector3.Distance(transform.position, Position.Instance.transform.position) > awareness)
+            if (timeMoving > stamina)
             {
                 BeginIdleState();
                 Debug.Log("began idle");
