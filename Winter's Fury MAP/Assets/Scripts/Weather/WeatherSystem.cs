@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Audio;
 using Managers;
 using Meryuhi.Rendering;
 using Pinwheel.Jupiter;
@@ -29,15 +30,14 @@ namespace Weather
 
         public static float timeIncrement;
         public static bool isBlizzard;
-        
 
         private void Start()
         {
             volume.profile.TryGet(out fog);
 
             timeIncrement = GameManager.Instance.GetTimeIncrement();
-            StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
-            //StartCoroutine(SelectWeather(1));
+            //StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
+            StartCoroutine(SelectWeather(5));
         }
 
         private void Update()

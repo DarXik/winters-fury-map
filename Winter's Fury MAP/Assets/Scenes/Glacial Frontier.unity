@@ -110044,7 +110044,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15390b3c97e1c0646bae8f489c50b655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Blizzard
+    clip: {fileID: 8300000, guid: 85e39b15ec58d04429e009d43ea5fdcb, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
 --- !u!1 &1991071750
 GameObject:
   m_ObjectHideFlags: 0
