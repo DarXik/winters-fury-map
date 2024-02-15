@@ -14,14 +14,24 @@ namespace Player
         private float _xAxisClamp;
 
         public static PlayerLook Instance { get; private set; }
+
+        public void SetSensitivity()
+        {
+            sensitivity = PlayerPrefs.GetFloat("sensitivityPreference");
+        }
         
         private void Awake()
         {
+
             Instance = this;
         }
-
+        private void Update()
+        {
+            SetSensitivity();
+        }
         private void Start()
         {
+
             UnblockRotation();
 
             _xAxisClamp = 0;

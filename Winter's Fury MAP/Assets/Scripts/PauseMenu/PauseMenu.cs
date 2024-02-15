@@ -5,6 +5,7 @@ using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using Weather.Wind;
 
 public class PauseMenu : MonoBehaviour
@@ -27,17 +28,20 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitGame()
     {
+        PreferencesManager.Instance.SavePreferences();
         Application.Quit();
     }
 
     public void ExitToMenu()
     {
+        PreferencesManager.Instance.SavePreferences();
         SceneManager.LoadScene(0);
         // uložilo by hru
     }
 
-    public GameObject SurvivalOverlay;
-    public GameObject FpsCounter;
+    [FormerlySerializedAs("SurvivalOverlay")] public GameObject survivalOverlay;
+    [FormerlySerializedAs("FpsCounter")] public GameObject fpsCounter;
+    [FormerlySerializedAs("Crosshair")] public GameObject crosshair;
 
     public void TogglePauseMenu()
     {
@@ -51,9 +55,10 @@ public class PauseMenu : MonoBehaviour
             pauseMenuOptionsObj.SetActive(false);
             PlayerLook.Instance.UnblockRotation();
 
-            SurvivalOverlay.SetActive(true);
-            FpsCounter.SetActive(true); // později toggle v nastavení, 4.výstup
+            survivalOverlay.SetActive(true);
+            fpsCounter.SetActive(GeneralScript.Instance.showFPSpreference);
             WindUI.Instance.DisplayWindIcon();
+            crosshair.SetActive(true);
 
             PreferencesManager.Instance.SavePreferences();
             GameManager.Instance.KeySetup();
@@ -61,6 +66,7 @@ public class PauseMenu : MonoBehaviour
             VideoScript.Instance.LoadPreferences();
             GeneralScript.Instance.LoadPreferences();
             GameManager.Instance.ResumeTime();
+            PlayerLook.Instance.SetSensitivity();
         }
         else // do pause menu
         {
@@ -69,9 +75,11 @@ public class PauseMenu : MonoBehaviour
             pauseMenuOptionsObj.SetActive(false);
             PlayerLook.Instance.BlockRotation();
 
-            SurvivalOverlay.SetActive(false);
-            FpsCounter.SetActive(false);
+            crosshair.SetActive(false);
+            survivalOverlay.SetActive(false);
+            fpsCounter.SetActive(false);
             WindUI.Instance.HideWindIcon();
+            fpsCounter.SetActive(false);
             // PassTimeManager.Instance.ClosePassWindow();
             // InventoryManager.Instance.ToggleInventory(true);
             // FirestartManager.Instance.CloseFireStartWindow();

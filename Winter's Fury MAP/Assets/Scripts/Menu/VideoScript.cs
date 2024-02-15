@@ -20,25 +20,6 @@ public class VideoScript : MonoBehaviour
         QualitySwitcher();
     }
 
-    private void Update()
-    {
-        switch (currentQualityIndex)
-        {
-            case 2:
-                btnRight.interactable = false;
-                btnLeft.interactable = true;
-                break;
-            case 1:
-                btnRight.interactable = true;
-                btnLeft.interactable = true;
-                break;
-            case 0:
-                btnRight.interactable = true;
-                btnLeft.interactable = false;
-                break;
-        }
-    }
-
     public void SavePreferences()
     {
         PlayerPrefs.SetInt("qualityPreference", currentQualityIndex);
@@ -111,6 +92,21 @@ public class VideoScript : MonoBehaviour
         clickedRight = true;
         clickedLeft = false;
         QualitySwitcher();
+        switch (currentQualityIndex)
+        {
+            case 2:
+                btnRight.interactable = false;
+                btnLeft.interactable = true;
+                break;
+            case 1:
+                btnRight.interactable = true;
+                btnLeft.interactable = true;
+                break;
+            case 0:
+                btnRight.interactable = true;
+                btnLeft.interactable = false;
+                break;
+        }
     }
 
     public void LeftClick()
@@ -118,13 +114,27 @@ public class VideoScript : MonoBehaviour
         clickedLeft = true;
         clickedRight = false;
         QualitySwitcher();
+        switch (currentQualityIndex)
+        {
+            case 2:
+                btnRight.interactable = false;
+                btnLeft.interactable = true;
+                break;
+            case 1:
+                btnRight.interactable = true;
+                btnLeft.interactable = true;
+                break;
+            case 0:
+                btnRight.interactable = true;
+                btnLeft.interactable = false;
+                break;
+        }
     }
 
     private void GetResolutions()
     {
         // vezme dostupná rozlišení, pro každý pc jiné
         resolutions = Screen.resolutions;
-        // rates = Screen.
         resolutionDropdown.ClearOptions();
 
         // list pro dostupná rozlišení

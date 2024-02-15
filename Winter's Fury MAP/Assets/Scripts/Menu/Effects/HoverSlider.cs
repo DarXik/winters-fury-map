@@ -3,17 +3,18 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class HoverSlider : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
     private Animator animator;
-    public GameObject sliderTextFPS;
-    public Slider sliderFPS;
+    [FormerlySerializedAs("sliderTextFPS")] public GameObject sliderText;
+    [FormerlySerializedAs("sliderFPS")] public Slider slider;
 
     private void Awake()
     {
-        animator = sliderTextFPS.GetComponent<Animator>();
+        animator = sliderText.GetComponent<Animator>();
     }
 
     public void Start()
@@ -47,6 +48,6 @@ public void OnPointerExit(PointerEventData eventData)
 
     private void ToggleVisibility(bool visibility)
     {
-        sliderTextFPS.SetActive(visibility);
+        sliderText.SetActive(visibility);
     }
 }

@@ -11,6 +11,7 @@ public class ControlsScript : MonoBehaviour
 {
     private string inventoryKeyPreference;
     private string passTimeKeyPreference;
+    private float sensitivityPreference;
 
     private bool inventoryKeyPressed;
     private bool passTimeKeyPressed;
@@ -19,6 +20,9 @@ public class ControlsScript : MonoBehaviour
     public TMP_Text inventoryKeyText;
     public Button passTimeKeyButton;
     public TMP_Text passTimeKeyText;
+    public TextMeshProUGUI sensitivityText;
+    public Slider sliderSensitivity;
+
     public static ControlsScript Instance { get; private set; }
 
     private void Awake()
@@ -31,6 +35,8 @@ public class ControlsScript : MonoBehaviour
     {
         PlayerPrefs.SetString("inventoryKey", inventoryKeyPreference);
         PlayerPrefs.SetString("passTimeKey", passTimeKeyPreference);
+        PlayerPrefs.SetFloat("sensitivityPreference", sensitivityPreference);
+
     }
 
     private Dictionary<string, string> keys = new();
@@ -51,6 +57,17 @@ public class ControlsScript : MonoBehaviour
         passTimeKeyPreference = PlayerPrefs.HasKey("passTimeKey") ? PlayerPrefs.GetString("passTimeKey") : "T";
         passTimeKeyText.text = passTimeKeyPreference;
         keys.TryAdd("passTimeKey", passTimeKeyPreference);
+
+        sensitivityPreference = PlayerPrefs.HasKey("sensitivityPreference") ? PlayerPrefs.GetFloat("sensitivityPreference") : 300f;
+        sensitivityText.text = sensitivityPreference.ToString();
+        SetSensitivity(sensitivityPreference);
+    }
+
+    public void SetSensitivity(float sens)
+    {
+        sensitivityPreference = sens;
+        sensitivityText.text = sens.ToString();
+        sliderSensitivity.value = sensitivityPreference;
     }
 
     public void InventoryKeyHandler()

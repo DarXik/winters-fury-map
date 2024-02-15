@@ -18,9 +18,4 @@ public class PreferencesManager : MonoBehaviour
         AudioScript.Instance.SavePreferences();
         ControlsScript.Instance.SavePreferences();
     }
-    public void DefaultOptions()
-    {
-        PlayerPrefs.DeleteAll();
-        Debug.Log("Smazáno");
-    }
 }

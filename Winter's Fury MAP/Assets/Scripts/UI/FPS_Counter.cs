@@ -17,6 +17,7 @@ public class FPS_Counter : MonoBehaviour
 
     void Awake()
     {
+
         // Cache strings and create array
         {
             for (int i = 0; i < _cacheNumbersAmount; i++) {
@@ -29,6 +30,7 @@ public class FPS_Counter : MonoBehaviour
 
     void Update()
     {
+        fpsText.gameObject.SetActive(GeneralScript.Instance.showFPSpreference);
         // Sample
         {
             var currentFrame = (int)Math.Round(1f / Time.smoothDeltaTime); // Use unscaledDeltaTime for more accurate, or if your game modifies Time.timeScale.
