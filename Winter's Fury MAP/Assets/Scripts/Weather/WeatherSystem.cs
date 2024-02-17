@@ -36,8 +36,8 @@ namespace Weather
             volume.profile.TryGet(out fog);
 
             timeIncrement = GameManager.Instance.GetTimeIncrement();
-            //StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
-            StartCoroutine(SelectWeather(5));
+            StartCoroutine(SelectWeather(Random.Range(0, weatherData.Length - 1)));
+            //StartCoroutine(SelectWeather(5));
         }
 
         private void Update()

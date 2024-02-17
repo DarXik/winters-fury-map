@@ -12,6 +12,8 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuObj, pauseMenuNavObj, pauseMenuOptionsObj;
 
+    public static bool pauseMenuOpened;
+    
     public static PauseMenu Instance { get; private set; }
 
     public void Awake()
@@ -39,9 +41,9 @@ public class PauseMenu : MonoBehaviour
         // uložilo by hru
     }
 
-    [FormerlySerializedAs("SurvivalOverlay")] public GameObject survivalOverlay;
-    [FormerlySerializedAs("FpsCounter")] public GameObject fpsCounter;
-    [FormerlySerializedAs("Crosshair")] public GameObject crosshair;
+    public GameObject survivalOverlay;
+    public GameObject fpsCounter;
+    public GameObject crosshair;
 
     public void TogglePauseMenu()
     {
@@ -50,6 +52,8 @@ public class PauseMenu : MonoBehaviour
 
         if (pauseMenuObj.activeSelf)
         {
+            pauseMenuOpened = false;
+            
             pauseMenuObj.SetActive(false);
             pauseMenuNavObj.SetActive(false);
             pauseMenuOptionsObj.SetActive(false);
@@ -70,6 +74,8 @@ public class PauseMenu : MonoBehaviour
         }
         else // do pause menu
         {
+            pauseMenuOpened = true;
+            
             pauseMenuObj.SetActive(true);
             pauseMenuNavObj.SetActive(true);
             pauseMenuOptionsObj.SetActive(false);

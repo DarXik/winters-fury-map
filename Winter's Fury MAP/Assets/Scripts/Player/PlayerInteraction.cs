@@ -69,7 +69,7 @@ namespace Player
                 ReduceLightSourceBurnTime();
 
             if (InventoryManager.inventoryOpened || FirestartManager.fireWindowOpened ||
-                AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened) return;
+                AddFuelManager.addFuelWindowOpened || PassTimeManager.passTimeWindowOpened || PauseMenu.pauseMenuOpened) return;
 
             CheckHover();
             if (Input.GetMouseButtonDown(0)) CheckHit();
