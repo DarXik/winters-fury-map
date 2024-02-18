@@ -77,7 +77,7 @@ namespace Player
             if (StaminaPercent <= 0f) StartCoroutine(StaminaDepletionHandler());
             if (isRegenerating) RegenerateStamina();
             
-            if (!PlayerLook.rotationBlocked)
+            if (!PlayerLook.rotationBlocked || VitalManager.playerDead)
             {
                 MovingStateHandler();
                 CheckWind();

@@ -5,6 +5,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 using Weather;
 using Weather.Wind;
 using Random = UnityEngine.Random;
@@ -23,7 +24,7 @@ namespace Managers
         [SerializeField] private float[] times;
         [SerializeField] private Transform[] spawnPoints;
 
-        private float previousTimeIncrement, timeIncrement;
+        private float previousTimeIncrement;
         private float currentTimeIncrement;
         public Volume volume;
         private ColorAdjustments ca;
@@ -32,6 +33,7 @@ namespace Managers
         public KeyCode togglePassTimeKey;
         public KeyCode pauseMenuToggleKey;
 
+        public static float TotalTime { get; private set; }
         public static GameManager Instance { get; private set; }
 
         private void Awake()
@@ -44,6 +46,8 @@ namespace Managers
 
         private void Start()
         {
+            TotalTime = 0;
+            
             cycle.AutoTimeIncrement = autoCycle;
             previousTimeIncrement = cycle.TimeIncrement;
 
@@ -66,6 +70,11 @@ namespace Managers
         {
             CheckUserInput();
             CheckTimeIncrement();
+
+            if (!VitalManager.playerDead)
+            {
+                TotalTime += Time.deltaTime * GetTimeIncrement();
+            }
         }
 
         private void CheckTimeIncrement()
@@ -100,6 +109,11 @@ namespace Managers
             {
                 PauseMenu.Instance.TogglePauseMenu();
             }
+        }
+
+        public void RestartGame()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
         public void PauseTime()

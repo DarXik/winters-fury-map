@@ -51,7 +51,7 @@ namespace JahnStar.AreaSpawner
 
                 lineRenderer.SetPosition(i, transform.GetChild(i).position);
             }
-            if (spawner.editMode && Selection.activeObject == gameObject) spawner.ChooseArea(int.Parse(gameObject.name.Split('_')[1]));
+            //if (spawner.editMode && Selection.activeObject == gameObject) spawner.ChooseArea(int.Parse(gameObject.name.Split('_')[1]));
         }
         public void ResizePoint(float pointSize, float lineThickness)
         {

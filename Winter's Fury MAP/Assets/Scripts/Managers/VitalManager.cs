@@ -1,26 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Inventory;
 using Player;
+using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
     public class VitalManager : MonoBehaviour
     {
-        [FormerlySerializedAs("tempChevrons")] [Header("UI References")]
-        public GameObject reduceTempChevrons;
+        [SerializeField] private GameObject player;
+
+        [Header("UI References")] public GameObject reduceTempChevrons;
 
         public GameObject increaseTempChevrons;
         public GameObject fatigueChevrons;
         public GameObject thirstChevrons;
         public GameObject hungerChevrons;
 
-        [Header("Health")] 
-        public float maxHealth;
+        [Header("Health")] public float maxHealth;
         public float healthRecoveryRate;
         public float warmthDrainRate;
         public float fatigueDrainRate;
@@ -57,6 +60,12 @@ namespace Managers
         private float currentThirst;
         private int thirstChevronsToReveal;
 
+        [Header("Death Window")] [SerializeField]
+        private GameObject deathWindow;
+
+        private CanvasGroup windowGroup;
+        [SerializeField] private TextMeshProUGUI timeAlive;
+
         // Fill Amounts
         public float HealthPercent => currentHealth / maxHealth;
         public float FatiguePercent => currentFatigue / maxFatigueBar;
@@ -65,7 +74,9 @@ namespace Managers
         public float WarmthPercent => currentTemp / maxTempBar;
 
         public static bool burningPlayer;
-        
+
+        public static bool playerDead;
+
         // Afflictions
         private List<Affliction> currentAfflictions = new();
 
@@ -76,6 +87,11 @@ namespace Managers
         private void Awake()
         {
             Instance = this;
+
+            windowGroup = deathWindow.GetComponent<CanvasGroup>();
+            windowGroup.alpha = 0;
+
+            deathWindow.SetActive(false);
         }
 
         private void Start()
@@ -134,27 +150,27 @@ namespace Managers
             {
                 RecoverHealth();
             }
-            
+
             // check afflictions
             if (currentAfflictions.Count > 0)
             {
                 CheckAfflictions();
                 ReduceAfflictionDuration();
             }
-            
+
             // if currentTemp is below 0 and we don't have it, inflict it after a set amount of hours
-            if (currentTemp <= 0 && currentAfflictions.All(afflictions => afflictions.afflictionType != AfflictionType.Hypothermia))
+            if (currentTemp <= 0 &&
+                currentAfflictions.All(afflictions => afflictions.afflictionType != AfflictionType.Hypothermia))
             {
                 CheckForHypothermia();
             }
-            
+
             // if currentTemp is above 0 and we have Hypothermia, heal it
             if (currentTemp > 0 &&
                 currentAfflictions.All(afflictions => afflictions.afflictionType == AfflictionType.Hypothermia))
             {
                 HealHypothermia();
             }
-            
         }
 
         public IEnumerator BurnPlayer()
@@ -162,7 +178,7 @@ namespace Managers
             while (burningPlayer)
             {
                 yield return new WaitForSeconds(1f);
-                
+
                 currentHealth -= burnDamage;
             }
         }
@@ -178,17 +194,18 @@ namespace Managers
             switch (currentActivity)
             {
                 case PlayerActivity.Sleeping:
-                    
-                    float sleepHealthRecoveryRate = CalculateSleepRecoveryRate(PassTimeManager.Instance.GetHoursToPass());
+
+                    float sleepHealthRecoveryRate =
+                        CalculateSleepRecoveryRate(PassTimeManager.Instance.GetHoursToPass());
                     currentHealth += sleepHealthRecoveryRate * (Time.deltaTime * timeIncrement);
-                    
+
                     break;
                 case PlayerActivity.Standing or PlayerActivity.Walking or PlayerActivity.Running:
                     currentHealth += healthRecoveryRate * (Time.deltaTime * timeIncrement);
                     break;
             }
         }
-        
+
         private float CalculateSleepRecoveryRate(int hoursToSleep)
         {
             float totalConditionRecovery = 0;
@@ -203,6 +220,15 @@ namespace Managers
 
         private void ReduceHealth()
         {
+            if (playerDead) return;
+            
+            if (currentHealth <= 0)
+            {
+                Die();
+
+                return;
+            }
+            
             if (WarmthPercent <= 0)
             {
                 currentHealth -= warmthDrainRate * (Time.deltaTime * timeIncrement);
@@ -472,7 +498,7 @@ namespace Managers
                 var affliction = currentAfflictions[i];
 
                 if (!affliction.hasSetDuration) continue;
-                
+
                 if (affliction.currentDuration <= 0)
                 {
                     currentAfflictions.Remove(affliction);
@@ -551,7 +577,7 @@ namespace Managers
             // 10% of condition per hour if not below 15%, not sleeping and not treated
             if (currentHealth > 15f && PlayerController.Instance.currentActivity != PlayerActivity.Sleeping && !treated)
             {
-                    currentHealth -= 10f * (Time.deltaTime * timeIncrement);
+                currentHealth -= 10f * (Time.deltaTime * timeIncrement);
             }
 
             // 30% of fatigue per hour
@@ -576,6 +602,36 @@ namespace Managers
             {
                 increaseTempChevrons.transform.GetChild(i).gameObject.SetActive(false);
             }
+        }
+
+        private void Die()
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            
+            playerDead = true;
+
+            // UI 
+            float totalMinutes = GameManager.TotalTime * 60f;
+
+            int days = Mathf.FloorToInt(totalMinutes / 24f / 60f);
+            int hours = Mathf.FloorToInt(totalMinutes / 60f % 24f);
+            int minutes = Mathf.FloorToInt(totalMinutes % 60f);
+
+            timeAlive.text = $"{days} DAYS {hours} HOURS {minutes} MINUTES";
+            
+            deathWindow.SetActive(true);
+            windowGroup.LeanAlpha(1, 3.5f).setEaseInOutQuart();
+
+            player.GetComponent<CharacterController>().enabled = false;
+            player.GetComponent<PlayerController>().enabled = false;
+            player.GetComponent<HarvestTrees>().enabled = false;
+
+            var rb = player.AddComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.FreezeRotationY;
+
+            var capsule = player.AddComponent<CapsuleCollider>();
+            capsule.height = 2;
         }
 
         public float GetCurrentCalories()

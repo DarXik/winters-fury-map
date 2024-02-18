@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Managers;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -37,7 +38,7 @@ namespace Player
             _xAxisClamp = 0;
             transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
-
+        
         public void BlockRotation(bool cursorVisible = true)
         {
             Cursor.lockState = CursorLockMode.None;
@@ -59,7 +60,7 @@ namespace Player
 
         private void RotateCamera()
         {
-            if (rotationBlocked) return;
+            if (rotationBlocked || VitalManager.playerDead) return;
             
             float mouseX = Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime;
             float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime;
