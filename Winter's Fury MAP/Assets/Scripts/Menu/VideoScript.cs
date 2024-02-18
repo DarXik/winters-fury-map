@@ -26,6 +26,7 @@ public class VideoScript : MonoBehaviour
         PlayerPrefs.SetInt("fpsPreference", fpsPreference);
         PlayerPrefs.SetFloat("brightnessPreference", brightnessPreference);
         PlayerPrefs.SetInt("fullscreenPreference", fullscreenPreference ? 1 : 0);
+        PlayerPrefs.SetInt("vsyncPreference", vsyncPreference ? 1 : 0);
     }
 
     public void LoadPreferences()
@@ -34,9 +35,11 @@ public class VideoScript : MonoBehaviour
         fpsPreference = PlayerPrefs.HasKey("fpsPreference") ? PlayerPrefs.GetInt("fpsPreference") : 60;
         brightnessPreference = PlayerPrefs.HasKey("brightnessPreference") ? PlayerPrefs.GetFloat("brightnessPreference") : -0.5f;
         fullscreenPreference = PlayerPrefs.HasKey("fullscreenPreference") ? PlayerPrefs.GetInt("fullscreenPreference") == 1 : PlayerPrefs.GetInt("fullscreenPreference") == 0;
+        vsyncPreference = PlayerPrefs.HasKey("vsyncPreference") ? PlayerPrefs.GetInt("vsyncPreference") == 1 : PlayerPrefs.GetInt("vsyncPreference") == 0;
         SetFPS(fpsPreference);
         SetBrightness(brightnessPreference);
         SetFullScreen(fullscreenPreference);
+        SetVsync(vsyncPreference);
     }
 
     public void SetFullScreen(bool isFullscreen)
@@ -46,14 +49,19 @@ public class VideoScript : MonoBehaviour
         toggleFullscreen.isOn = fullscreenPreference;
     }
 
+    public void SetVsync(bool vsync)
+    {
+        vsyncPreference = vsync;
+        QualitySettings.vSyncCount = vsync ? 1 : 0;
+        toggleVsync.isOn = vsyncPreference;
+    }
+
     public void SetFPS(float fps)
     {
-
         sliderTextFPS.text = fps.ToString("0");
         fpsPreference = (int) fps;
 
-        sliderFPS.value = fpsPreference >= 0 ? fpsPreference : 241; // oprava, 4.výstup
-        // auto ukládání a načítání 4.výstup, rozdělení do objektů
+        sliderFPS.value = fpsPreference >= 0 ? fpsPreference : 241;
 
         if (fps is 241 or -1)
         {
@@ -140,7 +148,7 @@ public class VideoScript : MonoBehaviour
         // list pro dostupná rozlišení
         var availableResolutions = new List<string>();
         Array.Reverse(resolutions);
-        
+
         int currResIndex = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
@@ -186,9 +194,11 @@ public class VideoScript : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
 
     [Header("Fullscreen")] public Toggle toggleFullscreen;
+    [Header("V-sync")] public Toggle toggleVsync;
 
     [Header("Pro ukládání")] private int fpsPreference;
     private int currentQualityIndex;
     private float brightnessPreference;
     private bool fullscreenPreference;
+    private bool vsyncPreference;
 }

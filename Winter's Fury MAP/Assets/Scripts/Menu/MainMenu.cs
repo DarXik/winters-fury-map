@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
         myUIGroup.alpha = 0;
         fadeIn = true;
         mainMenu.SetActive(true);
+        currentVersionText.text = Application.version;
     }
 
     private void Update()
@@ -179,4 +180,5 @@ public class MainMenu : MonoBehaviour
     [Header("Efekty")] [SerializeField] private CanvasGroup myUIGroup;
     public Image background;
     private bool fadeIn;
+    public TMP_Text currentVersionText;
 }
