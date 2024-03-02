@@ -37,7 +37,7 @@ public class RandomAnimalPlacer : MonoBehaviour
             for (int i = 0; i < spawnAmount - numOfChildren; i++)
             {
                 var value = Random.Range(0, animals.Length);
-                Instantiate(animals[value], RandomNavmeshLocation(750), Quaternion.identity, parent.transform);
+                Instantiate(animals[value], RandomNavmeshLocation(500), Quaternion.identity, parent.transform);
             }
         }
     }

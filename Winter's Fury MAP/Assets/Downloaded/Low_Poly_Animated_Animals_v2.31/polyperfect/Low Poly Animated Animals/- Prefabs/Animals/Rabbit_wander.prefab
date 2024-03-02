@@ -419,18 +419,18 @@ MonoBehaviour:
   idleStates:
   - stateName: LookOut
     animationBool: isLookingOut
-    minStateTime: 10
-    maxStateTime: 30
+    minStateTime: 5
+    maxStateTime: 20
     stateWeight: 10
   movementStates:
   - stateName: Hop
     animationBool: isJumping
-    maxStateTime: 5
+    maxStateTime: 10
     moveSpeed: 1
     turnSpeed: 100
   - stateName: Run
     animationBool: isRunning
-    maxStateTime: 20
+    maxStateTime: 10
     moveSpeed: 8
     turnSpeed: 200
   attackingStates: []

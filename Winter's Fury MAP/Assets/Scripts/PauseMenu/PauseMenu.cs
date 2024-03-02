@@ -41,16 +41,20 @@ public class PauseMenu : MonoBehaviour
         // uložilo by hru
     }
 
+    public bool IsPauseMenuOpened()
+    {
+        return pauseMenuOpened;
+    }
+
     public GameObject survivalOverlay;
     public GameObject fpsCounter;
     public GameObject crosshair;
 
     public void TogglePauseMenu()
     {
-
         // při kliku z podnabídky se odbarví tlačítko [general, video ...]
 
-        if (pauseMenuObj.activeSelf)
+        if (pauseMenuObj.activeSelf) // do hry
         {
             pauseMenuOpened = false;
             
@@ -85,10 +89,6 @@ public class PauseMenu : MonoBehaviour
             survivalOverlay.SetActive(false);
             fpsCounter.SetActive(false);
             WindUI.Instance.HideWindIcon();
-            fpsCounter.SetActive(false);
-            // PassTimeManager.Instance.ClosePassWindow();
-            // InventoryManager.Instance.ToggleInventory(true);
-            // FirestartManager.Instance.CloseFireStartWindow();
 
             GameManager.Instance.PauseTime();
         }

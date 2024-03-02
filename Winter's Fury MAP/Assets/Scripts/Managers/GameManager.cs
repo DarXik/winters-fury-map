@@ -47,7 +47,7 @@ namespace Managers
         private void Start()
         {
             TotalTime = 0;
-            
+
             cycle.AutoTimeIncrement = autoCycle;
             previousTimeIncrement = cycle.TimeIncrement;
 
@@ -95,17 +95,23 @@ namespace Managers
 
         private void CheckUserInput()
         {
-            if (Input.GetKeyDown(toggleInventoryKey) && !FirestartManager.fireWindowOpened && !PassTimeManager.passTimeWindowOpened && !AddFuelManager.addFuelWindowOpened)
+            if (Input.GetKeyDown(toggleInventoryKey) && !FirestartManager.fireWindowOpened &&
+                !PassTimeManager.passTimeWindowOpened && !AddFuelManager.addFuelWindowOpened &&
+                !PauseMenu.Instance.IsPauseMenuOpened())
             {
                 InventoryManager.Instance.ToggleInventory();
             }
 
-            if (Input.GetKeyDown(togglePassTimeKey) && !FirestartManager.fireWindowOpened && !InventoryManager.inventoryOpened && !AddFuelManager.addFuelWindowOpened)
+            if (Input.GetKeyDown(togglePassTimeKey) && !FirestartManager.fireWindowOpened &&
+                !InventoryManager.inventoryOpened && !AddFuelManager.addFuelWindowOpened &&
+                !PauseMenu.Instance.IsPauseMenuOpened())
             {
                 PassTimeManager.Instance.TogglePassTimeWindow(PassTypes.PassTime);
             }
 
-            if (Input.GetKeyDown(pauseMenuToggleKey))
+            if (Input.GetKeyDown(pauseMenuToggleKey) && !FirestartManager.fireWindowOpened &&
+                !InventoryManager.inventoryOpened
+                && !AddFuelManager.addFuelWindowOpened && !PassTimeManager.passTimeWindowOpened)
             {
                 PauseMenu.Instance.TogglePauseMenu();
             }

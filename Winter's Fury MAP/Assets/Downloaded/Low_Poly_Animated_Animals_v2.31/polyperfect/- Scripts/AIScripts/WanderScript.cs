@@ -445,7 +445,7 @@ namespace PolyPerfect
             {
                 if (logChanges)
                 {
-                    Debug.Log($"{gameObject.name}: Wandering.");
+                    // Debug.Log($"{gameObject.name}: Wandering.");
                 }
 
                 BeginWanderState();
@@ -456,7 +456,7 @@ namespace PolyPerfect
             {
                 if (logChanges)
                 {
-                    Debug.Log(string.Format("{0}: Idling.", gameObject.name));
+                    // Debug.Log(string.Format("{0}: Idling.", gameObject.name));
                 }
 
                 BeginIdleState(firstState);
