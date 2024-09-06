@@ -1,2 +1,1 @@
-# winters-fury-map
-The best game made by two best friends!
+school project for maturita (graduation) exam
